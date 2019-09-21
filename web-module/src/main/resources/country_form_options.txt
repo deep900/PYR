@@ -1,0 +1,198 @@
+<form:option>New Caledonia</form:option>
+																<form:option>Saint Barthélemy</form:option>
+																<form:option>Saint Martin</form:option>
+																<form:option>Saint Pierre and Miquelon</form:option>
+																<form:option>Wallis and Futuna</form:option>
+																<form:option>French Southern and Antarctic Lands</form:option>
+																<form:option>Gabon</form:option>
+																<form:option>Gambia</form:option>
+																<form:option>Georgia</form:option>
+																<form:option>Germany</form:option>
+																<form:option>Ghana</form:option>
+																<form:option>Greece</form:option>
+																<form:option>Grenada</form:option>
+																<form:option>Guatemala</form:option>
+																<form:option>Guinea</form:option>
+																<form:option>Guinea-Bissau</form:option>
+																<form:option>Guyana</form:option>
+																<form:option>Haiti</form:option>
+																<form:option>Honduras</form:option>
+																<form:option>Hungary</form:option>
+																<form:option>Iceland</form:option>
+																<form:option>India</form:option>
+																<form:option>Indonesia</form:option>
+																<form:option>Iran</form:option>
+																<form:option>Iraq</form:option>
+																<form:option>Ireland</form:option>
+																<form:option>Israel</form:option>
+																<form:option>Italy</form:option>
+																<form:option>Ivory Coast</form:option>
+																<form:option>Jamaica</form:option>
+																<form:option>Japan</form:option>
+																<form:option>Jordan</form:option>
+																<form:option>Kazakhstan</form:option>
+																<form:option>Kenya</form:option>
+																<form:option>Kiribati</form:option>
+																<form:option>Korea</form:option>
+																<form:option>North Korea</form:option>
+																<form:option>Kuwait</form:option>
+																<form:option>Kyrgyzstan</form:option>
+																<form:option>Laos</form:option>
+																<form:option>Latvia</form:option>
+																<form:option>Lebanon</form:option>
+																<form:option>Lesotho</form:option>
+																<form:option>Liberia</form:option>
+																<form:option>Libya</form:option>
+																<form:option>Cyrenaica</form:option>
+																<form:option>Liechtenstein</form:option>
+																<form:option>Lithuania</form:option>
+																<form:option>Luxembourg</form:option>
+																<form:option>Macedonia</form:option>
+																<form:option>Madagascar</form:option>
+																<form:option>Malawi</form:option>
+																<form:option>Malaysia</form:option>
+																<form:option>Maldives</form:option>
+																<form:option>Mali</form:option>
+																<form:option>Malta</form:option>
+																<form:option>Marshall Islands</form:option>
+																<form:option>Mauritania</form:option>
+																<form:option>Mauritius</form:option>
+																<form:option>Mexico</form:option>
+																<form:option>Micronesia</form:option>
+																
+																<form:option>Moldova</form:option>
+																<form:option>Monaco</form:option>
+																<form:option>Mongolia</form:option>
+																<form:option>Montenegro</form:option>
+																<form:option>Morocco</form:option>
+																<form:option>Mozambique</form:option>
+																<form:option>Namibia</form:option>
+																<form:option>Nauru</form:option>
+																<form:option>Nepal</form:option>
+																<form:option>Netherlands</form:option>
+																<form:option>Aruba</form:option>
+																<form:option>Curaçao</form:option>
+																<form:option>Sint Maarten</form:option>
+																<form:option>New Zealand</form:option>
+																
+																<form:option>Ross Dependency</form:option>
+																<form:option>Tokelau</form:option>
+																<form:option>Cook Islands</form:option>
+																<form:option>Niue</form:option>
+																<form:option>Nicaragua</form:option>
+																<form:option>Niger</form:option>
+																<form:option>Nigeria</form:option>
+																<form:option>Norway</form:option>
+																<form:option>Oman</form:option>
+																<form:option>Pakistan</form:option>
+																<form:option>Gilgit–Baltistan</form:option>
+																
+																<form:option>Palau</form:option>
+																<form:option>Palestine</form:option>
+																<form:option>Panama</form:option>
+																<form:option>Papua New Guinea</form:option>
+																<form:option>Paraguay</form:option>
+																<form:option>Peru</form:option>
+																<form:option>Philippines</form:option>
+																<form:option>Poland</form:option>
+																<form:option>Portugal</form:option>
+																<form:option>Qatar</form:option>
+																<form:option>Romania</form:option>
+																<form:option>Russia</form:option>
+																<form:option>Rwanda</form:option>
+																<form:option>Saint Kitts and Nevis</form:option>
+																<form:option>Saint Lucia</form:option>
+																
+																<form:option>Saint Vincent and the Grenadines</form:option>
+																<form:option>Samoa</form:option>
+																<form:option>San Marino</form:option>
+																<form:option>São Tomé and Príncipe</form:option>
+																<form:option>Saudi Arabia</form:option>
+																<form:option>Senegal</form:option>
+																<form:option>Serbia</form:option>
+																<form:option>Seychelles</form:option>
+																<form:option>Sierra Leone</form:option>
+																<form:option>Singapore</form:option>
+																<form:option>Slovakia</form:option>
+																<form:option>Slovenia</form:option>
+																<form:option>Solomon Islands</form:option>
+																
+																<form:option>Somalia</form:option>
+																<form:option>South Africa</form:option>
+																<form:option>South Sudan</form:option>
+																<form:option>Spain</form:option>
+																<form:option>Sri Lanka</form:option>
+																<form:option>Sudan</form:option>
+																<form:option>Suriname</form:option>
+																<form:option>Swaziland</form:option>
+																<form:option>Sweden</form:option>
+																<form:option>Switzerland</form:option>
+																<form:option>Syria</form:option>
+																
+																<form:option>Tajikistan</form:option>
+																<form:option>Tanzania</form:option>
+																<form:option>Thailand</form:option>
+																<form:option>Togo</form:option>
+																<form:option>Tonga</form:option>
+																<form:option>Trinidad and Tobago</form:option>
+																<form:option>Tunisia</form:option>
+																<form:option>Turkey</form:option>
+																<form:option>Turkmenistan</form:option>
+																<form:option>Tuvalu</form:option>
+																<form:option>Uganda</form:option>
+																<form:option>Ukraine</form:option>
+																<form:option>United Arab Emirates</form:option>
+																<form:option>United Kingdom</form:option>
+																<form:option>Akrotiri and Dhekelia</form:option>
+																<form:option>Anguilla</form:option>
+																<form:option>Bermuda</form:option>
+																<form:option>British Indian Ocean Territory</form:option>
+																
+																<form:option>British Virgin Islands</form:option>
+																<form:option>Cayman Islands</form:option>
+																<form:option>Falkland Islands</form:option>
+																<form:option>Gibraltar</form:option>
+																<form:option>Montserrat</form:option>
+																<form:option>Pitcairn Islands</form:option>
+																<form:option>Saint Helena</form:option>
+																<form:option> Ascension and Tristan da Cunha</form:option>
+																<form:option>South Georgia and the South Sandwich Islands</form:option>
+																<form:option>Turks and Caicos Islands</form:option>
+																<form:option>British Antarctic Territory</form:option>
+																<form:option>Guernsey</form:option>
+																<form:option>Alderney</form:option>
+																<form:option>Herm</form:option>
+																<form:option>Sark</form:option>
+																<form:option>Isle of Man</form:option>
+																<form:option>Jersey</form:option>
+																<form:option>United States</form:option>
+																<form:option>American Samoa</form:option>
+																<form:option>Guam</form:option>
+																
+																<form:option>Northern Mariana Islands</form:option>
+																<form:option>Puerto Rico</form:option>
+																<form:option>U.S. Virgin Islands</form:option>
+																<form:option>Marshall Islands</form:option>
+																<form:option>Micronesia</form:option>
+																<form:option>Palau</form:option>
+																<form:option>Uruguay</form:option>
+																<form:option>Uzbekistan</form:option>
+																<form:option>Vanuatu</form:option>
+																<form:option>Vatican City</form:option>
+																<form:option>Venezuela</form:option>
+																<form:option>Vietnam</form:option>
+																<form:option>Yemen</form:option>
+																<form:option>Zambia</form:option>
+																<form:option>Zimbabwe</form:option>
+																<form:option>Abkhazia</form:option>
+																<form:option>Cook Islands</form:option>
+																
+																<form:option>Kosovo</form:option>
+																<form:option>Nagorno-Karabakh</form:option>
+																<form:option>Niue</form:option>
+																<form:option>Northern Cyprus</form:option>
+																<form:option>Sahrawi Arab Democratic Republic</form:option>
+																<form:option>Somaliland</form:option>
+																<form:option>South Ossetia</form:option>
+																<form:option>Taiwan</form:option>
+																<form:option>Transnistria</form:option> 

@@ -1,0 +1,6 @@
+com\praiseyourredeemer\quiz\service\ServiceInstanceRestController.class
+com\praiseyourredeemer\quiz\service\MicroserviceClient.class
+com\praiseyourredeemer\quiz\service\MicroserviceClient$1.class
+com\praiseyourredeemer\quiz\service\MyAppConfig.class
+com\praiseyourredeemer\quiz\service\MyRibbonClient.class
+com\praiseyourredeemer\quiz\service\EurekaClientApplication.class

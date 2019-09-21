@@ -1,0 +1,12 @@
+{"playlist":
+    [
+	{
+	    "0": {"src":"music/Give_Thanks1.mp3", "type":"audio/mp3"},
+	    "1": {"src":"music/Give_Thanks1.ogg", "type":"audio/ogg"},
+	    "config": {
+		"title": "Give Thanks",
+		"poster": "music/poster.jpg"
+	    }
+	}
+    ]
+}
