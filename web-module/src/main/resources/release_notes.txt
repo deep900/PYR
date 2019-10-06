@@ -1,0 +1,3 @@
+Date:Aug 16 2017
+1. Made corrections in prayers page.
+2. Introduced release notes page.
