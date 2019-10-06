@@ -36,7 +36,7 @@ public class PyrMessenger implements Messenger{
 	
 	private String email_password_primary = "";
 	
-	private String basePath = "/home/pyr/properties/";	
+	private String basePath = "/home/praiseyourredeem/properties/";	
 
 	private String emailPropertiesFile = new String("email_settings_primary.properties");
 	

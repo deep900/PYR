@@ -30,7 +30,7 @@ public class SMSMessenger implements Messenger {
 	@Autowired
 	private PublicUtility publicUtility;
 	
-	private String basePath = "/home/pyr/properties/";
+	private String basePath = "/home/praiseyourredeem/properties/";
 
 	private String smsPropertiesFile = new String("sms.properties");
 

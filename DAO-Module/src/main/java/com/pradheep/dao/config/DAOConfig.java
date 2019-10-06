@@ -40,7 +40,7 @@ public class DAOConfig {
 	@Autowired
 	private PublicUtility publicUtility;
 	
-	private String basePath = "/home/pyr/properties/";	
+	private String basePath = "/home/praiseyourredeem/properties/";	
 
 	/*
 	 * Using dbcp db connection to establish a persistant relationship. Changed

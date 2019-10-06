@@ -22,7 +22,7 @@ public class DBPropertyInitializer implements ApplicationContextInitializer<Conf
 
 	private HashMap propertiesMap = new HashMap<String, String>();
 
-	private String basePath = "/home/pyr/properties/";
+	private String basePath = "/home/praiseyourredeem/properties/";
 
 	private String dbPropertiesFile = new String("db_connectivity.properties");	
 

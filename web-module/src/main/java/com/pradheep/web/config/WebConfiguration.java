@@ -61,7 +61,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		registry.addResourceHandler("/home/pyr/properties/**").addResourceLocations("/home/pyr/properties/");
+		registry.addResourceHandler("/home/praiseyourredeem/properties/**").addResourceLocations("/home/praiseyourredeem/properties/");
 		System.out.println("- - - Loading resources complete - - -");
 	}
 

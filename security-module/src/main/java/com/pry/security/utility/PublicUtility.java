@@ -35,7 +35,7 @@ public class PublicUtility implements InitializingBean {
 
 	private HashMap propertiesMap = new HashMap<String, String>();
 
-	private String basePath = "/home/pyr/properties/";
+	private String basePath = "/home/praiseyourredeem/properties/";
 
 	private String securityPropertiesFile = new String("security.properties");
 	
