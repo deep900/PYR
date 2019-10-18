@@ -3,7 +3,9 @@
  */
 package com.pradheep.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +46,15 @@ public class DidYouKnowController extends BaseUtility {
 		if (flag) {
 			ModelAndView model = getBasicModelAndView(PagePath.VIEW_ALL_DID_YOU_KNOW);
 			List<Object> didYouKnowData = daoService.getObjects(DidYouKnow.class, "lastModified");
-			didYouKnowData = convertUnicodeToString(didYouKnowData, DidYouKnow.class);
-			model.addObject("didYouKnowList", didYouKnowData);
+			List<DidYouKnow> collection = new ArrayList<DidYouKnow>();
+			Iterator iter = didYouKnowData.iterator();
+			while(iter.hasNext()){
+				DidYouKnow obj = (DidYouKnow) iter.next();
+				collection.add(obj);
+			}
+			System.out.println("Printing the list size :" + didYouKnowData.size());
+			didYouKnowData = convertUnicodeToString(collection, DidYouKnow.class);
+			model.addObject("didYouKnowList", collection);
 			applicationLocaleResolver.resolveLocale(request);
 			addTokenToModel(model);
 			return model;

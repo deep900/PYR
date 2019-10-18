@@ -9,6 +9,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ page import="com.pradheep.dao.model.DidYouKnow" %>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <link rel="stylesheet" href=<c:url value="/resources/css/calendar.css"/>
 	media="screen">
@@ -172,6 +173,7 @@ function showWarning(url){
 										<td><c:out value="${dykModel.lastModified}"></c:out></td>
 										<td><a href="<c:out value='${context}/admin/editDidYouKnow?id=${dykModel.id}&key=${token}'></c:out>">View/Edit</a></td>
 										<td><a href="#" onclick=showWarning('<c:out value='${context}/admin/deleteDidYouKnow?id=${dykModel.id}&key=${token}'></c:out>') >Delete</a></td>
+										
 										</tr>
 									</c:forEach>
 								</tbody>
