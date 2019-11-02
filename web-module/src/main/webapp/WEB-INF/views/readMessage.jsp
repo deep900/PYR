@@ -167,7 +167,7 @@ function loadMainContent(){
 											code="messages.page.main.title" /></span><em class="h-right"></em></span>
 							</h3>
 						</div>
-						<article class="column c-three-fourth">
+						<article>
 							<c:set var="count" value="0" scope="page" />
 
 							<div class="blog-post">
@@ -183,7 +183,7 @@ function loadMainContent(){
 								</div>
 								<br class="clear" />
 
-								<div class="blog-holder-message">
+								<div class="blog-holder-message" style="padding-left:60px">
 									<h4 class="post-title">
 										<a href='#'> <c:choose>
 												<c:when test="${language == 'ta'}">
