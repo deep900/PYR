@@ -152,7 +152,8 @@ document.getElementById('stylesheet').href ='css/'+url;
 														</tr>
 														<tr>
 															<td><a href="#" style="font-family:Cambria;margin=right:18px;font-size:16px"> Enter the text as seen</a></td>
-															<td><img id="image" src='<c:url value="/getCaptcha"/>' alt="image" style="height:50px;"/> <input type="text" id="captchastr" name="captchastr" style="height:28px;margin-top:-34px"/></td>
+															<td><img id="image" src='<c:url value="/getCaptcha"/>' alt="image" style="height:50px;"/> 
+															<input type="text" id="captchastr" name="captchastr" style="height:28px;margin-top: -47px;margin-left: 158px;width: 144px;"/></td>
 																														
 														</tr>
 														<tr>
