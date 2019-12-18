@@ -39,6 +39,7 @@ public interface PagePath {
 	public static String ADD_NEW_BIBLE_QUIZ_ENG = "admin/quiz/addBibleQuizEnglish";
 	public static String ADD_NEW_BIBLE_QUIZ_TAM = "admin/quiz/addBibleQuizTamil";
 	public static String VIEW_BIBLE_QUIZ = "admin/quiz/viewAddedBibleQuiz";
+	public static String VIEW_ALL_BIBLE_QUIZ = "admin/quiz/viewAllBibleQuiz";
 	//--------------------------------------------//
 	public static String VIEW_ALL_MESSAGES = "admin/viewAllMessages";
 	public static String ADD_MESSAGES = "admin/addMessage";

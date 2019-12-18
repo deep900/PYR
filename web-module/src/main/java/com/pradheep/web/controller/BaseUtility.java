@@ -27,6 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pradheep.dao.config.DAOService;
+import com.pradheep.dao.model.BibleQuizTamil;
 import com.pradheep.dao.model.BibleVerse;
 import com.pradheep.dao.model.Category;
 import com.pradheep.dao.model.DidYouKnow;
@@ -84,6 +85,13 @@ public class BaseUtility<T> {
 				bVerse.setChapter(PYRUtility.convertUnicodeToString(bVerse.getChapter()));
 				bVerse.setVerse(PYRUtility.convertUnicodeToString(bVerse.getVerse()));
 				toBeReturned.add(bVerse);
+			}
+			if (obj.equals(BibleQuizTamil.class)) {
+				BibleQuizTamil quizTamil = (BibleQuizTamil) iter.next();
+				quizTamil.setBibleReference(PYRUtility.convertUnicodeToString(quizTamil.getBibleReference()));
+				quizTamil.setQuestion(PYRUtility.convertUnicodeToString(quizTamil.getQuestion()));
+				quizTamil.setCorrectAnswer(PYRUtility.convertUnicodeToString(quizTamil.getCorrectAnswer()));
+				toBeReturned.add(quizTamil);
 			}
 		}
 		return toBeReturned;
@@ -165,13 +173,14 @@ public class BaseUtility<T> {
 		}
 		return values;
 	}
-	
+
 	/**
 	 * Pagination basic settings for ModelAndView.
+	 * 
 	 * @param request
 	 * @param model
 	 */
-	public void setCurrentIndex(HttpServletRequest request,ModelAndView model){
+	public void setCurrentIndex(HttpServletRequest request, ModelAndView model) {
 		String current_page = request.getParameter("startIndex");
 		int pageIndex = 0;
 		if (current_page == null) {
@@ -192,12 +201,14 @@ public class BaseUtility<T> {
 
 	/**
 	 * Set the data for Pagination.
+	 * 
 	 * @param request
 	 * @param model
 	 * @param T
 	 * @param sortColumn
 	 */
-	public void addAllObjectsToModel(HttpServletRequest request, ModelAndView model,Class T,String sortColumn,int recordsPerPage) {
+	public void addAllObjectsToModel(HttpServletRequest request, ModelAndView model, Class T, String sortColumn,
+			int recordsPerPage) {
 		String current_page = request.getParameter("startIndex");
 		String direction = request.getParameter("action");
 		int pageIndex = 0;
@@ -215,13 +226,12 @@ public class BaseUtility<T> {
 				pageIndex = pageIndex - 1;
 			}
 		}
-		List<Object> messages = daoService.getObjectsWithPagination(T, sortColumn, pageIndex,
-				maxRecordsPerPage,true);
+		List<Object> messages = daoService.getObjectsWithPagination(T, sortColumn, pageIndex, maxRecordsPerPage, true);
 		String maxMessagesCount = daoService.getCountOfObjects(T);
 		int maxMsgCnt = Integer.parseInt(maxMessagesCount);
 		messages = convertUnicodeToString(messages, T);
-		if(T == Message.class){
-		provideOnlyFewWords(messages);
+		if (T == Message.class) {
+			provideOnlyFewWords(messages);
 		}
 		model.addObject("objectList", messages);
 		model.addObject("maxRecordsCount", maxMsgCnt);
@@ -233,13 +243,13 @@ public class BaseUtility<T> {
 		Iterator iter = messageList.iterator();
 		while (iter.hasNext()) {
 			Object obj = iter.next();
-			if(obj instanceof Message){
-			Message msgObj = (Message) obj;
-			msgObj.setMessageEnglish(" ".getBytes());
-			msgObj.setMessageTamil(" ".getBytes());
-			msgObj.setLongMessagePhoto(" ".getBytes());
-			msgObj.setLongMessagePhoto(" ".getBytes());
-		}
+			if (obj instanceof Message) {
+				Message msgObj = (Message) obj;
+				msgObj.setMessageEnglish(" ".getBytes());
+				msgObj.setMessageTamil(" ".getBytes());
+				msgObj.setLongMessagePhoto(" ".getBytes());
+				msgObj.setLongMessagePhoto(" ".getBytes());
+			}
 		}
 	}
 
@@ -326,7 +336,7 @@ public class BaseUtility<T> {
 			getLogger().error("Token was null ");
 			return flag;
 		}
-		token = token.replace(" ", "+");		
+		token = token.replace(" ", "+");
 		String parse = publicUtility.DecryptText(token);
 		// getLogger().info("Printing after parse :" + parse);
 		StringTokenizer tokenizer = new StringTokenizer(parse, ";");
@@ -475,6 +485,7 @@ public class BaseUtility<T> {
 
 	/**
 	 * Use this method to sort th
+	 * 
 	 * @param comparator
 	 * @param numberOfRecords
 	 * @param collection

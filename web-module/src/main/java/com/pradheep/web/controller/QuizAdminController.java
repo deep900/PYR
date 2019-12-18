@@ -193,4 +193,24 @@ public class QuizAdminController extends BaseUtility {
 		addTokenToModel(modelAndView);
 		return modelAndView;
 	}
+	
+	
+	@RequestMapping("admin/viewAllBibleQuiz")
+	@Secured("ROLE_ADMIN")
+	public ModelAndView viewAllBibleQuiz(HttpServletRequest request, HttpServletResponse response) {
+		getLogger().info("View all bible quiz questions");
+		if (!checkToken(request)) {
+			return getBasicModelAndView(PagePath.ACCESS_DENIED);
+		}		
+		ModelAndView modelAndView = null;
+		String pagePath = PagePath.VIEW_ALL_BIBLE_QUIZ;
+		modelAndView = getBasicModelAndView(pagePath);		
+		List<BibleQuizEng> englishQuiz = (List) daoService.getObjects(BibleQuizEng.class);		
+		List<BibleQuizTamil> tamilQuiz = (List) daoService.getObjects(BibleQuizTamil.class);
+		modelAndView.addObject("englishQuizList", englishQuiz);
+		modelAndView.addObject("tamilQuizList", convertUnicodeToString(tamilQuiz,BibleQuizTamil.class));		
+		return modelAndView;
+	}
+	
+	
 }
