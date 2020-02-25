@@ -116,7 +116,7 @@ document.getElementById('stylesheet').href ='css/'+url;
 
 								</div>
 								<br class="clear" />
-								<div class="blog-holder">
+								<div class="prayer-content">
 									<h4 class="post-title">Special prayers</h4>
 									<p>
 									<div id="accordion">
