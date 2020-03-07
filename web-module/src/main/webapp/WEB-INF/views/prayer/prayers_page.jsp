@@ -180,6 +180,38 @@ document.getElementById('stylesheet').href ='css/'+url;
 										<br>19.The Lord has established his throne in heaven, and his kingdom rules over all.
 										</li></ul>
 										</div>
+										
+										<h3>
+											<a href="#">Prayer for deliverance from sins.</a>
+										</h3>
+										<div>
+											<p>
+												Heavenly father let you name be glorified , thanks for
+												sending Jesus to gentiles to know the Gospel and we now know
+												that he died for our sins and we are liberated from sins
+												with washed pure by the blood of Jesus. Kindly help to
+												control our sinful thoughts and be pure and do right in your
+												sight.<br><br> Sins that we have done are great, but your love
+												was greater to forgive. We confess our sins today and we
+												agree to follow your words and do your will father. Kindly
+												help us to overcome this world. Let our eyes and ears look
+												and hear good things and be very far from the sinful word.
+												Let my mind always meditate your words day and night.<br> <br>We are
+												no more slaves to sin as you have made us your child and
+												washed by the blood of Jesus. We are now the slaves for
+												Grace of God and we will bear the cross and follow your
+												diligently.
+											</p>
+											<br> In Jesus name we pray. <b> AMEN</b></p>
+										<hr> References: <ul><li>Psalms 139:23-24<br>
+										Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me and lead me in the way everlasting.<br>
+										
+										</li></ul>
+										<ul><li>Romans 6 :5,6,7<br>
+										<p>For if we have been united with him in a death like his, we will certainly also be united with him in a resurrection like his. For we know that our old self was crucified with him so that the body ruled by sin might be done away with, that we should no longer be slaves to sin because anyone who has died has been set free from sin.</p> 
+										</li></ul>
+										
+										</div>
 										<!-- <h3>
 											<a href="#"></a>Prayer for getting out of temptations
 										</h3>
