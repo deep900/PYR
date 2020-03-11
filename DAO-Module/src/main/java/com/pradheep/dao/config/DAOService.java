@@ -327,7 +327,8 @@ public class DAOService implements InitializingBean {
 			if (isOrderRequired) {
 				c.addOrder(Order.desc(criteria));
 			}
-			c.setFirstResult(startIndex);
+			getLogger().info("Printing the start index : " + startIndex);
+			c.setFirstResult((startIndex - 1) * maxRecordsPerPage);			
 			c.setMaxResults(maxRecordsPerPage);
 			return c.list();
 		} catch (Exception err) {

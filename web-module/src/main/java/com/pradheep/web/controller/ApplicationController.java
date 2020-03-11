@@ -137,7 +137,7 @@ public class ApplicationController extends BaseUtility {
 		 */
 		// -------- Pagination settings -------------------//
 		setCurrentIndex(request, model);
-		addAllObjectsToModel(request, model, Message.class, "lastModified", 10);
+		addAllObjectsToModel(request, model, Message.class, "lastModified", ApplicationConstants.NUMBER_OF_RECORDS_PER_PAGE);
 		// ------- End of pagination settings--------------- //
 		Locale locale = applicationLocaleResolver.resolveLocale(request);
 		applicationLocaleResolver.setLocale(request, response, locale);

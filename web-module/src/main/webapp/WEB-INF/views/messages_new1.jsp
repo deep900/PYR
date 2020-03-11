@@ -215,13 +215,17 @@ function loadMainContent(){
 							<hr>
 							<strong class="short-heading1">More Messages<span class="h-line"></span></strong>
 								<ul class="pagination-list color">
-									<li><a href="<c:url value="/messages?startIndex=${currentIndex}&action=previous"/>" class="prev">previous</a></li>
+									<c:if test = "${currentIndex > 1}">
+         							<li><a href="<c:url value="/messages?startIndex=${currentIndex}&action=previous"/>" class="prev">previous</a></li>
+      								</c:if>							
 									<c:set var="count" value="0" scope="page" />
-									<c:forEach begin="1" end="${maxRecordsCount}" step="${maxRecordsPerPage}" varStatus="loop">
+									<c:forEach begin="${maxRecordsPerPage}" end="${maxRecordsCount}" step="${maxRecordsPerPage}" varStatus="loop">
 									<c:set var="count" value="${count + 1}" scope="page"/>
 									<li><a href="<c:url value="/messages?startIndex=${count}&action=nextSet"/>">${count}</a></li>
 									</c:forEach>
+								 	<c:if test = "${currentIndex <= count}">
 									<li><a href="<c:url value="/messages?startIndex=${currentIndex}&action=next"/>" class="next">Next</a></li>
+									</c:if>
 								</ul>
 							</div>
 

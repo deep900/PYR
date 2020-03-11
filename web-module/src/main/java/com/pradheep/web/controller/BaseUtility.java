@@ -182,11 +182,21 @@ public class BaseUtility<T> {
 	 */
 	public void setCurrentIndex(HttpServletRequest request, ModelAndView model) {
 		String current_page = request.getParameter("startIndex");
+		String action = request.getParameter("action");
+		int incr = 1;
+		if(null != action){
+		if(action.equals("previous")){
+			incr = -1;
+		}
+		else if(action.equals("next") || action.equals("nextSet")){
+			incr = 1;
+		}
+		}
 		int pageIndex = 0;
 		if (current_page == null) {
 			pageIndex = 0;
 		} else {
-			pageIndex = Integer.parseInt(current_page);
+			pageIndex = Integer.parseInt(current_page) + incr;
 		}
 		if (pageIndex == 0) {
 			model.addObject("currentIndex", 1);
