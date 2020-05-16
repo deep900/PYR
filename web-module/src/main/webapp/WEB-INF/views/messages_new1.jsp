@@ -162,10 +162,9 @@ function loadMainContent(){
 								<div class="blog-post">
 									<div class="slide-1">
 										<ul>
-											<li><img id="image"
-												src='<c:url value="getImage?id=${msgModel.getId()}"/>'
-												alt="image" 
-												/></li>
+											<li><a href=<c:url value="/readMessage?id=${msgModel.getId()}" />>
+											<img id="image" src='<c:url value="getImage?id=${msgModel.getId()}"/>' alt="image"/>
+											</a></li>
 										</ul>
 										<div class="blog-date">
 											<p>${msgModel.getLastModifiedDisplay()}</p>
