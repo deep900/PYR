@@ -181,9 +181,9 @@ function loadMainContent(){
 										<p>${message.getLastModifiedDisplay()}</p>
 									</div>
 								</div>
-								<br class="clear" />
-
-								<div class="blog-holder-message" style="padding-left:60px">
+								
+								<br class="clear" />								
+								<div class=${msg_blog_style} style="padding-left:60px">								
 									<h4 class="post-title">
 										<a href='#'> <c:choose>
 												<c:when test="${language == 'ta'}">

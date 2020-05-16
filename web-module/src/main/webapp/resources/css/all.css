@@ -2122,6 +2122,14 @@ ul.social-networks li a:hover {
 	color: #333;
 }
 
+.blog-holder-message-ta {
+	margin: 10px 0 0 0;
+	font-size: 16px;
+	line-height: 25px;
+	font-family: 'Vijaya';
+	color: #333;
+}
+
 .sermons-box {
 	margin-top: 0;
 }
@@ -3842,6 +3850,17 @@ ul.list-link li {
 	padding: 0 50px 21px 45px;
 	text-transform: uppercase;
 	background: url(../images/sidebar-heading.png) no-repeat left bottom;
+}
+
+.unsubscribe-heading span {
+	color: #222222;
+	display: block;
+	font-family: 'Cambria';
+	font-size: 18px;
+	letter-spacing: 1px;
+	line-height: 38px;
+	padding: 0 50px 21px 45px;
+	text-transform: uppercase;	
 }
 
 .clock {

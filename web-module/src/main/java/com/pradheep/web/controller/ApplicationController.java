@@ -171,6 +171,7 @@ public class ApplicationController extends BaseUtility {
 		setLanguageBasedStyle(locale, model);
 		model.addObject("language", locale.getLanguage());
 		model.addObject("message", dispMsg);
+		model.addObject("msg_blog_style",locale.getLanguage().toString().contains("ta") ? "blog-holder-message-ta" :"blog-holder-message");
 		return model;
 	}
 
