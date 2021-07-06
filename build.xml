@@ -1,0 +1,62 @@
+<project name="Project" default="main" basedir=".">
+	<target name="init">
+		<property name="appname" value="web-module-1.0" />
+		<property name="tomcat_version" value="apache-tomcat-8.0.32" />
+		<property name="tomcatCleanWebAppDir" value="C:/Software/${tomcat_version}/${tomcat_version}/webapps/${appname}" />
+		<property name="tomcatWebAppDir" value="C:/Software/${tomcat_version}/${tomcat_version}/webapps" />
+		<property name="warDirectory" value="web-module/target" />
+		<property name="src" value="C:\Software_Development\Workspace\PYR" />
+		<property name="tomcatBinDir" value="C:\Software\${tomcat_version}\${tomcat_version}\bin" />
+		<property name="tomcatCleanWorkDir" value="C:\Software\${tomcat_version}\${tomcat_version}\work" />
+
+	</target>
+
+	<target name="stopServer" depends="init">
+		<echo message="Stopping tomcat server" />
+		<exec dir="${tomcatBinDir}" executable="C:/Software/${tomcat_version}/${tomcat_version}/bin/shutdown.bat" output="dir.txt">
+		</exec>
+	</target>
+	<target name="startServer" depends="init">
+		<echo message="Starting the tomcat server" />
+		<exec dir="${tomcatBinDir}" executable="C:/Software/${tomcat_version}/${tomcat_version}/bin/startup.bat" output="dir1.txt">
+		</exec>
+	</target>
+
+	<target name="clean" depends="init">
+		<echo message="Clean tomcat web app directory.. ${tomcatCleanWebAppDir}" />
+		<delete dir="${tomcatCleanWebAppDir}" />
+	</target>
+
+	<target name="cleanWorkDir" depends="init">
+		<echo message="Clean tomcat work directory.. ${tomcatCleanWorkDir}" />
+		<delete dir="${tomcatCleanWorkDir}" />
+	</target>
+
+	<target name="deploy" depends="clean">
+		<echo message="Deploy the war file .. ${src}\${warDirectory}\${appname}.war" />
+		<copy file="${src}/${warDirectory}/${appname}.war" todir="${tomcatWebAppDir}" />
+	</target>
+
+	<target name="mavenInstall">
+		<echo message="Executing maven install" />
+		<exec dir="${src}" executable="C:\Software\apache-maven-3.6.3\bin\mvn.cmd">
+			<arg line=" install -Dskip.test.skip=true" />
+		</exec>
+	</target>
+
+	<target name="mavenClean" depends="init">
+		<echo message="Executing maven clean" />
+		<echo message="Cleaning ${src}" />
+		<exec dir="${src}" executable="C:\Software\apache-maven-3.6.3\bin\mvn.cmd">
+			<arg line="-X clean" />
+		</exec>
+	</target>
+
+	<target name="main" depends="stopServer,mavenClean,mavenInstall,clean,cleanWorkDir,deploy,startServer">
+		<echo message="Executing main method" />
+		<description>Main target</description>
+	</target>
+
+
+
+</project>
