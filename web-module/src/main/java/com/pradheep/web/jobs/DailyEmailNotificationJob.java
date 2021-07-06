@@ -4,8 +4,6 @@
 package com.pradheep.web.jobs;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -13,16 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.pradheep.dao.model.BibleVerse;
-import com.pradheep.dao.model.DailySMSLogger;
 import com.pradheep.dao.model.Subscription;
 import com.pradheep.web.common.ApplicationConstants;
 import com.pradheep.web.common.DailyVerseManager;
 import com.pradheep.web.common.OneYearBible;
 import com.pradheep.web.common.PYRUtility;
-import com.pyr.messenger.PyrMessenger;
+import com.pradheep.web.common.SubscriptionManager;
 import com.pyr.notification.EmailMessageObject;
 import com.pyr.notification.MessageObject;
-import com.pyr.templates.DailySMSMessageObject;
 
 /**
  * @author pradheep.p
@@ -39,7 +35,8 @@ public class DailyEmailNotificationJob extends NotificationJob {
 	@Qualifier("oneYearBibleManager")
 	private OneYearBible oneYearBible;
 	
-	private List<Subscription> subscriptionList = new ArrayList<Subscription>();
+	@Autowired
+	private SubscriptionManager subscriptionManager;
 
 	public DailyEmailNotificationJob() {
 		setNotificationType(NotificationService.NOTIFICATION_TYPE_EMAIL);
@@ -49,12 +46,13 @@ public class DailyEmailNotificationJob extends NotificationJob {
 	@Override
 	public void notifyMessage() {
 		getLogger().info("----------- Email notification service --------------");
+		List<Subscription> subscriptionList = subscriptionManager.getSubscriptionList();
 		getLogger().info("Calling the " + this.getClass().getName() + " starting the job at :" + new Date().toString());
-		if (getSubscriptionList() == null || getSubscriptionList().isEmpty()) {
+		if (subscriptionList == null || subscriptionList.isEmpty()) {
 			getLogger().info("No subscribers found ");
 			return;
 		}
-		for (Subscription subscriber : getSubscriptionList()) {
+		for (Subscription subscriber : subscriptionList) {
 			MessageObject msgObject = getMessageObject(subscriber);
 			getLogger().info("Sending the Email notification to " + subscriber.getEmailId());
 			Object value = pryMessenger.communicate(msgObject);			
@@ -115,29 +113,7 @@ public class DailyEmailNotificationJob extends NotificationJob {
 			getLogger().error("Error in getting today's chapter");
 		}
 		return todayChapter;
-	}
-
-	public List<Subscription> getSubscriptionList() {
-		subscriptionList.clear();
-		
-		for(Object subscriber : getAllSubscribers()){
-			Subscription obj = (Subscription) subscriber;			
-			subscriptionList.add(obj);			
-		}
-		return subscriptionList;
-	}
-
-	public void setSubscriptionList(List<Subscription> subscriptionList) {
-		this.subscriptionList = subscriptionList;
-	}
-	
-	private List<Object> getAllSubscribers(){
-		List<Object> objects = daoService.getObjectsListById(Subscription.class, "approved", new Boolean(true), "=",-1);
-		if(objects == null){
-			return Collections.emptyList();
-		}
-		return objects;
-	}
+	}	
 
 	@Override
 	public MessageObject getMessageObject(Object messageObj) {		

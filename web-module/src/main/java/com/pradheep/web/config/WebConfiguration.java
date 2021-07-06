@@ -29,15 +29,18 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.pradheep.dao.config.DAOConfig;
 import com.pradheep.web.common.CommonTaskExecutor;
+import com.pradheep.web.common.DailyQuizManager;
 import com.pradheep.web.common.DailyVerseManager;
 import com.pradheep.web.common.OneYearBible;
 import com.pradheep.web.common.QuizHelper;
+import com.pradheep.web.common.SubscriptionManager;
 import com.pradheep.web.common.WebPageMonitorService;
 import com.pradheep.web.controller.ApplicationLocaleResolver;
 import com.pradheep.web.event.EventHandler;
 import com.pradheep.web.event.PyrApplicationEventPublisher;
 import com.pradheep.web.jobs.ApplicationNotificationService;
 import com.pradheep.web.jobs.DailyEmailNotificationJob;
+import com.pradheep.web.jobs.DailyQuizNotification;
 import com.pradheep.web.jobs.DailySMSNotificationJob;
 import com.pradheep.web.jobs.MonthlyMessageNotification;
 import com.pradheep.web.jobs.PersistedNotificationService;
@@ -262,5 +265,20 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	public MonthlyMessageNotification getMonthlyMessageNotification() {
 		MonthlyMessageNotification monthlyMessageNotification = new MonthlyMessageNotification();
 		return monthlyMessageNotification;
+	}
+	
+	@Bean(name="subscriptionManager")
+	public SubscriptionManager subscriptionManager() {
+		return new SubscriptionManager();
+	}
+	
+	@Bean(name="dailyQuizNotificationJob")
+	public DailyQuizNotification getDailyQuizNotification(){
+		return new DailyQuizNotification();
+	}
+	
+	@Bean(name="dailyQuizManager")
+	public DailyQuizManager getDailyQuizManager(){
+		return new DailyQuizManager();
 	}
 }

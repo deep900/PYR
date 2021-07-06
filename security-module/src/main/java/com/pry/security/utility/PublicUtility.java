@@ -12,6 +12,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -39,7 +41,7 @@ public class PublicUtility implements InitializingBean {
 
 	private String securityPropertiesFile = new String("security.properties");
 	
-	private String key_;
+	private String key_="45&dfrgYutQA3$#ZxcFGLoUi";
 
 	private byte[] sharedvector_ = { 0x01, 0x02, 0x03, 0x05, 0x07, 0x0B, 0x0D, 0x11 };
 
@@ -162,6 +164,22 @@ public class PublicUtility implements InitializingBean {
 			propertiesMap.put(name, properties.getProperty(name));
 		}
 		return propertiesMap;
+	}
+	
+	public static void main(String args[]){
+		PublicUtility publicUtility = new PublicUtility();
+		//System.out.println(publicUtility.DecryptText("rEetCL2ZVm4mp7gQEBnWoQ=="));
+		System.out.println(publicUtility.EncryptText("1"));
+	}
+	
+	public Date getDateAtZeroHours(){
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(new Date());
+		calendar.set(GregorianCalendar.HOUR_OF_DAY, 0);
+		calendar.set(GregorianCalendar.MINUTE, 0);
+		calendar.set(GregorianCalendar.SECOND, 0);
+		calendar.set(GregorianCalendar.MILLISECOND, 0);
+		return calendar.getTime();
 	}
 
 }

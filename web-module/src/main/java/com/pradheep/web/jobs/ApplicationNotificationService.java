@@ -44,14 +44,7 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 	private Logger getLogger() {
 		return ApplicationLoggerWeb.getLogBean(this.getClass());
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pradheep.web.jobs.NotificationService#scheduleNotificationJob(com.
-	 * pradheep.web.jobs.NotificationJob)
-	 */
+	
 	@Override
 	public void addNotificationJob(NotificationJob notificationJob) {
 		this.notificationJobs.add(notificationJob);
@@ -72,13 +65,7 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-	 */
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		// Loading the Jobs for timely execution //
@@ -99,11 +86,12 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 	@Override				
 	public void scheduleNotificationJobs() {
 		getLogger().info("Scheduling the Jobs");
+		int timeDiffInJobsInSecs = 0;
 		for(NotificationJob job: notificationJobs){
 			if(job.getJobFrequency() == NotificationJob.JOB_FREQUENCY_DAILY_HRS){
 				// Daily Schedule //
 				Long period = new Long(86400000); // 1 day delay
-				Date startDate = PYRUtility.getNextDaySixAM();
+				Date startDate = PYRUtility.getNextDaySixAM(timeDiffInJobsInSecs);
 				getLogger().info("------------- Scheduling Jobs ---------------------");
 				getLogger().info("Job Start Time " + startDate.toString());
 				GregorianCalendar calendar = new GregorianCalendar();
@@ -113,6 +101,7 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 				getLogger().info("Next schedule period : " + calendar.getTime().toString());
 				getLogger().info("----------------------------------------------------");				
 				taskScheduler.scheduleWithFixedDelay(job,startDate , period);
+				timeDiffInJobsInSecs = timeDiffInJobsInSecs + 300; // Keep a five minutes delay between jobs.
 			}
 		}
 	}	

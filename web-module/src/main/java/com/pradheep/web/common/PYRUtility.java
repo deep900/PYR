@@ -38,7 +38,7 @@ public class PYRUtility {
 		return sdf.format(today);		
 	}
 	
-	public static Date getNextDaySixAM(){
+	public static Date getNextDaySixAM(Integer offsetInSeconds){
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
 		calendar.add(GregorianCalendar.DAY_OF_MONTH, 1);
@@ -46,6 +46,9 @@ public class PYRUtility {
 		calendar.set(GregorianCalendar.MINUTE, 0);
 		calendar.set(GregorianCalendar.SECOND, 0);
 		calendar.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		if(offsetInSeconds != null) {
+			calendar.add(GregorianCalendar.SECOND, offsetInSeconds);
+		}
 		return calendar.getTime();
 	}
 	
@@ -159,7 +162,7 @@ public class PYRUtility {
 	}
 	
 	public static void creationTest(){
-		String arg ="இயேசு தம்மை  பின்பற்றுகிறவர்களுக்கு அவர் சொன்னதாவது  : அவர்களுக்குரிய தேவதூதர்கள் பரலோகத்திலே என் பரமபிதாவின் சமுகத்தை எப்பொழுதும் தரிசிக்கிறார்கள்.";
+		String arg ="மின் அஞ்சல்";
 		System.out.println("Creation Test:" +getUnicodeCharacter(arg));
 	}
 	

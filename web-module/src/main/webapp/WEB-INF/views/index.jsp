@@ -195,7 +195,7 @@
 											</div>
 										</div> --%>
 										</li> 
-										 <li><img src=<c:url value="/resources/images/banner-img-7.jpg"/> alt="image" />
+										 <li><img src=<c:url value="/resources/images/banner3.png"/> alt="image" />
 										<%-- <div class="left">
 											<div class="banner-caption">
 												<a href="#"><spring:message code="mainpage.banner3.title1"/></a><span>&nbsp;</span>
@@ -375,16 +375,7 @@
 		<footer class="footer">
 			<div class="footer-holder">
 				<div class="footer-frame">
-					<div class="top">
-						<div class=" holder">
-							<div class="music-bar">
-								<audio controls autoplay loop style="width:100%">									
-									<source src=<c:url value="/resources/music/${music_file_name}.mp3"/> type="audio/mpeg">
-  									<source src=<c:url value="/resources/music/${music_file_name}.ogg"/> type="audio/ogg">
-								</audio>
-							</div>
-						</div>
-					</div>
+					
 					<div class="bottom">
 						<div class=" holder">
 							<section class="grid-holder">

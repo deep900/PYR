@@ -46,7 +46,7 @@ public class BaseUtility<T> {
 	private SimpleDateFormat _sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	@Autowired
-	private PublicUtility publicUtility;
+	public PublicUtility publicUtility;
 
 	private long token_validity_in_secs = 3600;
 

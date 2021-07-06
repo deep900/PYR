@@ -96,3 +96,13 @@ body{
 
 }
 
+.dailyQuizDiv{
+	width:100%;
+	height:290px;	
+}
+
+.dailyQuizDiv .label {
+	width:200px;
+	height:30px;
+}
+

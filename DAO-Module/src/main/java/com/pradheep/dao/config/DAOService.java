@@ -152,6 +152,30 @@ public class DAOService implements InitializingBean {
 		}
 		return null;
 	}
+	
+	@Transactional
+	public List getObjectsListId(Class classRef, String queryParameter, String reference) {
+		Session session = null;
+		try {
+			getLogger().debug("You are about to invoke getObjectsById method with " + classRef);
+			String sql = "FROM " + classRef.getName() + " WHERE " + queryParameter + " ='" + reference + "'";
+			session = sessionFactory.openSession();
+			Query query = session.createQuery(sql);
+			List<Object> list = query.list();
+			if (list.isEmpty()) {
+				return null;
+			} else {
+				return list;
+			}
+		} catch (Exception err) {
+			getLogger().error(err.getMessage(), err);
+		} finally {
+			if (null != session && session.isOpen()) {
+				session.close();
+			}
+		}
+		return null;
+	}
 
 	@Transactional
 	public Object getObjectsLike(Class classRef, String queryParameter, String reference) {

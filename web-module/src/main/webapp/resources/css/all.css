@@ -108,6 +108,13 @@ a:hover {
 	font-weight: normal;
 	font-style: normal;
 }
+
+@font-face {
+	font-family: 'Noto-Sans-Tamil';
+	src: url('../fonts/Noto-Sans-Tamil.ttf');	
+	font-weight: normal;
+	font-style: normal;
+}
 /* form defaults */
 input, select, textarea {
 	font-family: Droid Sans;
@@ -2126,7 +2133,7 @@ ul.social-networks li a:hover {
 	margin: 10px 0 0 0;
 	font-size: 16px;
 	line-height: 25px;
-	font-family: 'Vijaya';
+	font-family: 'Noto-Sans-Tamil';
 	color: #333;
 }
 

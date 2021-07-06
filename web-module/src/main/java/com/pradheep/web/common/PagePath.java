@@ -27,6 +27,8 @@ public interface PagePath {
 	public static String YOU_ARE_IN_QUIZ_PAGE = "quiz/youAreInQuiz";
 	public static String QUIZ_RESULTS = "quiz/quizResults";
 	public static String DANIEL_PAGE = "daniel-prophet";
+	public static String DAILY_QUIZ_PAGE = "quiz/daily_quiz_entry";
+	public static String SUBMIT_DAILY_QUIZ_PAGE = "quiz/submitDailyQuiz";
 	//-------------- admin pages------------------//
 	public static String ADMIN_HOME = "admin/adminHome";
 	public static String VIEW_ALL_DID_YOU_KNOW = "admin/viewAllDidYouKnow";
