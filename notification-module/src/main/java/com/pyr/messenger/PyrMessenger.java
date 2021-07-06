@@ -6,6 +6,7 @@ package com.pyr.messenger;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -64,7 +65,11 @@ public class PyrMessenger implements Messenger{
 			//mimeMessage.setText(body,"text/html");
 			mimeMessage.setContent(body, "text/html; charset=utf-8");
 			mimeMessage.setSubject(subject);
-			mimeMessage.setFrom(new InternetAddress(fromAddress));
+			try {
+				mimeMessage.setFrom(new InternetAddress(fromAddress,"Praise Your Redeemer"));
+			} catch (UnsupportedEncodingException e) {				
+				e.printStackTrace();
+			}
 			mimeMessage.setRecipients(MimeMessage.RecipientType.TO, getCommaSeperatedAddress(toAddress));
 			if (ccAddress != null && ccAddress.length > 0) {
 				mimeMessage.setRecipients(MimeMessage.RecipientType.CC, getCommaSeperatedAddress(ccAddress));
