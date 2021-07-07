@@ -14,6 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -68,6 +69,7 @@ public class DAOService implements InitializingBean {
 		} finally {
 			if (null != session && session.isOpen()) {
 				session.close();
+				session = null;
 			}
 		}
 	}
@@ -320,6 +322,27 @@ public class DAOService implements InitializingBean {
 		}
 		return Collections.emptyList();
 	}
+	
+	@Transactional
+	public List<Object> getObjectsNotIn(Class classRef,String propertyName, List<Integer> existingQuizIds) {
+		Session session = null;
+		try {
+			getLogger().debug("You are about to invoke getObjects method with " + classRef);
+			session = sessionFactory.openSession();
+			Criteria c = session.createCriteria(classRef);
+			Conjunction andConditions = Restrictions.conjunction();
+			andConditions.add(Restrictions.not(Restrictions.in(propertyName, existingQuizIds)));						
+			c.add(andConditions); 			
+			return c.list();
+		} catch (Exception err) {
+			getLogger().error(err.getMessage(), err);
+		} finally {
+			if (null != session && session.isOpen()) {
+				session.close();
+			}
+		}
+		return Collections.emptyList();
+	}
 
 	@Transactional
 	public String getCountOfObjects(Class classRef) {
@@ -465,10 +488,10 @@ public class DAOService implements InitializingBean {
 		} finally {
 			if (null != session && session.isOpen()) {
 				session.close();
+				session = null;
 			}
 		}
 		return Collections.emptyList();
-
 	}
 
 	public boolean unSubscribeMember(String key) {

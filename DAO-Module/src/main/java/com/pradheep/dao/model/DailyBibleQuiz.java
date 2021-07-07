@@ -66,4 +66,10 @@ public class DailyBibleQuiz implements Serializable {
 		this.quizId = quizId;
 	}
 
+	@Override
+	public String toString() {
+		return "DailyBibleQuiz [id=" + id + ", quizDate=" + quizDate + ", language=" + language + ", quizId=" + quizId
+				+ "]";
+	}
+
 }

@@ -4,6 +4,7 @@
 package com.pradheep.web.common;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -26,12 +27,12 @@ public class DailyQuizManager {
 
 	@Autowired
 	private DAOService daoService;
-	
+
 	private Logger logger;
-	
+
 	@Autowired
 	private PublicUtility publicUtility;
-	
+
 	private Logger getLogger() {
 		if (logger == null) {
 			return ApplicationLogger.getLogBean(this.getClass());
@@ -40,124 +41,107 @@ public class DailyQuizManager {
 	}
 
 	public List<DailyBibleQuiz> getBibleQuizByDate(String quizDate) {
-		insertDailyQuiz();
-		return daoService.getObjectsListId(DailyBibleQuiz.class, "quizDate", quizDate);		
+		//insertDailyQuiz();
+		return daoService.getObjectsListId(DailyBibleQuiz.class, "quizDate", quizDate);
+	}
+	
+	public List<Integer> getExistingDailyBibleQuizIds(String language){
+		List dailyBibleQuizList = daoService.getObjectsListById(DailyBibleQuiz.class,"language",language,"=",-1);
+		ArrayList<Integer> dailyQuizIds = new ArrayList<Integer>();
+		Iterator<DailyBibleQuiz> iterator = dailyBibleQuizList.iterator();
+		while(iterator.hasNext()) {
+			DailyBibleQuiz quiz = iterator.next();
+			dailyQuizIds.add(quiz.getQuizId());
+		}
+		return dailyQuizIds;
 	}
 
 	private void insertDailyQuiz() {
-		BibleQuizEng quizEng = getRandomEngBibleQuiz();
-		if(quizEng == null) {
+		List<Integer> existingEngQuizIds = getExistingDailyBibleQuizIds("English");
+		List<Integer> existingTaQuizIds = getExistingDailyBibleQuizIds("Tamil");
+		getLogger().info("Printing the existing english ids" + existingEngQuizIds);
+		getLogger().info("Printing the existing tamil ids:" + existingTaQuizIds);
+		BibleQuizEng quizEng = getRandomEngBibleQuiz(existingEngQuizIds);
+		if (quizEng == null) {
 			getLogger().info("No bible quiz found for english");
-		}else {
+		} else {			
 			DailyBibleQuiz dailyBibleQuiz = new DailyBibleQuiz();
 			dailyBibleQuiz.setLanguage("English");
 			dailyBibleQuiz.setQuizId(quizEng.getId());
 			dailyBibleQuiz.setQuizDate(getCurrentQuizDate());
-			daoService.saveObject(dailyBibleQuiz);
-		}
-		BibleQuizTamil quizTamil = getRandomTamBibleQuiz();
-		if(null == quizTamil) {
+			daoService.saveOrUpdateEntity(dailyBibleQuiz);
+			getLogger().info("Persisted the entity :" + dailyBibleQuiz.toString());
+		}		
+		BibleQuizTamil quizTamil = getRandomTamBibleQuiz(existingTaQuizIds);
+		if (null == quizTamil) {
 			getLogger().info("No bible quiz found for tamil.");
-		}else {
+		} else {			
 			DailyBibleQuiz dailyBibleQuiz = new DailyBibleQuiz();
 			dailyBibleQuiz.setLanguage("Tamil");
 			dailyBibleQuiz.setQuizDate(getCurrentQuizDate());
 			dailyBibleQuiz.setQuizId(quizTamil.getId());
-			daoService.saveObject(dailyBibleQuiz);
+			daoService.saveOrUpdateEntity(dailyBibleQuiz);
 		}
-		
-	}
+	}	
 
-	private String getExistingDailyQuizIdForEnglish() {
-		return getIdsForQuiz("SELECT quiz_id from daily_bible_quiz where language= 'English'");
-	}
-
-	private String getExistingDailyQuizIdForTamil() {
-		return getIdsForQuiz("SELECT quiz_id from daily_bible_quiz where language= 'Tamil'");
-	}
-
-	private BibleQuizEng getRandomEngBibleQuiz() {
-		String idsEnglish = getExistingDailyQuizIdForEnglish();
-		if (idsEnglish.length() > 0) {
-			List<Object> engBibleQuizList = daoService
-					.queryUsingNativeSQL("SELECT * FROM bible_quiz_en where id not in (" + idsEnglish + ")");
-			if (null != engBibleQuizList && !engBibleQuizList.isEmpty()) {
-				return (BibleQuizEng) engBibleQuizList.get(0);
-			}
-		} else {
-			List<Object> engBibleQuizList = daoService.getObjects(BibleQuizEng.class);
-			if (null != engBibleQuizList && !engBibleQuizList.isEmpty()) {
-				return (BibleQuizEng) engBibleQuizList.get(0);
-			}
-		}
-		return null;
-	}
-	
-	private BibleQuizTamil getRandomTamBibleQuiz() {
-		String idsEnglish = getExistingDailyQuizIdForTamil();
-		if (idsEnglish.length() > 0) {
-			List<Object> tamBibleQuizList = daoService
-					.queryUsingNativeSQL("SELECT * FROM bible_quiz_ta where id not in (" + idsEnglish + ")");
-			if (null != tamBibleQuizList && !tamBibleQuizList.isEmpty()) {
-				return (BibleQuizTamil) tamBibleQuizList.get(0);
-			}
-		} else {
-			List<Object> tamBibleQuizList = daoService.getObjects(BibleQuizTamil.class);
-			if (null != tamBibleQuizList && !tamBibleQuizList.isEmpty()) {
-				return (BibleQuizTamil) tamBibleQuizList.get(0);
-			}
+	private BibleQuizEng getRandomEngBibleQuiz(List<Integer> existingQuizIds) {
+		List<Object> engBibleQuizList = null;
+		/*try {
+			engBibleQuizList = daoService.queryUsingNativeSQL(
+					"select * from bible_quiz_en where id not in (select distinct quiz_id from daily_bible_quiz where language= 'English') limit 1");
+		getLogger().info("English quiz list: " + engBibleQuizList.toString()); 	
+		} catch (Exception err) {
+			getLogger().error("Error while fetching results.", err);
+		}*/
+		List bibleQuizEngList = daoService.getObjectsNotIn(BibleQuizEng.class, "Id", existingQuizIds);
+		if (null != engBibleQuizList && !engBibleQuizList.isEmpty()) {
+			return (BibleQuizEng) engBibleQuizList.get(0);
 		}
 		return null;
 	}
 
-	private String getIdsForQuiz(String query) {
-		List<Object> ids = daoService.queryUsingNativeSQL(query);
-		StringBuffer idsVal = new StringBuffer();
-		if (null != ids && !ids.isEmpty()) {
-			Iterator<Object> idsIterator = ids.iterator();
-			while (idsIterator.hasNext()) {
-				String id = idsIterator.next().toString();
-				idsVal.append(id);
-				if (idsIterator.hasNext()) {
-					idsVal.append(",");
-				}
-			}
+	private BibleQuizTamil getRandomTamBibleQuiz(List<Integer> existingQuizIds) {
+		List tamBibleQuizList = daoService.getObjectsNotIn(BibleQuizTamil.class, "Id", existingQuizIds);
+		if (null != tamBibleQuizList && !tamBibleQuizList.isEmpty()) {
+			return (BibleQuizTamil) tamBibleQuizList.get(0);
 		}
-		return idsVal.toString();
-	}
-	
-	public DailyBibleQuiz getBibleQuizById(Integer quizId) {		
-		DailyBibleQuiz dailyBibleQuiz = (DailyBibleQuiz) daoService.getObjectsById(DailyBibleQuiz.class, "quizId",quizId.toString());
+		return null;
+	}	
+
+	public DailyBibleQuiz getBibleQuizById(Integer quizId) {
+		DailyBibleQuiz dailyBibleQuiz = (DailyBibleQuiz) daoService.getObjectsById(DailyBibleQuiz.class, "quizId",
+				quizId.toString());
 		System.out.println("Printing the daily quiz" + dailyBibleQuiz);
 		return dailyBibleQuiz;
 	}
-	
-	public String getCurrentQuizDate(){
+
+	public String getCurrentQuizDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String parsedDate = sdf.format(new Date());
 		return parsedDate;
 	}
-	
-	public DailyBibleQuiz getBibleQuizByDateAndLanguage(String language){		
-		String[] queryParameters = new String[]{"quizDate","language"};
-		Object[] reference = new Object[] {getCurrentQuizDate(),language};
-		String[] symbol = new String[]{"=","="};
-		List<DailyBibleQuiz> bibleQuizList = (List) daoService.getObjectsListByMultipleParameters(DailyBibleQuiz.class, queryParameters, reference, symbol, -1, false);
-		if(bibleQuizList != null && !bibleQuizList.isEmpty()){
+
+	public DailyBibleQuiz getBibleQuizByDateAndLanguage(String language) {
+		String[] queryParameters = new String[] { "quizDate", "language" };
+		Object[] reference = new Object[] { getCurrentQuizDate(), language };
+		String[] symbol = new String[] { "=", "=" };
+		List<DailyBibleQuiz> bibleQuizList = (List) daoService.getObjectsListByMultipleParameters(DailyBibleQuiz.class,
+				queryParameters, reference, symbol, -1, false);
+		if (bibleQuizList != null && !bibleQuizList.isEmpty()) {
 			return bibleQuizList.get(0);
 		}
 		return null;
 	}
-	
+
 	public BibleQuizEng getEngBibleQuiz(Integer quizId) {
-		BibleQuizEng engQuiz = (BibleQuizEng) daoService.getObjectsById(BibleQuizEng.class,"id" , quizId.toString());
+		BibleQuizEng engQuiz = (BibleQuizEng) daoService.getObjectsById(BibleQuizEng.class, "id", quizId.toString());
 		return engQuiz;
 	}
-	
+
 	public BibleQuizTamil getTamilBibleQuiz(Integer quizId) {
-		BibleQuizTamil bibleQuizTam = (BibleQuizTamil) daoService.getObjectsById(BibleQuizTamil.class, "id", quizId.toString());
+		BibleQuizTamil bibleQuizTam = (BibleQuizTamil) daoService.getObjectsById(BibleQuizTamil.class, "id",
+				quizId.toString());
 		return bibleQuizTam;
 	}
-	
-	
+
 }

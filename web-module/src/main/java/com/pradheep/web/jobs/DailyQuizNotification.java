@@ -41,6 +41,11 @@ public class DailyQuizNotification extends NotificationJob {
 
 	@Override
 	public void run() {
+		try {
+			Thread.currentThread().sleep(10000);
+		} catch (InterruptedException e) {			
+			e.printStackTrace();
+		}
 		getLogger().info("Running daily quiz notification at" + getTodaysDate());
 		notifyMessage();
 	}
@@ -71,10 +76,16 @@ public class DailyQuizNotification extends NotificationJob {
 		} else {
 			message.append("<br> Click the link below to participate in today's quiz.");
 			Iterator<DailyBibleQuiz> dailyQuizIterator = dailyBibleQuizList.iterator();
+			String lang = "";
 			while(dailyQuizIterator.hasNext()){
 			DailyBibleQuiz dailyBibleQuiz = dailyQuizIterator.next();	
+			if(dailyBibleQuiz.getLanguage().equalsIgnoreCase("English")){
+				lang = "en";
+			}else if(dailyBibleQuiz.getLanguage().equalsIgnoreCase("Tamil")){
+				lang = "ta";
+			}
 			message.append("<br><b>" + dailyBibleQuiz.getLanguage() + " Quiz </b><br>");
-			message.append(URL + "?quizId=" + encryptQuizId(dailyBibleQuiz.getQuizId()) + "<br><br>");
+			message.append(URL + "?lang="+ lang + "<br><br>");
 			}			
 		}
 		message.append("<br> - Praise your redeemer ministry.</font>");

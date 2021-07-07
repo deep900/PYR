@@ -88,4 +88,11 @@ public class BibleQuizEng extends QuizBaseModel implements java.io.Serializable,
 	public void setBibleReference(String bibleReference) {
 		this.bibleReference = bibleReference;
 	}
+
+	@Override
+	public String toString() {
+		return "BibleQuizEng [Id=" + Id + ", level=" + level + ", testament=" + testament + ", question=" + question
+				+ ", choice=" + choice + ", correctAnswer=" + correctAnswer + ", bibleReference=" + bibleReference
+				+ "]";
+	}
 }

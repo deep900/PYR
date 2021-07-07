@@ -23,6 +23,7 @@ import com.pradheep.dao.model.BibleQuizTamil;
 import com.pradheep.dao.model.DailyBibleQuiz;
 import com.pradheep.web.common.DailyQuizManager;
 import com.pradheep.web.common.MonitorHitCounter;
+import com.pradheep.web.common.PYRUtility;
 import com.pradheep.web.common.PagePath;
 
 /**
@@ -39,47 +40,38 @@ public class DailyQuizController extends BaseUtility {
 	@MonitorHitCounter(path = PagePath.DAILY_QUIZ_PAGE)
 	public ModelAndView getDailyQuiz(HttpServletRequest request, HttpServletResponse response) {
 		getLogger().info("Inside daily quiz page");
-		String quizId = request.getParameter("quizId");
 		String language = request.getParameter("lang");
 		String errorMsg = "";
 		BibleQuizTaker bibleQuizTaker = new BibleQuizTaker();
 		ModelAndView model = new ModelAndView(PagePath.DAILY_QUIZ_PAGE, "command", bibleQuizTaker);
 		DailyBibleQuiz dailyBibleQuiz = null;
-		if (null == quizId) {
-			getLogger().error("Unable to find the quiz id");
-			getLogger().info("Printing the language" + language);
-			String lang = "";
-			if(language.equalsIgnoreCase("en")){
-				lang = "English";
-			}else if(language.equalsIgnoreCase("ta")){
-				lang = "Tamil";
-			}
-			dailyBibleQuiz = dailyQuizManager.getBibleQuizByDateAndLanguage(lang);
-		} else {
-			try {
-				String decryptedQuizId = decodeDateFromRequest(quizId);
-				getLogger().info("Printing the quizId:" + quizId + ",decoded:" + decryptedQuizId);
-				dailyBibleQuiz = getDailyBibleQuiz(Integer.parseInt(decryptedQuizId));
-			} catch (Exception err) {
-				model.addObject("error_msg", err.getMessage());
-				getLogger().error("Error while parsing the data for daily quiz", err);
-			}
-		}	
-		if(null != dailyBibleQuiz) {
-		if (dailyBibleQuiz.getLanguage().equalsIgnoreCase("English")) {
-			BibleQuizEng bibleQuizEng = dailyQuizManager.getEngBibleQuiz(dailyBibleQuiz.getQuizId());
-			bibleQuizTaker.setQuizId(String.valueOf(bibleQuizEng.getId()));
-			bibleQuizTaker.setLanguage("English");
-			model.addObject("todayQuiz", bibleQuizEng);
-		} else if (dailyBibleQuiz.getLanguage().equalsIgnoreCase("Tamil")) {
-			BibleQuizTamil bibleQuizTam = dailyQuizManager.getTamilBibleQuiz(dailyBibleQuiz.getQuizId());
-			bibleQuizTaker.setQuizId(String.valueOf(bibleQuizTam.getId()));
-			bibleQuizTaker.setLanguage("Tamil");
-			model.addObject("todayQuiz", bibleQuizTam);
+
+		getLogger().error("Unable to find the quiz id");
+		getLogger().info("Printing the language" + language);
+		String lang = "";
+		if (language.equalsIgnoreCase("en") || language.equalsIgnoreCase("english")) {
+			lang = "English";
+		} else if (language.equalsIgnoreCase("ta") || language.equalsIgnoreCase("tamil")) {
+			lang = "Tamil";
 		}
-		}else {
-		errorMsg = "Error while loading the quiz.";	
-		getLogger().error("Error while loading the quiz !");
+		dailyBibleQuiz = dailyQuizManager.getBibleQuizByDateAndLanguage(lang);
+		if (null != dailyBibleQuiz) {
+			if (dailyBibleQuiz.getLanguage().equalsIgnoreCase("English")) {
+				BibleQuizEng bibleQuizEng = dailyQuizManager.getEngBibleQuiz(dailyBibleQuiz.getQuizId());
+				bibleQuizTaker.setQuizId(String.valueOf(bibleQuizEng.getId()));
+				bibleQuizTaker.setLanguage("English");
+				model.addObject("todayQuiz", bibleQuizEng);
+			} else if (dailyBibleQuiz.getLanguage().equalsIgnoreCase("Tamil")) {
+				BibleQuizTamil bibleQuizTam = dailyQuizManager.getTamilBibleQuiz(dailyBibleQuiz.getQuizId());
+				bibleQuizTaker.setQuizId(String.valueOf(bibleQuizTam.getId()));
+				bibleQuizTaker.setLanguage("Tamil");
+				bibleQuizTam.setQuestion(PYRUtility.convertUnicodeToString(bibleQuizTam.getQuestion()));
+				bibleQuizTam.setChoice(PYRUtility.convertUnicodeToString(bibleQuizTam.getChoice()));
+				model.addObject("todayQuiz", bibleQuizTam);
+			}
+		} else {
+			errorMsg = "Error while loading the quiz.";
+			getLogger().error("Error while loading the quiz !");
 		}
 		model.addObject("errorMsg", errorMsg);
 		Locale locale = applicationLocaleResolver.resolveLocale(request);
@@ -92,8 +84,7 @@ public class DailyQuizController extends BaseUtility {
 	@RequestMapping("/submitDailyQuiz")
 	@MonitorHitCounter(path = PagePath.SUBMIT_DAILY_QUIZ_PAGE)
 	public ModelAndView submitDailyQuiz(@ModelAttribute("bibleQuizTaker") BibleQuizTaker bibleQuizTaker,
-			BindingResult result, HttpServletRequest request, HttpServletResponse reponse) {
-		getLogger().info("Quiz has been submitted." + bibleQuizTaker.toString());
+			BindingResult result, HttpServletRequest request, HttpServletResponse reponse) {		
 		String quizResult = "";
 		String correctAns = "";
 		String reference = "";
@@ -110,19 +101,20 @@ public class DailyQuizController extends BaseUtility {
 				reference = bibleQuizEng.getBibleReference();
 				question = bibleQuizEng.getQuestion();
 			}
-		}else if(bibleQuizTaker.getLanguage().equalsIgnoreCase("Tamil")) {
+		} else if (bibleQuizTaker.getLanguage().equalsIgnoreCase("Tamil")) {
 			if (null != quizId) {
 				BibleQuizTamil bibleQuizTa = dailyQuizManager.getTamilBibleQuiz(quizId);
-				correctAns = bibleQuizTa.getCorrectAnswer();
-				reference = bibleQuizTa.getBibleReference();
-				question = bibleQuizTa.getQuestion();
+				correctAns = PYRUtility.convertUnicodeToString(bibleQuizTa.getCorrectAnswer());
+				reference = PYRUtility.convertUnicodeToString(bibleQuizTa.getBibleReference());
+				question = PYRUtility.convertUnicodeToString(bibleQuizTa.getQuestion());
 			}
-		}		
+		}
 		if (correctAns.equals(bibleQuizTaker.getAnswer())) {
 			quizResult = "Correct";
 		} else {
 			quizResult = "not correct";
 		}
+		getLogger().info("Quiz has been submitted:" + bibleQuizTaker.toString() + "," + quizResult + "," + getQuizDate());
 		model.addObject("result", quizResult);
 		model.addObject("correctAnswer", correctAns);
 		model.addObject("question", question);

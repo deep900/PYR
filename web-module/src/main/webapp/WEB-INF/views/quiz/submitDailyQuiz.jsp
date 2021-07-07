@@ -130,7 +130,7 @@
 </head>
 <body>
 	<ul id="sheetswitch">
-		<li><a href="<c:url value="/login-page" />" class="default">black</a></li>
+		<li><a href="<c:url value="/" />" class="default">black</a></li>
 		<li><a href="#" class="blue"
 			onClick="changeStyle('blue.css');return false;">white</a></li>
 		<li><a href="#" class="green"
@@ -172,7 +172,7 @@
 
 
 						
-<h3>Dear ${name}, your answer is ${result} </h3><br>
+<h3>Dear ${name}, find the correct answer below. </h3><br>
 <h4>Question:${question}</h4><br>
 <h4>Correct answer: ${correctAnswer} </h4><br>
 <h4>Bible reference: ${reference}</h4>	

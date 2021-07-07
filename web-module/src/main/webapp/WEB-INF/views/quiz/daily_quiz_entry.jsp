@@ -130,7 +130,7 @@
 </head>
 <body>
 	<ul id="sheetswitch">
-		<li><a href="<c:url value="/login-page" />" class="default">black</a></li>
+		<li><a href="<c:url value="/" />" class="default">black</a></li>
 		<li><a href="#" class="blue"
 			onClick="changeStyle('blue.css');return false;">white</a></li>
 		<li><a href="#" class="green"
@@ -181,7 +181,8 @@
 <c:choose>
 <c:when test="${errorMsg != 'Error while loading the quiz.'}">
 <form:form action="${context}/submitDailyQuiz" method="post" name="dailyQuizPage">
-<div class="dailyQuizDiv">									
+<div class="dailyQuizDiv">	
+<label style="padding-left:100px"><b>Quiz date: ${quizDate}</b></label>								
 <table>
 <tr>
 <td><label style="width:50px;height:30px;"><spring:message code="bible.quiz.new.user.name" /></label> </td>
