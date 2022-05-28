@@ -79,7 +79,7 @@ public class SMSMessenger implements Messenger {
 				}
 			}
 		};
-		threadPoolExecutor.execute(d);
+		//threadPoolExecutor.execute(d);
 		return true;
 	}
 

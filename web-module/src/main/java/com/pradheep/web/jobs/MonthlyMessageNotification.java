@@ -63,6 +63,7 @@ public class MonthlyMessageNotification extends PersistedNotificationJob {
 		emailMessageObject.setBodyOfMessage(getMessageToBeSent());
 		emailMessageObject.setToList(toList);
 		emailMessageObject.setFooterInformation("Kindly do not reply to this email.");
+		emailMessageObject.setFromAddress("administrator@praiseyourredeemer.org");
 		pryMessenger.sendEmailMessage(emailMessageObject);		
 	}
 

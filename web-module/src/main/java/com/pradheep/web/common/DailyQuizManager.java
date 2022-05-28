@@ -142,6 +142,15 @@ public class DailyQuizManager {
 		BibleQuizTamil bibleQuizTam = (BibleQuizTamil) daoService.getObjectsById(BibleQuizTamil.class, "id",
 				quizId.toString());
 		return bibleQuizTam;
+	} 
+	
+	public void saveBibleQuiz(DailyBibleQuiz dailyBibleQuiz) {
+		daoService.saveOrUpdateEntity(dailyBibleQuiz);
+		getLogger().info("Persisted the daily bible quiz");
+	}
+	
+	public List<Object> runNativeQuery(String sql) {
+		return daoService.queryUsingNativeSQL(sql);
 	}
 
 }

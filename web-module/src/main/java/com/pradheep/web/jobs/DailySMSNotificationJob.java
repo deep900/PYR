@@ -67,7 +67,8 @@ public class DailySMSNotificationJob extends NotificationJob {
 
 	@Override
 	public void run() {
-		this.notifyMessage();
+		// SMS Support is not enabled now.
+		//this.notifyMessage();
 		getLogger().info("Job completed at .. " + new Date());
 	}
 

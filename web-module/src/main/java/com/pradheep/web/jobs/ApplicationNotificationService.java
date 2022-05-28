@@ -38,6 +38,8 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 
 	private Properties properties = new Properties();
 	
+	private long oneDayDelayInMills = 86400000l;
+	
 	@Autowired
 	private ThreadPoolTaskScheduler taskScheduler;
 
@@ -90,7 +92,7 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 		for(NotificationJob job: notificationJobs){
 			if(job.getJobFrequency() == NotificationJob.JOB_FREQUENCY_DAILY_HRS){
 				// Daily Schedule //
-				Long period = new Long(86400000); // 1 day delay
+				Long period = new Long(oneDayDelayInMills);
 				Date startDate = PYRUtility.getNextDaySixAM(timeDiffInJobsInSecs);
 				getLogger().info("------------- Scheduling Jobs ---------------------");
 				getLogger().info("Job Start Time " + startDate.toString());

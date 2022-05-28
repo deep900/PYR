@@ -136,6 +136,13 @@ public class PYRUtility {
 		//PYRUtility.converFile();
 		/*PYRUtility utility = new PYRUtility();
 		utility.createUI();*/
+		
+		convertFile(); 
+		creationTest();
+		System.exit(-1);
+	}
+	
+	public static void convertFile(){
 		JFileChooser jfc = new JFileChooser("C:\\Software_Development\\PYRWorkspace\\message_translations");
 		jfc.showOpenDialog(new JFrame());
 		StringBuffer buf = new StringBuffer();
@@ -157,20 +164,18 @@ public class PYRUtility {
 			e.printStackTrace();
 		}
 		System.out.println(getUnicodeCharacter(buf.toString()));
-		creationTest();
-		System.exit(-1);
 	}
 	
 	public static void creationTest(){
-		String arg ="மின் அஞ்சல்";
-		System.out.println("Creation Test:" +getUnicodeCharacter(arg));
+		//String arg ="நம்மக்கு நியமிக்கப்பட்ட ஓட்டம்";
+		//System.out.println(getUnicodeCharacter(arg));
 	}
 	
 	private void createUI(){
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JFrame jf = new JFrame();
-		jf.setPreferredSize(new Dimension(750,650));
-		jf.setSize(new Dimension(750,650));
+		jf.setPreferredSize(new Dimension(750,650)); 
+		jf.setSize(new Dimension(750,650)); 
 		jf.setTitle("Unicode Converter V1");
 		JPanel mainContainer = new JPanel();
 		

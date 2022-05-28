@@ -15,7 +15,6 @@ import com.pradheep.dao.model.DailyBibleQuiz;
 import com.pradheep.dao.model.Subscription;
 import com.pradheep.web.common.DailyQuizManager;
 import com.pradheep.web.common.SubscriptionManager;
-import com.pry.security.utility.PublicUtility;
 import com.pyr.notification.EmailMessageObject;
 import com.pyr.notification.MessageObject;
 
@@ -29,10 +28,11 @@ public class DailyQuizNotification extends NotificationJob {
 	private DailyQuizManager dailyQuizManager;
 
 	@Autowired
-	private SubscriptionManager subscriptionManager;
+	private SubscriptionManager subscriptionManager;	
 	
-	@Autowired
-	private PublicUtility publicUtility;
+	private int dailyIncrement = 1;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 
 	public DailyQuizNotification() {
 		setNotificationType(NotificationService.NOTIFICATION_TYPE_EMAIL);
@@ -44,10 +44,16 @@ public class DailyQuizNotification extends NotificationJob {
 		try {
 			Thread.currentThread().sleep(10000);
 		} catch (InterruptedException e) {			
-			e.printStackTrace();
+			getLogger().error("Interrupted exception", e);
 		}
 		getLogger().info("Running daily quiz notification at" + getTodaysDate());
 		notifyMessage();
+		try {
+			Thread.currentThread().sleep(10000);
+		} catch (InterruptedException e) {			
+			getLogger().error("Interrupted exception", e);
+		}
+		updateNextQuizRecord();
 	}
 
 	@Override
@@ -63,10 +69,15 @@ public class DailyQuizNotification extends NotificationJob {
 			getLogger().info("No subscribers found for daily quiz.");
 		}
 	}
+	
+	private List<DailyBibleQuiz> getDailyQuiz(){
+		List<DailyBibleQuiz> dailyBibleQuizList = dailyQuizManager.getBibleQuizByDate(dailyQuizManager.getCurrentQuizDate());
+		return dailyBibleQuizList;
+	}
 
 	@Override
-	public MessageObject getMessageObject(Object subscription) {		
-		List<DailyBibleQuiz> dailyBibleQuizList = dailyQuizManager.getBibleQuizByDate(dailyQuizManager.getCurrentQuizDate());
+	public MessageObject getMessageObject(Object subscription) {
+		List<DailyBibleQuiz> dailyBibleQuizList = getDailyQuiz();
 		StringBuffer message = new StringBuffer();
 		message.append("<font face='cambria'><u>Today's bible quiz -  " + getTodaysDate() +"</u>");
 		String URL = "www.praiseyourredeemer.org/dailyQuiz";
@@ -97,14 +108,48 @@ public class DailyQuizNotification extends NotificationJob {
 		messageObject.setSubjectOfMessage("Daily Quiz-" + getTodaysDate());
 		return messageObject;
 	}	
-	
-	private String encryptQuizId(Integer quizId){
-		return publicUtility.EncryptText(String.valueOf(quizId));
-	}
 
-	private String getTodaysDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+	private String getTodaysDate() {		
 		return sdf.format(new Date());
+	}
+	
+	public int getNextQuizId(String language,int existingId) {
+		String sql;
+		if(language.equalsIgnoreCase("english")){
+			sql = "select id from bible_quiz_en where id > " + existingId + " limit 1";					
+		} else{
+			sql = "select id from bible_quiz_ta where id > " + existingId + " limit 1";
+		}	
+		List<Object> quizIds = dailyQuizManager.runNativeQuery(sql);
+		if(null != quizIds && !quizIds.isEmpty()) {
+			getLogger().info(quizIds.toString());
+			String quizId = quizIds.get(0).toString();
+			getLogger().info("Next quiz id:" + quizId);
+			return Integer.parseInt(quizId);
+		}
+		getLogger().error("Unable to find the next quiz id");
+		return existingId;		
+	}
+	
+	private void updateNextQuizRecord(){
+		List<DailyBibleQuiz> dailyBibleQuizList = getDailyQuiz();
+		if(null == dailyBibleQuizList || dailyBibleQuizList.isEmpty()) {
+			getLogger().error("No daily bible quiz found to update the next date.");
+			return;
+		}
+		Date today = new Date();
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(today);
+		calendar.add(GregorianCalendar.DAY_OF_MONTH,dailyIncrement);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		String nextQuizDate = sdf1.format(calendar.getTime());
+		getLogger().info("Printing the next quiz date:" + nextQuizDate);
+		dailyBibleQuizList.forEach(dailyBibleQuiz -> {
+			dailyBibleQuiz.setQuizDate(nextQuizDate);			
+			dailyBibleQuiz.setQuizId(getNextQuizId(dailyBibleQuiz.getLanguage(), dailyBibleQuiz.getId()));
+			dailyQuizManager.saveBibleQuiz(dailyBibleQuiz);
+		});
+		getLogger().info("Updated the bible quiz records:" + dailyBibleQuizList.size());
 	}
 
 }
