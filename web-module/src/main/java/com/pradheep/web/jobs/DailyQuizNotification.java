@@ -146,7 +146,7 @@ public class DailyQuizNotification extends NotificationJob {
 		getLogger().info("Printing the next quiz date:" + nextQuizDate);
 		dailyBibleQuizList.forEach(dailyBibleQuiz -> {
 			dailyBibleQuiz.setQuizDate(nextQuizDate);			
-			dailyBibleQuiz.setQuizId(getNextQuizId(dailyBibleQuiz.getLanguage(), dailyBibleQuiz.getId()));
+			dailyBibleQuiz.setQuizId(getNextQuizId(dailyBibleQuiz.getLanguage(), dailyBibleQuiz.getQuizId()));
 			dailyQuizManager.saveBibleQuiz(dailyBibleQuiz);
 		});
 		getLogger().info("Updated the bible quiz records:" + dailyBibleQuizList.size());
