@@ -144,12 +144,18 @@ public class DailyQuizNotification extends NotificationJob {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		String nextQuizDate = sdf1.format(calendar.getTime());
 		getLogger().info("Printing the next quiz date:" + nextQuizDate);
-		dailyBibleQuizList.forEach(dailyBibleQuiz -> {
-			dailyBibleQuiz.setQuizDate(nextQuizDate);			
-			dailyBibleQuiz.setQuizId(getNextQuizId(dailyBibleQuiz.getLanguage(), dailyBibleQuiz.getQuizId()));
-			dailyQuizManager.saveBibleQuiz(dailyBibleQuiz);
-		});
-		getLogger().info("Updated the bible quiz records:" + dailyBibleQuizList.size());
+		dailyBibleQuizList.forEach(dailyBibleQuiz -> {			
+			dailyQuizManager.saveBibleQuiz(createNewBibleQuiz(nextQuizDate,
+					getNextQuizId(dailyBibleQuiz.getLanguage(), dailyBibleQuiz.getQuizId()),dailyBibleQuiz.getLanguage()));
+		});		
+	}
+	
+	private DailyBibleQuiz createNewBibleQuiz(String nextQuizDate, int quizId,String language) {
+		DailyBibleQuiz bibleQuiz = new DailyBibleQuiz();
+		bibleQuiz.setQuizDate(nextQuizDate);
+		bibleQuiz.setQuizId(quizId);
+		bibleQuiz.setLanguage(language);		
+		return bibleQuiz;
 	}
 
 }

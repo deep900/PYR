@@ -146,7 +146,7 @@ public class DailyQuizManager {
 	
 	public void saveBibleQuiz(DailyBibleQuiz dailyBibleQuiz) {
 		daoService.saveOrUpdateEntity(dailyBibleQuiz);
-		getLogger().info("Persisted the daily bible quiz");
+		getLogger().info("Persisted the daily bible quiz" + dailyBibleQuiz.toString());
 	}
 	
 	public List<Object> runNativeQuery(String sql) {
