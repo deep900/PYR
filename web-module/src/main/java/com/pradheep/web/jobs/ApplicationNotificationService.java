@@ -93,7 +93,7 @@ public class ApplicationNotificationService implements InitializingBean, Notific
 			if(job.getJobFrequency() == NotificationJob.JOB_FREQUENCY_DAILY_HRS){
 				// Daily Schedule //
 				Long period = new Long(oneDayDelayInMills);
-				Date startDate = PYRUtility.getNextDaySixAM(timeDiffInJobsInSecs);
+				Date startDate = PYRUtility.getNextDaySixAM(timeDiffInJobsInSecs);				
 				getLogger().info("------------- Scheduling Jobs ---------------------");
 				getLogger().info("Job Start Time " + startDate.toString());
 				GregorianCalendar calendar = new GregorianCalendar();

@@ -173,17 +173,8 @@
 						<div class="gholder">
 							<a class="btn-prev" href="#">next</a>
 							<div class="gmask">
-								<ul>
-									
-									<li><img src=<c:url value="/resources/images/banner-img-8.jpg"/> alt="image" />
-										<%-- <div class="left">
-											<div class="banner-caption">
-												<a href="#"><spring:message code="mainpage.banner1.title1"/></a><span>&nbsp;</span>
-											</div>
-											<div class="banner-caption caption-1">
-												<a href="#"><spring:message code="mainpage.banner1.title2"/></a><span>&nbsp;</span>
-											</div>
-										</div> --%>
+								<ul>																	
+									<li><img src=<c:url value="/resources/images/banner-img-8.jpg"/> alt="image" />										
 										</li>
 									 <li><img src=<c:url value="/resources/images/banner-img-9.jpg"/> alt="image" />
 										<%-- <div class="left">
@@ -395,7 +386,7 @@
 												<span>Chennai, India</span>
 												<br><span>Contact</span>
 												<span>Email:administrator@praiseyourredeemer.org</span>
-												<span>Phone:+91 7401504728</span>
+												<span>Phone:+65 84530859</span>
 											</address>										
 										</div>
 									</article>

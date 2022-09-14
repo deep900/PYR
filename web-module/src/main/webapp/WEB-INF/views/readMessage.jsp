@@ -198,12 +198,12 @@ function loadMainContent(){
 									</h4>
 									<c:choose>
 										<c:when test="${language == 'ta'}">
-											<a href=<c:url value="/readMessage?id=${message.getId()}&lang=en"/> class="readmorebtn small">Read in English</a>
+											<a href=<c:url value="/readMessage?id=${message.getId()}&lang=en&ref=${uniqueIndex} }"/> class="readmorebtn small">Read in English</a>
 											<br>
 
 										</c:when>
 										<c:otherwise>
-											<a href=<c:url value="/readMessage?id=${message.getId()}&lang=ta"/> class="readmorebtn small">தமிழில் படிக்கவும்</a>
+											<a href=<c:url value="/readMessage?id=${message.getId()}&lang=ta&ref=${uniqueIndex}"/> class="readmorebtn small">தமிழில் படிக்கவும்</a>
 											<br>
 										</c:otherwise>
 									</c:choose>

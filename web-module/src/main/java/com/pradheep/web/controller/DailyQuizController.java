@@ -47,7 +47,7 @@ public class DailyQuizController extends BaseUtility {
 		DailyBibleQuiz dailyBibleQuiz = null;
 
 		getLogger().error("Unable to find the quiz id");
-		getLogger().info("Printing the language" + language);
+		getLogger().info("Printing the language:" + language);
 		String lang = "";
 		if (language.equalsIgnoreCase("en") || language.equalsIgnoreCase("english")) {
 			lang = "English";

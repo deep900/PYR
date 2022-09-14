@@ -154,13 +154,20 @@ public class ApplicationController extends BaseUtility {
 	@MonitorHitCounter(path = PagePath.READ_MESSAGES)
 	public ModelAndView readMessage(HttpServletRequest request, HttpServletResponse response) {
 		getLogger().debug("Inside read messages page..");
+		ModelAndView model = null;
 		// Commenting the token feature to make it available easily.
 		/*
 		 * if (!checkToken(request)) { return new ModelAndView(PagePath.ACCESS_DENIED);
 		 * }
 		 */
-		ModelAndView model = new ModelAndView(PagePath.READ_MESSAGES);
-		String id = request.getParameter("id");
+		String uniqueRef = request.getParameter("ref");
+		if(!uniqueIdGenerator.isValidLink(uniqueRef)) {
+			getLogger().info("Not a valid link, redirecting to the error page.");
+			model = new ModelAndView(PagePath.ERROR_PAGE);
+			return model;
+		}
+		model = new ModelAndView(PagePath.READ_MESSAGES);
+		String id = request.getParameter("id");		
 		Object obj = daoService.getObjectsById(Message.class, "id", id);
 		Message msgObj = (Message) obj;
 		DisplayMessage dispMsg = new DisplayMessage();
@@ -172,6 +179,9 @@ public class ApplicationController extends BaseUtility {
 		model.addObject("language", locale.getLanguage());
 		model.addObject("message", dispMsg);
 		model.addObject("msg_blog_style",locale.getLanguage().toString().contains("ta") ? "blog-holder-message-ta" :"blog-holder-message");
+		String uniqueId = uniqueIdGenerator.getMessageReaderUniqueID();
+		getLogger().info("Printing the unique id:" + uniqueId);
+		model.addObject("uniqueIndex",uniqueId);
 		return model;
 	}
 

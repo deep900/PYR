@@ -38,6 +38,7 @@ import com.pradheep.web.common.ApplicationConstants;
 import com.pradheep.web.common.ApplicationLoggerWeb;
 import com.pradheep.web.common.PYRUtility;
 import com.pradheep.web.common.PagePath;
+import com.pradheep.web.common.UniqueIDGenerator;
 import com.pradheep.web.exception.UnKnownUserException;
 import com.pry.security.utility.PublicUtility;
 
@@ -57,6 +58,9 @@ public class BaseUtility<T> {
 	public ApplicationLocaleResolver applicationLocaleResolver;
 
 	private Logger logger = null;
+	
+	@Autowired
+	public UniqueIDGenerator uniqueIdGenerator;
 
 	public List<Object> convertUnicodeToString(List<Object> entity, Class obj) {
 		if (entity == null) {
@@ -246,6 +250,9 @@ public class BaseUtility<T> {
 		model.addObject("objectList", messages);
 		model.addObject("maxRecordsCount", maxMsgCnt);
 		model.addObject("maxRecordsPerPage", maxRecordsPerPage);
+		String uniqueId = uniqueIdGenerator.getMessageReaderUniqueID();
+		getLogger().info("Printing the unique id:" + uniqueId);
+		model.addObject("uniqueIndex",uniqueId);
 	}
 
 	private void provideOnlyFewWords(List<Object> messageList) {

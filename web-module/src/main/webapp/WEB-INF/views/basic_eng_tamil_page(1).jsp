@@ -203,7 +203,7 @@
 												<span>Chennai, India</span>
 												<br><span>Contact</span>
 												<span>Email:administrator@praiseyourredeemer.org</span>
-												<span>Phone:+91 8610279716</span>
+												<span>Phone:+65 84530859</span>
 											</address>										
 										</div>
 									</article>

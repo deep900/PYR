@@ -210,7 +210,7 @@
 											<h5>Praise Your Redeemer Ministry</h5>
 											<address>
 												<span>Chennai, India</span> <span>administrator@praiseyourredeemer.org</span>
-												<span>Phone:+91 7401504728</span>
+												<span>Phone:+65 84530859</span>
 											</address>
 										</div>
 									</article>

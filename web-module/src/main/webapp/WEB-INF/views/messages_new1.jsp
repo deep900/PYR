@@ -162,7 +162,7 @@ function loadMainContent(){
 								<div class="blog-post">
 									<div class="slide-1">
 										<ul>
-											<li><a href=<c:url value="/readMessage?id=${msgModel.getId()}" />>
+											<li><a href=<c:url value="/readMessage?id=${msgModel.getId()}&ref=${uniqueIndex}" />>
 											<img id="image" src='<c:url value="getImage?id=${msgModel.getId()}"/>' alt="image"/>
 											</a></li>
 										</ul>
@@ -173,7 +173,7 @@ function loadMainContent(){
 									<br class="clear" />
 									<div class="blog-holder">
 										<h4 class="post-title">
-											<a href=<c:url value="/readMessage?id=${msgModel.getId()}" />>
+											<a href=<c:url value="/readMessage?id=${msgModel.getId()}&ref=${uniqueIndex}" />>
 												<c:choose>
 													<c:when test="${language == 'ta'}">
 														<c:out value="${msgModel.getMessageTitleTamil()}" />
@@ -203,7 +203,7 @@ function loadMainContent(){
 												<li><a href="#" class="author">By Praise Your
 														Redeemer</a></li>
 												<li><a
-													href=<c:url value="/readMessage?id=${msgModel.getId()}"/>
+													href=<c:url value="/readMessage?id=${msgModel.getId()}&ref=${uniqueIndex}"/>
 													class="section"><spring:message code="messages.page.read.more"/></a></li>
 											</ul>
 										</div>

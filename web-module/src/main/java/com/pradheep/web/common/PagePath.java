@@ -46,4 +46,5 @@ public interface PagePath {
 	public static String VIEW_ALL_MESSAGES = "admin/viewAllMessages";
 	public static String ADD_MESSAGES = "admin/addMessage";
 	public static String EDIT_PHOTO = "admin/editMessagePhoto";
+	public static String ERROR_PAGE = "errorPage";
 }

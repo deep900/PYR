@@ -137,7 +137,7 @@ public class PYRUtility {
 		/*PYRUtility utility = new PYRUtility();
 		utility.createUI();*/
 		
-		convertFile(); 
+		//convertFile(); 
 		creationTest();
 		System.exit(-1);
 	}
@@ -167,8 +167,8 @@ public class PYRUtility {
 	}
 	
 	public static void creationTest(){
-		//String arg ="நம்மக்கு நியமிக்கப்பட்ட ஓட்டம்";
-		//System.out.println(getUnicodeCharacter(arg));
+		String arg ="யோவான் 1:41";
+		System.out.println(getUnicodeCharacter(arg));
 	}
 	
 	private void createUI(){

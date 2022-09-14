@@ -36,13 +36,13 @@
     body{background: #F5F5F5;}
   </style>
   </head>
-<body>
+  <body>
     <div class="error-pages">        
         <h1>Invalid Session</h1>
-        <h4>You may be idle for long time. Login again to continue</h4>
-        <div class="bottom-links">
-          <a href="${context}/login-page" class="btn btn-light">Login Again</a>          
+        <h4>Kindly navigate from the main page, some error occured.</h4>
+        <div class="bottom-links">               
           <a href="${context}/" class="btn btn-default">Go Homepage</a>
+           <a href="${context}/messages" class="btn btn-default">Messages Page</a>
         </div>
 
 </body>
