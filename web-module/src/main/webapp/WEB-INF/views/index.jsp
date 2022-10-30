@@ -134,7 +134,7 @@
 												</div>
 											</div>
 										</div></li>
-										<li class="fullwidth"><a href="#" class="drop"><spring:message code="mainpage.services"/></a>
+										<li class="fullwidth"><a href="#" class="drop"><spring:message code="mainpage.services"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 										<div class="dropdown_fullwidth first_fullwidth">											
 											<div class="col_2_unused">
 												
@@ -144,6 +144,7 @@
 														<li><a href=<c:url value="/messages" />><spring:message code="mainpage.services.message"/></a></li>
 														<li><a href=<c:url value="/important-verses" />><spring:message code="mainpage.services.verses"/></a></li>
 														<li><a href='<c:url value="/quizMainPage" />'><spring:message code="mainpage.services.quiz"/></a></li>
+														<li><a href='<c:url value="/prophecy-and-fulfillment" />'><spring:message code="mainpage.services.prophecy"/></a></li>
 														<li><a href='<c:url value='/subscribe?key=${token}'/>'><spring:message code="subscription.link.title"/></a></li>														
 													</ul>
 												</div>
@@ -304,8 +305,8 @@
 						</article>
 						<article class="column c-one-third">
 							<div class="img-holder slide-1">
-								<a href='<c:url value="/under-development" />'><img
-									src=<c:url value="/resources/images/jeremiah.jpg"/> alt="image" /></a>
+								<a href='<c:url value="/prophecy-and-fulfillment?lang=en" />'><img
+									src=<c:url value="/resources/images/prophecy.jpg"/> alt="image" /></a>
 							</div>
 						</article>
 					</section>

@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `prophesy_and_fullfilment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `search_key` VARCHAR(100) NOT NULL,
+  `prophetic_scrip` VARCHAR(2000) NOT NULL,
+  `subject` VARCHAR(200) NOT NULL,
+  `fulfilment` VARCHAR(2000) NOT NULL,	
+  `book` VARCHAR(60) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Seed_of_a_woman','Genesis 3:15<br>And I will put enmity between you and the woman, and between your seed and her seed; He shall bruise your head, and you shall bruise his heel.','Seed of a woman','Galatians 4:4<br>But when the fullness of the time had come,God sent forth his son, born of a woman, born under the law.','Genesis');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Descendant_of_Abraham','Genesis 12:3<br>I will bless those who bless you, and i will curse him those who curses you; and in you all the families of the earth shall be blessed.','Descendant of Abraham','Mathew 1:1<br>The book of the genealogy of Jesus Christ, the son of david, the Son of Abraham.','Genesis');
+
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Descendant_of_Isaac','Genesis 17:19<br>Then God said.No sarah your wife shall bear you a son, and you shall call his name isaac; I will estasblish My covevenant with him for an everlasting covenant, and with his descendants after him.','Descendant of Isaac','Luke 3:34<br> the son of Jacob, the son of Isaac, the son of Abraham, the son of Terah, the son of Nahor.','Genesis');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Declared_the_son_of_God','Psalms 2:7<br>I will declare the decree: the LORD has said to me, You are My son, today I have begotten you.','Declared the son of God','Mathew 3:17<br>And suddenly a voice came from heaven saying, This is My beloved Son, in whom I am well pleased','Psalms');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Adored_by_infants','Psalms 8:2 <br> Out of the mouth of babes and nursing infants you have ordained strength, because of your enemies, that you may silence the enemy and the avenger.','Adored by infants','Mathew 21:15,16<br> But when the chief priests and scribes saw the wonderful things that he did, and the children crying out in the temple and saying, Hosanna to the Son of David! they were indignant and said to him, Do you hear what these are saying? And Jesus said to them, Yes Have you never read, Out of the mouth of babes and nursing infants you have perfected praise?','Psalms');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('To_be_resurrected','Psalms 16:10<br>For you will not leave my soul in Sheol, nor will you allow your Holy one to see corruption.','To be resurrected','Mark 16:6,7<br> But he said to them, Do not be alarmed. You seek Jesus of Nazareth, who was crucified. He is risen! He is not here. See the place where they laid him. But go, tell his disciples and Peter that is going before you into Galilee; there you will see him, as he said to you.','Psalms');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Forsaken_by_God','Psalms 22:1<br> My God, My God, why have you forsaken Me? why are you so far from helping me, and from the words of my groaning?','Forsaken by God','Mathew 27:46<br> And about the ninth hour Jesus cried out with a loud voice, saying,Eli Eli, lama sabacthani? that is My God, My God, why have you forsaken Me?','Psalms');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('Sneered_and_mocked','Psalms 22:7,8 <br> All those who see Me redicule Me; they shoot out the lip, they shake the head, saying, He trusted in the LORD, let him rescue him; Let him deliver him, since He delights in Him!','Sneered and mocked','Luke 23:35<br> And the people stood looking on. But even the rulers with them sneered, saying. He saved others; let Him save Himself if He is the Christ, the chosen of God.','Psalms');
+insert into prophesy_and_fullfilment(`search_key`,`prophetic_scrip`,`subject`,`fulfilment`,`book`) values ('','','','','Psalms');
+
+select search_key,book from prophesy_and_fullfilment;

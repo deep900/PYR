@@ -4147,4 +4147,18 @@ ul.list-link li {
 	width: 100%;
 	display:block;
 }
+.prophecyTable{
+	font-family:Cambria;
+	margin-left:0px;
+	float:left;
+	font-size:17px;
+	width:auto;
+	line-height: 1.5em;
+	padding:4px;	
+}
+
+.prophecyTable th, td {	
+	padding:6px;
+	border:1px solid #C8C6C2;	
+}
 

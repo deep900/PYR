@@ -47,4 +47,6 @@ public interface PagePath {
 	public static String ADD_MESSAGES = "admin/addMessage";
 	public static String EDIT_PHOTO = "admin/editMessagePhoto";
 	public static String ERROR_PAGE = "errorPage";
+	//-------------------------------------------//
+	public static String PROPHECY_AND_FULFILLMENT = "prophecyAndFullfilment";
 }
