@@ -1,0 +1,68 @@
+.event-footer {
+	margin-top: 400px;
+	padding: 10px;
+	font-size: 13px;
+	font-family: 'Bona Nova', serif;
+	text-align: center;
+	width: 100%;
+	margin-top: auto;
+}
+
+.title-msg {
+	font-size: 50px;
+	padding: 10px;
+	text-align: center;
+	font-family: 'Bona Nova', serif;
+}
+
+.childDivContainer {
+	padding: 10px;
+	font-family: 'Bona Nova', serif;
+	font-size: 13px;
+}
+
+.childDivContainer input {
+	width: 100px;
+	height: 18px;
+	font-family: 'Bona Nova', serif;
+	margin-left: 5px;
+}
+
+.childDivContainer select {
+	width: 50px;
+	height: 25px;
+	font-family: 'Bona Nova', serif;
+	margin-left: 5px;
+}
+
+.adultDivContainer {
+	padding: 10px;
+	font-family: 'Bona Nova', serif;
+	font-size: 13px;
+}
+
+.adultDivContainer input {
+	width: 100px;
+	height: 18px;
+	font-family: 'Bona Nova', serif;
+	margin-left: 5px;
+}
+
+.adultDivContainer select {
+	width: 50px;
+	height: 25px;
+	font-family: 'Bona Nova', serif;
+	margin-left: 5px;
+}
+
+.registration-main {
+	font-family: Bona Nova ', serif;
+	font-size: 12px;
+	margin: 5px;
+	width: 350px;
+	height: 200px;
+	outline: dashed 1px black;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+}
