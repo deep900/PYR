@@ -4,7 +4,9 @@
 package com.pradheep.web.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import com.pradheep.dao.model.BibleQuizEng;
 import com.pradheep.dao.model.BibleQuizTaker;
 import com.pradheep.dao.model.BibleQuizTamil;
 import com.pradheep.dao.model.DailyBibleQuiz;
+import com.pradheep.dao.model.DailyQuizWinner;
 import com.pradheep.web.common.DailyQuizManager;
 import com.pradheep.web.common.MonitorHitCounter;
 import com.pradheep.web.common.PYRUtility;
@@ -84,7 +87,7 @@ public class DailyQuizController extends BaseUtility {
 	@RequestMapping("/submitDailyQuiz")
 	@MonitorHitCounter(path = PagePath.SUBMIT_DAILY_QUIZ_PAGE)
 	public ModelAndView submitDailyQuiz(@ModelAttribute("bibleQuizTaker") BibleQuizTaker bibleQuizTaker,
-			BindingResult result, HttpServletRequest request, HttpServletResponse reponse) {		
+			BindingResult result, HttpServletRequest request, HttpServletResponse reponse) {
 		String quizResult = "";
 		String correctAns = "";
 		String reference = "";
@@ -111,15 +114,21 @@ public class DailyQuizController extends BaseUtility {
 		}
 		if (correctAns.equals(bibleQuizTaker.getAnswer())) {
 			quizResult = "Correct";
+			markSuccess(bibleQuizTaker.getName(), bibleQuizTaker.getEmail(), quizId,
+					bibleQuizTaker.getLanguage().equalsIgnoreCase("English") ? "En" : "Ta");
 		} else {
 			quizResult = "not correct";
 		}
-		getLogger().info("Quiz has been submitted:" + bibleQuizTaker.toString() + "," + quizResult + "," + getQuizDate());
+		getLogger()
+				.info("Quiz has been submitted:" + bibleQuizTaker.toString() + "," + quizResult + "," + getQuizDate());
 		model.addObject("result", quizResult);
 		model.addObject("correctAnswer", correctAns);
 		model.addObject("question", question);
 		model.addObject("name", bibleQuizTaker.getName());
 		model.addObject("reference", reference);
+		model.addObject("yesterdayDate", dailyQuizManager.getYesterdayDateFormatted());
+		model.addObject("previousDayWinnersEN", getPreviousDayWinners("En"));
+		model.addObject("previousDayWinnersTA", getPreviousDayWinners("Ta"));
 		Locale locale = applicationLocaleResolver.resolveLocale(request);
 		setLanguageBasedStyle(locale, model);
 		return model;
@@ -136,6 +145,38 @@ public class DailyQuizController extends BaseUtility {
 	private String getQuizDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 		return sdf.format(new Date());
+	}
+
+	private void markSuccess(String name, String email, int quizId, String language) {
+		getLogger().info("Marking the success entry for " + name + ", Email:" + email + ",id:" + quizId + ",Language:"
+				+ language);
+		DailyQuizWinner quizWinner = new DailyQuizWinner();
+		quizWinner.setEmail(email);
+		quizWinner.setLanguage(language);
+		quizWinner.setQuiz_id(quizId);
+		quizWinner.setName(name);
+		dailyQuizManager.saveBibleQuizWinner(quizWinner);
+	}
+
+	private List<DailyQuizWinner> getPreviousDayWinners(String language) {
+		List<DailyQuizWinner> dailyQuizWinnersList = new ArrayList<DailyQuizWinner>();
+		String yesterdayDate = dailyQuizManager.getYesterdayDateFormatted();
+		String sql = "SELECT * FROM daily_quiz_winner WHERE answer_time like '%" + yesterdayDate + "%' and language ='" + language +"' order by answer_time limit 10";		
+		List<Object> list = dailyQuizManager.runNativeQuery(sql,DailyQuizWinner.class);
+		getLogger().info("--- >"+list);
+		if (list != null) {
+			list.forEach(x -> {
+				getLogger().info(x.getClass());
+				if (x instanceof DailyQuizWinner) {
+					DailyQuizWinner winner = (DailyQuizWinner) x;
+					dailyQuizWinnersList.add(winner);
+					getLogger().info("Printing the winner" + winner.toString());
+				}
+			});
+		}else{
+			getLogger().info("No winners found for " + yesterdayDate);
+		}
+		return dailyQuizWinnersList;
 	}
 
 }

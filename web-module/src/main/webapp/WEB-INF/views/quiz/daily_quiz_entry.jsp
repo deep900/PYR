@@ -73,6 +73,39 @@
 			newRegisterFormDiv.style.display = "none";
 		}
 	}
+	
+	function validateForm() {
+		let name = document.forms["dailyQuizPage"]["name"].value;
+		let email = document.forms["dailyQuizPage"]["email"].value;
+		if (name == "") {
+			alert("Enter the name to proceed. (Minimum 3 character)");
+			return false;
+		}
+		if (name.length < 3) {
+			alert("Name must be greater than three character");
+			return false;
+		}
+		if (name.length > 25) {
+			alert("Name must be less than 25 character");
+			return false;
+		}
+		if (email.length > 30) {
+			alert("Email must be less than 30 character");
+			return false;
+		}
+
+		if (name.toLowerCase().contains("update")
+				|| name.toLowerCase().contains("delete")
+				|| email.toLowerCase().contains("update")
+				|| email.toLowerCase().contains("delete")
+				|| name.toLowerCase().contains("select")
+				|| email.toLowerCase().contains("select")) {
+			alert("Enter a valid name and email.");
+			return false;
+		}
+
+		return true;
+	}
 </script>
 
 <!-- End JavaScript -->
@@ -180,7 +213,7 @@
 						<article class="column" style="width: 700px;padding-left:10%">
 <c:choose>
 <c:when test="${errorMsg != 'Error while loading the quiz.'}">
-<form:form action="${context}/submitDailyQuiz" method="post" name="dailyQuizPage">
+<form:form action="${context}/submitDailyQuiz" method="post" name="dailyQuizPage" onsubmit="return validateForm()">
 <div class="dailyQuizDiv">	
 <label style="padding-left:100px"><b>Quiz date: ${quizDate}</b></label>								
 <table>

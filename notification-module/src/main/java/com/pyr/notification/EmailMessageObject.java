@@ -3,6 +3,8 @@
  */
 package com.pyr.notification;
 
+import java.io.File;
+
 /**
  * @author pradheep.p
  *
@@ -13,6 +15,7 @@ public class EmailMessageObject extends MessageObject {
 	private String[] ccList = null;
 	private String[] bccList = null;
 	private String fromAddress;
+	private File attachment;
 	
 
 	public EmailMessageObject() {
@@ -49,6 +52,14 @@ public class EmailMessageObject extends MessageObject {
 
 	public void setBccList(String[] bccList) {
 		this.bccList = bccList;
+	}
+
+	public File getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(File attachment) {
+		this.attachment = attachment;
 	}
 
 }

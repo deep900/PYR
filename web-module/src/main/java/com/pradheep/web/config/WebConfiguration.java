@@ -35,15 +35,19 @@ import com.pradheep.web.common.OneYearBible;
 import com.pradheep.web.common.QuizHelper;
 import com.pradheep.web.common.SubscriptionManager;
 import com.pradheep.web.common.WebPageMonitorService;
+import com.pradheep.web.common.event.EventManager;
 import com.pradheep.web.controller.ApplicationLocaleResolver;
 import com.pradheep.web.event.EventHandler;
 import com.pradheep.web.event.PyrApplicationEventPublisher;
-import com.pradheep.web.jobs.ApplicationNotificationService;
+import com.pradheep.web.jobs.ApplicationScheduleService;
+import com.pradheep.web.jobs.DBCleanupTask;
 import com.pradheep.web.jobs.DailyEmailNotificationJob;
 import com.pradheep.web.jobs.DailyQuizNotification;
 import com.pradheep.web.jobs.DailySMSNotificationJob;
+import com.pradheep.web.jobs.EventParticipantNotificationJob;
 import com.pradheep.web.jobs.MonthlyMessageNotification;
 import com.pradheep.web.jobs.PersistedNotificationService;
+import com.pradheep.web.service.EventManagementService;
 import com.pyr.templates.NotificationConfiguration;
 
 /**
@@ -64,7 +68,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		registry.addResourceHandler("/home/praiseyourredeem/properties/**").addResourceLocations("/home/praiseyourredeem/properties/");
+		registry.addResourceHandler("/home/praiseyourredeem/properties/**")
+				.addResourceLocations("/home/praiseyourredeem/properties/");
 		System.out.println("- - - Loading resources complete - - -");
 	}
 
@@ -224,8 +229,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean(name = "smsNotificationService")
-	public ApplicationNotificationService getSMSNotificationService() {
-		ApplicationNotificationService smsNotificationService = new ApplicationNotificationService();
+	public ApplicationScheduleService getSMSNotificationService() {
+		ApplicationScheduleService smsNotificationService = new ApplicationScheduleService();
 		return smsNotificationService;
 	}
 
@@ -243,7 +248,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		return dailySMSNotificationJob;
 	}
 
-	@Bean(name = "EmailNotificationJob")	
+	@Bean(name = "EmailNotificationJob")
 	public DailyEmailNotificationJob getDailyEmailNotificationJob() {
 		DailyEmailNotificationJob dailyEmailNotificationJob = new DailyEmailNotificationJob();
 		return dailyEmailNotificationJob;
@@ -254,31 +259,51 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		QuizHelper quizHelper = new QuizHelper();
 		return quizHelper;
 	}
-	
-	@Bean(name="persistedNotificationService")	
+
+	@Bean(name = "persistedNotificationService")
 	public PersistedNotificationService getPersistedNotificationService() {
 		PersistedNotificationService notificationService = new PersistedNotificationService();
 		return notificationService;
 	}
-	
-	@Bean(name="monthlyMessageNotification")	
+
+	@Bean(name = "monthlyMessageNotification")
 	public MonthlyMessageNotification getMonthlyMessageNotification() {
 		MonthlyMessageNotification monthlyMessageNotification = new MonthlyMessageNotification();
 		return monthlyMessageNotification;
 	}
-	
-	@Bean(name="subscriptionManager")
+
+	@Bean(name = "subscriptionManager")
 	public SubscriptionManager subscriptionManager() {
 		return new SubscriptionManager();
 	}
-	
-	@Bean(name="dailyQuizNotificationJob")
-	public DailyQuizNotification getDailyQuizNotification(){
+
+	@Bean(name = "dailyQuizNotificationJob")
+	public DailyQuizNotification getDailyQuizNotification() {
 		return new DailyQuizNotification();
 	}
-	
-	@Bean(name="dailyQuizManager")
-	public DailyQuizManager getDailyQuizManager(){
+
+	@Bean(name = "dailyQuizManager")
+	public DailyQuizManager getDailyQuizManager() {
 		return new DailyQuizManager();
+	}
+
+	@Bean(name = "dbCleanupJob")
+	public DBCleanupTask getDBCleanupTask() {
+		return new DBCleanupTask();
+	}
+	
+	@Bean(name = "eventManager")
+	public EventManager getEventManager() {
+		return new EventManager();
+	}
+	
+	@Bean(name="eventManagementService")
+	public EventManagementService getEventManagementService(){
+		return new EventManagementService();
+	}
+	
+	@Bean(name="eventParticipantNotificationJob")
+	public EventParticipantNotificationJob getEventParticipantNotificationJob(){
+		return new EventParticipantNotificationJob();
 	}
 }

@@ -33,7 +33,7 @@ import com.pry.security.utility.SecurityConfiguration;
  *
  */
 @Configuration
-@ComponentScan(basePackages = { "com.pradheep.dao*" })
+@ComponentScan(basePackages = { "com.pradheep.dao*" ,"com.pradheep.dao.model.event"})
 @Import({ SecurityConfiguration.class })
 public class DAOConfig {
 
@@ -50,7 +50,7 @@ public class DAOConfig {
 	public AnnotationSessionFactoryBean getSessionFactory() {
 		AnnotationSessionFactoryBean sessionFactory = new org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean();
 		sessionFactory.setDataSource(getDataSource());
-		sessionFactory.setPackagesToScan(new String[] { "com.pradheep.dao.model" });
+		sessionFactory.setPackagesToScan(new String[] { "com.pradheep.dao.model","com.pradheep.dao.model.event" });
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");

@@ -5,15 +5,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <title>Invalid Session</title>
+  <title>Prophesy and Fulfilment</title>
   <c:set var="context" value="${pageContext.request.contextPath}" />
   <!-- ========== Css Files ========== -->
 <link rel="icon" type="image/png" href=<c:url value="/resources/images/favicon.png"/>>
-<meta name="description" content>
-<meta name="author" content>
-<link rel="icon" type="image/png" href=<c:url value="/resources/images/favicon.png"/>>
-<meta name="description" content>
-<meta name="author" content>
+<meta name="description" "Prophesy in the bible and its fulfillment.">
+<meta name="author" >
 <link rel="icon" type="image/png" href=<c:url value="/resources/images/favicon.png"/>>
 <!-- CSS Style -->
 <link rel="stylesheet" href=<c:url value="/resources/css/all.css"/> type="text/css" media="all">
@@ -37,12 +34,10 @@
   </style>
   </head>
   <body>
-    <div class="error-pages">        
-        <h1>Invalid Session</h1>
+    <div>        
+        <h1>Prophesy and its fullfilment.</h1>
         <h4>Kindly navigate from the main page, some error occured.</h4>
-        <div class="bottom-links">               
-          <a href="${context}/" class="btn btn-default">Go Homepage</a>
-           <a href="${context}/messages" class="btn btn-default">Messages Page</a>
+        <div class="bottom-links">
         </div>
 
 </body>

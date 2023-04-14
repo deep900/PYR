@@ -195,11 +195,14 @@
 											<input type="hidden" id="eventId" name="eventId" value="${eventModel.id}" />
 											
 										</form:form>
+										
 										<div class="alert ${csscode} hideit">
 											<p>${errorMessage}</p>
 											<span class="close"></span>
 										</div>
 										<hr>
+										<img src=<c:url value="${eventModel.eventProgramFlyerPath}"/>
+											alt="image">
 									</div>
 								</div>
 							</div>

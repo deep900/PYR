@@ -28,6 +28,7 @@ import com.pradheep.dao.model.event.EventWrapper;
 import com.pradheep.web.common.MonitorHitCounter;
 import com.pradheep.web.common.PagePath;
 import com.pradheep.web.common.event.EventManager;
+import com.pradheep.web.service.EventManagementService;
 
 /**
  * This is for managing the events and its participants.
@@ -40,6 +41,9 @@ public class EventManagementController extends BaseUtility<Object> {
 
 	@Autowired
 	private EventManager eventManager;
+	
+	@Autowired
+	private EventManagementService eventManagementService;
 
 	@RequestMapping("/eventHost/register")
 	@MonitorHitCounter(path = PagePath.EVENT_PAGE)
@@ -52,9 +56,15 @@ public class EventManagementController extends BaseUtility<Object> {
 		try {
 			EventModel event = eventManager.getEventById(orgEventId);
 			model.addObject("eventModel", event);
+			if (eventManagementService.isEventEnded(event)) {
+				getLogger().info("Event already ended" + eventId);
+				model.setViewName(PagePath.EVENT_END_PAGE);
+				errorMsg = "Event already ended, kindly contact the event host";
+			}
 		} catch (Exception err) {
 			errorMsg = "Please check the event id";
 			getLogger().error("Error while obtaining the event", err);
+			model.setViewName(PagePath.EVENT_END_PAGE);
 		}
 		model.addObject("errorMsg", errorMsg);
 		model.addObject("eventId", orgEventId);
@@ -103,7 +113,8 @@ public class EventManagementController extends BaseUtility<Object> {
 		}
 		int flag = eventManager.saveEventParticipants(wrapper);
 		if (flag != -1) {
-			model.addObject("errorMsg", "You have successfully registered , Your reference is: " + flag + "<br><br> Kindly present this reference number while you attend the event.");
+			model.addObject("errorMsg", "You have successfully registered , Your reference is: " + flag
+					+ "<br><br> Kindly present this reference number while you attend the event.");
 		} else {
 			model.addObject("errorMsg", "Unable to register at this moment. Kindly try again later");
 		}
@@ -151,6 +162,6 @@ public class EventManagementController extends BaseUtility<Object> {
 		default:
 			return "Veg";
 		}
-	}
+	}	
 
 }

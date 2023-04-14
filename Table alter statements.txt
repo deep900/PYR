@@ -1,0 +1,8 @@
+alter table event add column email_remainder_template varchar(1000) NULL;
+
+update event set email_remainder_template='Dear ${PARTICIPANT_NAME},<br>Thank you for your registration for the event of : Good friday and easter on the 7th of April 2023.<br><br>Your registration number is ${PARTICIPANT_ID} <br>The event starts @6.30 pm <br>We look forward for your participation!<br>Thank you<br>City Missions Indian International Church<br>#11-12, Mount Zion, Kallang ave<br>Singapore- 339407.<br>For any queries : <br>Contact us: faithmissionsint@gmail.com<br>Whatsapp : +6584481381' where id = 1;
+
+alter table event_participants add column email_remainder_sent bit(1) default 0;
+update event_participants set email_remainder_sent=0 where email_remainder_sent=null;
+
+

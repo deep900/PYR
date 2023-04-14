@@ -18,6 +18,7 @@ import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +73,27 @@ public class DAOService implements InitializingBean {
 				session = null;
 			}
 		}
+	}
+	
+	@Transactional
+	public Object saveObjectAndReturn(Object obj) {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			Transaction transObj = session.beginTransaction();
+			session.save(obj);
+			transObj.commit();
+			getLogger().info("Object saved.." + obj.getClass().getName());
+			return obj;
+		} catch (Exception err) {
+			getLogger().error(err.getMessage(), err);
+		} finally {
+			if (null != session && session.isOpen()) {
+				session.close();
+				session = null;
+			}
+		}
+		return null;
 	}
 
 	@Transactional
@@ -475,12 +497,13 @@ public class DAOService implements InitializingBean {
 		}
 	}
 
-	public List<Object> queryUsingNativeSQL(String sql) {
+	public List<Object> queryUsingNativeSQL(String sql,Class T) {
 		getLogger().info("Trying to execute sql " + sql);
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
 			Query query = session.createSQLQuery(sql);
+			query.setResultTransformer(new AliasToBeanResultTransformer(T));
 			List<Object> list = query.list();
 			return list;
 		} catch (Exception err) {
@@ -492,6 +515,44 @@ public class DAOService implements InitializingBean {
 			}
 		}
 		return Collections.emptyList();
+	}
+	
+	public List<Object> queryUsingNativeSQL(String sql) {
+		getLogger().info("Trying to execute sql " + sql);
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			Query query = session.createSQLQuery(sql);			
+			List<Object> list = query.list();
+			return list;
+		} catch (Exception err) {
+			getLogger().error(err.getMessage(), err);
+		} finally {
+			if (null != session && session.isOpen()) {
+				session.close();
+				session = null;
+			}
+		}
+		return Collections.emptyList();
+	}
+	
+	public int executeUsingNativeSQL(String sql) {
+		getLogger().info("Trying to execute sql " + sql);
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			Query query = session.createSQLQuery(sql);
+			int result = query.executeUpdate();
+			return result;
+		} catch (Exception err) {
+			getLogger().error(err.getMessage(), err);
+		} finally {
+			if (null != session && session.isOpen()) {
+				session.close();
+				session = null;
+			}
+		}
+		return 0;
 	}
 
 	public boolean unSubscribeMember(String key) {

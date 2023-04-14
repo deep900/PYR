@@ -11,6 +11,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.pradheep.dao.model.BibleQuizEng;
+import com.pradheep.dao.model.BibleQuizTamil;
 import com.pradheep.dao.model.DailyBibleQuiz;
 import com.pradheep.dao.model.Subscription;
 import com.pradheep.web.common.DailyQuizManager;
@@ -73,7 +75,7 @@ public class DailyQuizNotification extends NotificationJob {
 	private List<DailyBibleQuiz> getDailyQuiz(){
 		List<DailyBibleQuiz> dailyBibleQuizList = dailyQuizManager.getBibleQuizByDate(dailyQuizManager.getCurrentQuizDate());
 		return dailyBibleQuizList;
-	}
+	}	
 
 	@Override
 	public MessageObject getMessageObject(Object subscription) {
@@ -88,24 +90,31 @@ public class DailyQuizNotification extends NotificationJob {
 			message.append("<br> Click the link below to participate in today's quiz.");
 			Iterator<DailyBibleQuiz> dailyQuizIterator = dailyBibleQuizList.iterator();
 			String lang = "";
+			String diffLevel = "";
 			while(dailyQuizIterator.hasNext()){
 			DailyBibleQuiz dailyBibleQuiz = dailyQuizIterator.next();	
 			if(dailyBibleQuiz.getLanguage().equalsIgnoreCase("English")){
 				lang = "en";
+				BibleQuizEng engBibleQuiz = dailyQuizManager.getEngBibleQuiz(dailyBibleQuiz.getQuizId());
+				diffLevel = engBibleQuiz.getLevel();
 			}else if(dailyBibleQuiz.getLanguage().equalsIgnoreCase("Tamil")){
 				lang = "ta";
+				BibleQuizTamil tamBibleQuiz = dailyQuizManager.getTamilBibleQuiz(dailyBibleQuiz.getQuizId());
+				diffLevel = tamBibleQuiz.getLevel();
 			}
 			message.append("<br><b>" + dailyBibleQuiz.getLanguage() + " Quiz </b><br>");
-			message.append(URL + "?lang="+ lang + "<br><br>");
+			message.append(URL + "?lang="+ lang + "<br>");
+			message.append("Difficulty level:" + diffLevel + "<br>");
+			message.append("--------------------------------------");
 			}			
 		}
-		message.append("<br> - Praise your redeemer ministry.</font>");
+		message.append("<br> - Admin [PraiseYourRedeemer].</font>");
 		Subscription subscriptionObj = (Subscription) subscription;
 		EmailMessageObject messageObject = new EmailMessageObject();
 		messageObject.setBodyOfMessage(message.toString());
 		messageObject.setToList(new String[] { subscriptionObj.getEmailId() });
 		messageObject.setFromAddress("administrator@praiseyourredeemer.org");
-		messageObject.setSubjectOfMessage("Daily Quiz-" + getTodaysDate());
+		messageObject.setSubjectOfMessage("Daily Bible Quiz-" + getTodaysDate());
 		return messageObject;
 	}	
 

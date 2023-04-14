@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "event")
 public class EventModel implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -21,34 +21,40 @@ public class EventModel implements java.io.Serializable {
 
 	@Column(name = "event_name")
 	private String eventName;
-	
+
 	@Column(name = "event_date_time")
 	private Timestamp eventDateTime;
-	
+
 	@Column(name = "event_location")
 	private String eventLocation;
-	
-	@Column(name="welcome_note")
+
+	@Column(name = "welcome_note")
 	private String welcomeNote;
-	
-	@Column(name="organizer")
+
+	@Column(name = "organizer")
 	private String organizer;
-	
-	@Column(name="event_org_contact_no")
+
+	@Column(name = "event_org_contact_no")
 	private String eventOrgContactNumber;
-	
-	@Column(name="event_org_email")
+
+	@Column(name = "event_org_email")
 	private String eventOrgEmail;
 
-	@Column(name="event_flyer_image_path")
+	@Column(name = "event_flyer_image_path")
 	private String eventFlyerImagePath;
-	
-	@Column(name="event_org_logo_path")
+
+	@Column(name = "event_org_logo_path")
 	private String eventOrgLogoPath;
-	
-	@Column(name="event_reg_notification_freq")
+
+	@Column(name = "event_reg_notification_freq")
 	private int eventNotificationFreq;
-	
+
+	@Column(name = "event_program_flyer_image_path")
+	private String eventProgramFlyerPath;
+
+	@Column(name = "email_remainder_template")
+	private String emailRemainderTemplate;
+
 	public Integer getId() {
 		return Id;
 	}
@@ -63,7 +69,7 @@ public class EventModel implements java.io.Serializable {
 
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
-	}	
+	}
 
 	public String getEventLocation() {
 		return eventLocation;
@@ -87,7 +93,7 @@ public class EventModel implements java.io.Serializable {
 
 	public void setOrganizer(String organizer) {
 		this.organizer = organizer;
-	}	
+	}
 
 	public String getEventOrgContactNumber() {
 		return eventOrgContactNumber;
@@ -103,7 +109,7 @@ public class EventModel implements java.io.Serializable {
 
 	public void setEventOrgEmail(String eventOrgEmail) {
 		this.eventOrgEmail = eventOrgEmail;
-	}	
+	}
 
 	public String getEventFlyerImagePath() {
 		return eventFlyerImagePath;
@@ -119,7 +125,7 @@ public class EventModel implements java.io.Serializable {
 
 	public void setEventOrgLogoPath(String eventOrgLogoPath) {
 		this.eventOrgLogoPath = eventOrgLogoPath;
-	}	
+	}
 
 	public int getEventNotificationFreq() {
 		return eventNotificationFreq;
@@ -127,15 +133,6 @@ public class EventModel implements java.io.Serializable {
 
 	public void setEventNotificationFreq(int eventNotificationFreq) {
 		this.eventNotificationFreq = eventNotificationFreq;
-	}
-
-	@Override
-	public String toString() {
-		return "EventModel [Id=" + Id + ", eventName=" + eventName + ", eventDateTime=" + eventDateTime
-				+ ", eventLocation=" + eventLocation + ", welcomeNote=" + welcomeNote + ", organizer=" + organizer
-				+ ", eventOrgContactNumber=" + eventOrgContactNumber + ", eventOrgEmail=" + eventOrgEmail
-				+ ", eventFlyerImagePath=" + eventFlyerImagePath + ", eventOrgLogoPath=" + eventOrgLogoPath
-				+ ", eventNotificationFreq=" + eventNotificationFreq + "]";
 	}
 
 	public Timestamp getEventDateTime() {
@@ -146,5 +143,30 @@ public class EventModel implements java.io.Serializable {
 		this.eventDateTime = eventDateTime;
 	}
 
-	
+	public String getEventProgramFlyerPath() {
+		return eventProgramFlyerPath;
+	}
+
+	public void setEventProgramFlyerPath(String eventProgramFlyerPath) {
+		this.eventProgramFlyerPath = eventProgramFlyerPath;
+	}
+
+	public String getEmailRemainderTemplate() {
+		return emailRemainderTemplate;
+	}
+
+	public void setEmailRemainderTemplate(String emailRemainderTemplate) {
+		this.emailRemainderTemplate = emailRemainderTemplate;
+	}
+
+	@Override
+	public String toString() {
+		return "EventModel [Id=" + Id + ", eventName=" + eventName + ", eventDateTime=" + eventDateTime
+				+ ", eventLocation=" + eventLocation + ", welcomeNote=" + welcomeNote + ", organizer=" + organizer
+				+ ", eventOrgContactNumber=" + eventOrgContactNumber + ", eventOrgEmail=" + eventOrgEmail
+				+ ", eventFlyerImagePath=" + eventFlyerImagePath + ", eventOrgLogoPath=" + eventOrgLogoPath
+				+ ", eventNotificationFreq=" + eventNotificationFreq + ", eventProgramFlyerPath="
+				+ eventProgramFlyerPath + ", emailRemainderTemplate=" + emailRemainderTemplate + "]";
+	}	
+
 }

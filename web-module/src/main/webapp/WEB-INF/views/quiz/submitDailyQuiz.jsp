@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.pradheep.dao.model.BibleQuizEng"%>
+<%@ page import="com.pradheep.dao.model.DailyQuizWinner"%>
 <link rel="stylesheet" href=<c:url value="/resources/css/calendar.css"/>
 	media="screen">
 <link rel="stylesheet" href=<c:url value="/resources/css/google.css"/>
@@ -172,17 +173,58 @@
 
 
 						
-<h3>Dear ${name}, find the correct answer below. </h3><br>
+<h3>Dear ${name}, find the correct answer below. </h2><br>
 <h4>Question:${question}</h4><br>
 <h4>Correct answer: ${correctAnswer} </h4><br>
 <h4>Bible reference: ${reference}</h4>	
 
-							
-
+<hr>
+<br>
+<h3>Quiz winners for ${yesterdayDate} </h3><br>
+<table style="margin-left:0px!important;width:100%">
+<tr><th>English quiz</th><th>Tamil Quiz</th></tr>
+<tr><td>
+<table style="margin-left:0px!important;width:100%">
+<c:choose>
+<c:when test="${previousDayWinnersEN.size() != 0 }"> 
+<tr><th> SNO </th><th> Name</th></tr>
+</c:when>
+ <c:otherwise>
+ <tr><td> No winners </td> </tr>
+ </c:otherwise>
+ </c:choose>
+<c:set var="count" value="0" scope="page" />
+<c:forEach var="quizWinner" items="${previousDayWinnersEN}">
+<c:set var="count" value="${count + 1}" scope="page" />
+<tr><td>${count}</td><td>${quizWinner.name} </td></tr>
+</c:forEach>
+</table>
+</td>
+<td>
+<table style="margin-left:0px!important;width:100%">
+<c:choose>
+<c:when test="${previousDayWinnersTA.size() != 0 }"> 
+<tr><th> SNO </th><th> Name</th></tr>
+</c:when>
+ <c:otherwise>
+ <tr><td> No winners </td> </tr>
+ </c:otherwise>
+</c:choose>
+<c:set var="count" value="0" scope="page" />
+<c:forEach var="quizWinner" items="${previousDayWinnersTA}">
+<c:set var="count" value="${count + 1}" scope="page" />
+<tr> <td>${count}</td><td>${quizWinner.name} </td></tr>
+</c:forEach>
+</table>
+</td>
+</tr>
+</table><br>
+Thanks for your participation. Jesus bless you !
 </article>						
 </section>
 </section>
 </div>
+
 </div>
 
 		<!-- footer -->
