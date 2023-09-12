@@ -38,11 +38,11 @@ public class PYRUtility {
 		return sdf.format(today);		
 	}
 	
-	public static Date getNextDaySixAM(Integer offsetInSeconds){
+	public static Date getNextDayFourAM(Integer offsetInSeconds){
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
 		calendar.add(GregorianCalendar.DAY_OF_MONTH, 1);
-		calendar.set(GregorianCalendar.HOUR_OF_DAY, 6);	
+		calendar.set(GregorianCalendar.HOUR_OF_DAY, 4);	
 		calendar.set(GregorianCalendar.MINUTE, 0);
 		calendar.set(GregorianCalendar.SECOND, 0);
 		calendar.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
@@ -162,13 +162,14 @@ public class PYRUtility {
 			}
 		} catch (IOException e) {			
 			e.printStackTrace();
-		}
+		} 
 		System.out.println(getUnicodeCharacter(buf.toString()));
 	}
 	
 	public static void creationTest(){
-		String arg ="யோவான் 1:41";
+		String arg ="துன்பங்கள்";
 		System.out.println(getUnicodeCharacter(arg));
+		//convertFile();
 	}
 	
 	private void createUI(){

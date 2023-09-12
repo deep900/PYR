@@ -155,15 +155,20 @@ public class DailyQuizController extends BaseUtility {
 		quizWinner.setLanguage(language);
 		quizWinner.setQuiz_id(quizId);
 		quizWinner.setName(name);
-		dailyQuizManager.saveBibleQuizWinner(quizWinner);
+		if (isNameValid(name)) {
+			dailyQuizManager.saveBibleQuizWinner(quizWinner);
+		} else {
+			getLogger().info("Invalid name , cannot persist this name: " + name);
+		}
 	}
 
 	private List<DailyQuizWinner> getPreviousDayWinners(String language) {
 		List<DailyQuizWinner> dailyQuizWinnersList = new ArrayList<DailyQuizWinner>();
 		String yesterdayDate = dailyQuizManager.getYesterdayDateFormatted();
-		String sql = "SELECT * FROM daily_quiz_winner WHERE answer_time like '%" + yesterdayDate + "%' and language ='" + language +"' order by answer_time limit 10";		
-		List<Object> list = dailyQuizManager.runNativeQuery(sql,DailyQuizWinner.class);
-		getLogger().info("--- >"+list);
+		String sql = "SELECT * FROM daily_quiz_winner WHERE answer_time like '%" + yesterdayDate + "%' and language ='"
+				+ language + "' order by answer_time limit 10";
+		List<Object> list = dailyQuizManager.runNativeQuery(sql, DailyQuizWinner.class);
+		getLogger().info("--- >" + list);
 		if (list != null) {
 			list.forEach(x -> {
 				getLogger().info(x.getClass());
@@ -173,10 +178,34 @@ public class DailyQuizController extends BaseUtility {
 					getLogger().info("Printing the winner" + winner.toString());
 				}
 			});
-		}else{
+		} else {
 			getLogger().info("No winners found for " + yesterdayDate);
 		}
 		return dailyQuizWinnersList;
 	}
 
+	/**
+	 * Avoid unnecessary names in the quiz results page.
+	 * Avoids name like ABC, DEF.
+	 * 
+	 * @param bibleQuizTakerName
+	 * @return
+	 */
+	private boolean isNameValid(String bibleQuizTakerName) {
+		if (null == bibleQuizTakerName || bibleQuizTakerName.length() < 3) {
+			return false;
+		}
+		bibleQuizTakerName = bibleQuizTakerName.trim();
+		if (bibleQuizTakerName.length() == 3) {
+			String str = bibleQuizTakerName.toLowerCase();
+			char[] array = str.toCharArray();		
+			int firstChar = (int) array[0];
+			int secChar = (int) array[1];
+			int thirdChar = (int) array[2];
+			if((firstChar + 1 == secChar) && (secChar +1 == thirdChar)){
+				return false;
+			}			
+		}
+		return true;
+	}	
 }
