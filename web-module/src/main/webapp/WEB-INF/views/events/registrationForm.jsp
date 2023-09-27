@@ -70,6 +70,12 @@
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
+<!-- <script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+	
+</script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+
 </head>
 <body style="font-family: 'Bona Nova', serif;">
 	<div class="wrapper">
@@ -82,7 +88,8 @@
 							<div class="blog-post-1">
 
 								<br class="clear" />
-								<div class="blog-holder" style="font-size:18px;font-weight:bold!important">
+								<div class="blog-holder"
+									style="font-size: 18px; font-weight: bold !important">
 									<div class="title-msg">
 										<span><u> ${eventModel.welcomeNote} <br>
 												${eventModel.eventName}
@@ -104,76 +111,91 @@
 												<table style="border: 0px; width: 1080px; margin-left: 10px">
 													<tr>
 														<td><label>Registering for: </label></td>
-														<td><form:select id="registeringFor" name="registeringFor" path="registeringFor"
-															class="mystyle"
-															style="height: 34px; width: 308px; font-size: 13px;">
+														<td><form:select id="registeringFor"
+																name="registeringFor" path="registeringFor"
+																class="mystyle"
+																style="height: 34px; width: 308px; font-size: 13px;">
 																<option value="MySelf">Myself</option>
 																<option value="My-Family">My Family</option>
 																<option value="My-Friends">My Friends</option>
-														</form:select></td>
+															</form:select></td>
 													</tr>
 													<tr>
 														<td>Name:</td>
 														<td><form:input type="text" id="name" path="name"
-															style="height: 30px; width: 300px; font-size: 13px;" />
+																style="height: 30px; width: 300px; font-size: 13px;" />
 														</td>
 													</tr>
 
 													<tr>
 														<td>Contact number:</td>
-														<td><form:input type="text" path="mobileNumber" id="mobileNumber"
-															style="height: 30px; width: 300px; font-size: 13px;" />
+														<td><form:input type="text" path="mobileNumber"
+																id="mobileNumber"
+																style="height: 30px; width: 300px; font-size: 13px;" />
 														</td>
 													</tr>
 
 													<tr>
 														<td>Email:</td>
 														<td><form:input type="text" id="email" path="email"
-															style="height: 30px; width: 300px; font-size: 13px;" />
+																style="height: 30px; width: 300px; font-size: 13px;" />
 														</td>
 													</tr>
+													<tr>
+														<td>Like to prefer</td>
+														<td><form:select id="dinnerTime"
+																name="dinnerTime" path="dinnerTime"
+																style="height: 34px; width: 308px; font-size: 13px;">
+																<option value="Pre-Dinner">Pre-Dinner @5:30PM</option>
+																<option value="Post-Dinner" selected>Post-Dinner @9PM</option>																
+															</form:select></td>
+													</tr>							
 
 													<tr>
 														<td>Food preference:</td>
-														<td><form:select id="foodPreference" name="foodPreference" path="foodPreference"
-															style="height: 34px; width: 308px; font-size: 13px;">
-																<option value="Vegeterian">Vegeterian</option>	
-																<option value="Non-Vegeterian">Non-Vegeterian</option>															
+														<td><form:select id="foodPreference"
+																name="foodPreference" path="foodPreference"
+																style="height: 34px; width: 308px; font-size: 13px;">
+																<option value="Vegeterian">Vegeterian</option>
+																<option value="Non-Vegeterian">Non-Vegeterian</option>
 																<option value="Non-Vegeterian-Hallal">Non-Vegeterian(Hallal)</option>
 																<option value="Not Required">Not Required</option>
-														</form:select></td>
+															</form:select></td>
 													</tr>
 
 													<tr>
 														<td>Name of person invited you:</td>
-														<td><form:input type="text" id="personWhoInvited" path="personWhoInvited"
-															style="height: 30px; width: 300px; font-size: 13px;" /><br>
-															<span style="font-size:13px;color:red">Hint: Specify CMIIC if you are already a member of church</span>
-														</td>
+														<td><form:input type="text" id="personWhoInvited"
+																path="personWhoInvited"
+																style="height: 30px; width: 300px; font-size: 13px;" /><br>
+															<span style="font-size: 13px; color: red">Hint:
+																Specify CMIIC if you are already a member of church</span></td>
 													</tr>
 
 													<tr>
 														<td>Number of children accompany you:</td>
-														<td><form:select id="childCount" name="childCount" path="childCount"
-															style="height: 34px; width: 308px; font-size: 13px;"
-															onchange="loadChildComp()">
+														<td><form:select id="childCount" name="childCount"
+																path="childCount"
+																style="height: 34px; width: 308px; font-size: 13px;"
+																onchange="loadChildComp()">
 																<option value="0">Select</option>
 																<option value="1">1</option>
 																<option value="2">2</option>
 																<option value="3">3</option>
 																<option value="4">4</option>
-																<option value="5">5</option>																
-														</form:select>
+																<option value="5">5</option>
+															</form:select>
 															<div class="childDivContainer" id="childContainer"></div></td>
 													</tr>
 
 													<tr>
-														<td>Number of adults accompany you: <br> 
-														<span style="font-size:13px;color:red">(Age Above 13)</span>
+														<td>Number of adults accompany you: <br> <span
+															style="font-size: 13px; color: red">(Age Above 13)</span>
 														</td>
-														<td><form:select id="adultCount" name="adultCount" path="adultCount"
-															style="height: 34px; width: 308px; font-size: 13px;"
-															onchange="adultsChanged()">
+														<td><form:select id="adultCount" name="adultCount"
+																path="adultCount"
+																style="height: 34px; width: 308px; font-size: 13px;"
+																onchange="adultsChanged()">
 																<option value="0">Select</option>
 																<option value="1">1</option>
 																<option value="2">2</option>
@@ -184,18 +206,20 @@
 																<option value="7">7</option>
 																<option value="8">8</option>
 																<option value="9">9</option>
-																<option value="10">10</option>														
-														</form:select>
+																<option value="10">10</option>
+															</form:select>
 															<div class="adultDivContainer" id="adultContainer"></div></td>
 													</tr>
 												</table>
-												<br> <input name="submit" type="submit" value="SUBMIT"
-													style="margin-left: 10px;"> <br> <br>
-											</div>											
-											<input type="hidden" id="eventId" name="eventId" value="${eventModel.id}" />
-											
+												<br> <input id="submit" name="submit" type="submit"
+													value="SUBMIT" style="margin-left: 10px;"> <br>
+												<br>
+											</div>
+											<input type="hidden" id="eventId" name="eventId"
+												value="${eventModel.id}" />
+
 										</form:form>
-										
+
 										<div class="alert ${csscode} hideit">
 											<p>${errorMessage}</p>
 											<span class="close"></span>
@@ -245,18 +269,19 @@
 	</div>
 	</footer>
 	</div>
-	<script src=<c:url value="/resources/js/jquery-1.js"/>></script>
-	<!-- jQuery library -->
+	<!-- <script src=<c:url value="/resources/js/jquery-1.js"/>></script>
+	
 	<script type="text/javascript"
 		src=<c:url value="/resources/js/jquery.slideshow.js"/>>
 		
 	</script>
 	<script src=<c:url value="/resources/js/jquery-u.js"/>></script>
-	<script src=<c:url value="/resources/js/jqueryi-icon-menu.js"/>></script>
+	<script src=<c:url value="/resources/js/jqueryi-icon-menu.js"/>></script>-->
 	<script src=<c:url value="/resources/js/tytabs.js"/>></script>
 	<script src=<c:url value="/resources/js/browser-detect.js"/>></script>
 	<script type="text/javascript">
 		function validateForm() {
+
 			var name = document.getElementById('name').value;
 			if (name.length < 3) {
 				alert("Name should be at least 3 characters.");
@@ -267,6 +292,15 @@
 				alert("Enter a valid mobile number.");
 				return false;
 			}
+			/* var data = validateMobileNumber(mobileNum);
+			if (data === 'true') {
+				alert("Mobile Number already exists - Kindly provide another mobile number");
+				console.log(data);
+				return false;
+			} else {
+			console.log("Mobile number does not exist");
+			}*/
+
 			var email = document.getElementById('email').value;
 			if (email.length < 3) {
 				alert("Enter a valid email address");
@@ -283,56 +317,70 @@
 			var childNodes = container.childNodes;
 			var jsonOut = "[";
 			var nameOut = "";
-			for (y=0;i<childNodes.length;y++) {
+			for (y = 0; i < childNodes.length; y++) {
 				var childId = childNodes[y].id;
-				var childName = childNodes[y].value;				
+				var childName = childNodes[y].value;
 				console.log("Child ID" + childId);
 				console.log("Child Name:" + childName);
-				
-				if(childId != undefined){
-				if (childId.includes("child")) {
-					if (childName.length < 3) {
-						alert("Child Name should be at least 3 characters.")
-						return false;
+
+				if (childId != undefined) {
+					if (childId.includes("child")) {
+						if (childName.length < 3) {
+							alert("Child Name should be at least 3 characters.")
+							return false;
+						}
+						nameOut = nameOut + "{\"name\":\"" + childName + "\",";
 					}
-					nameOut = nameOut + "{\"name\":\"" + childName + "\","; 
-				}
-				if(childId.includes("foodPreference")){
-					nameOut = nameOut + "{\"foodPreference\":\"" + childName + "\"}"
-				}
+					if (childId.includes("foodPreference")) {
+						nameOut = nameOut + "{\"foodPreference\":\""
+								+ childName + "\"}"
+					}
 				}
 			}
 			jsonOut = "[" + nameOut + "]";
 			childList.value = jsonOut;
 			console.log(jsonOut);
 			alert(jsonOut);
-			            
+
 			var aContainer = document.getElementById("adultContainer");
 			var adultList = document.getElementById("adultMembers");
 			console.log("Has Child Nodes" + aContainer.hasChildNodes());
 			var achildNodes = aContainer.childNodes;
-			for ( x=0;i<achildNodes.length;x++) {
+			for (x = 0; i < achildNodes.length; x++) {
 				var childId = achildNodes[x].id;
-				var childName = achildNodes[x].value;				
+				var childName = achildNodes[x].value;
 				console.log("Child ID" + childId);
 				console.log("Child Name:" + childName);
-				if(childId != undefined){
-				if (childId.includes("adult")) {
-					if (childName.length < 3) {
-						alert("Adult Name should be at least 3 characters.")
-						return false;
+				if (childId != undefined) {
+					if (childId.includes("adult")) {
+						if (childName.length < 3) {
+							alert("Adult Name should be at least 3 characters.")
+							return false;
+						}
 					}
-				}
-				if (childId.includes("food")) {
-					if (childName.length < 3) {
-						alert("Adult Name should be at least 3 characters.")
-						return false;
+					if (childId.includes("food")) {
+						if (childName.length < 3) {
+							alert("Adult Name should be at least 3 characters.")
+							return false;
+						}
 					}
-				}
 				}
 			}
 			return true;
 		}
+			
+	function validateMobileNumber(mobileNumber) {		
+		const remote_url = 'http://localhost:8080/web-module-1.0/api/eventHost/checkMobileNumber?eventId=1GCu57LGZkU=&mobileNumber=';
+		alert("Inside validate mobile number: " + remote_url);
+		const request = new XMLHttpRequest();
+		request.open("GET", remote_url+mobileNumber, false); // `false` makes the request synchronous
+		request.send(null);
+		if (request.status === 200) {
+		  console.log(request.responseText);
+		  return request.responseText;
+		}
+		return "";
+	}
 	</script>
 	<script type="text/javascript">
 		function loadChildComp() {
@@ -354,16 +402,17 @@
 				input.id = "child" + i;
 				container.appendChild(input);
 				var selectList = document.createElement("select");
-				createFoodPreference(container, selectList, i + 1, "childMembers");
+				createFoodPreference(container, selectList, i + 1,
+						"childMembers");
 				container.appendChild(document.createElement("br"));
 				container.appendChild(document.createElement("br"));
 			}
 		}
 
 		function createFoodPreference(parentElement, selectList, id, arg) {
-			var array = [ "Veg","Non-Veg", "Non-Veg-Hallal","Not Required" ];
+			var array = [ "Veg", "Non-Veg", "Non-Veg-Hallal", "Not Required" ];
 			selectList.id = "food-" + arg + "-" + id;
-			selectList.name=arg+".foodPreference";
+			selectList.name = arg + ".foodPreference";
 			parentElement.appendChild(selectList);
 			//Create and append the options
 			for (var i = 0; i < array.length; i++) {
@@ -394,7 +443,8 @@
 				input.id = "adult" + i;
 				container.appendChild(input);
 				var selectList = document.createElement("select");
-				createFoodPreference(container, selectList, i + 1, "adultMembers");
+				createFoodPreference(container, selectList, i + 1,
+						"adultMembers");
 				container.appendChild(document.createElement("br"));
 				container.appendChild(document.createElement("br"));
 			}

@@ -302,6 +302,7 @@ public class DAOService implements InitializingBean {
 				cr.setMaxResults(limits);
 			}
 			int i = 0;
+			
 			for (; i < queryParameters.length; i++) {
 				if (symbol[i].equals("=")) {
 					cr.add(Restrictions.eq(queryParameters[i], reference[i]));

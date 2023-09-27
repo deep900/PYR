@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "event_participants")
 public class EventParticipants implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,36 +22,39 @@ public class EventParticipants implements java.io.Serializable {
 
 	@Column(name = "event_id")
 	private Integer eventId;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "email")
 	private String email;
-	
-	@Column(name="mobile_number")
+
+	@Column(name = "mobile_number")
 	private String mobileNumber;
-	
-	@Column(name="food_preference")
+
+	@Column(name = "food_preference")
 	private String foodPreference;
 
-	@Column(name="person_invited")
+	@Column(name = "person_invited")
 	private String personWhoInvited;
-	
-	@Column(name="registering_for")
+
+	@Column(name = "registering_for")
 	private String registeringFor;
-	
-	@Column(name="child_cnt")
+
+	@Column(name = "child_cnt")
 	private Integer childCount;
-	
-	@Column(name="adult_count")
+
+	@Column(name = "adult_count")
 	private Integer adultCount;
-	
-	@Column(name="registered_time")
+
+	@Column(name = "registered_time")
 	private Timestamp registeredTime;
-	
-	@Column(name="email_remainder_sent")
+
+	@Column(name = "email_remainder_sent")
 	private boolean remindedByEmail;
+
+	@Column(name = "dinner_time")
+	private String dinnerTime;	
 
 	public Integer getId() {
 		return Id;
@@ -139,7 +142,7 @@ public class EventParticipants implements java.io.Serializable {
 
 	public void setRegisteredTime(Timestamp registeredTime) {
 		this.registeredTime = registeredTime;
-	}	
+	}
 
 	public boolean isRemindedByEmail() {
 		return remindedByEmail;
@@ -149,13 +152,21 @@ public class EventParticipants implements java.io.Serializable {
 		this.remindedByEmail = remindedByEmail;
 	}
 
+	public String getDinnerTime() {
+		return dinnerTime;
+	}
+
+	public void setDinnerTime(String dinnerTime) {
+		this.dinnerTime = dinnerTime;
+	}
+
 	@Override
 	public String toString() {
 		return "EventParticipants [Id=" + Id + ", eventId=" + eventId + ", name=" + name + ", email=" + email
 				+ ", mobileNumber=" + mobileNumber + ", foodPreference=" + foodPreference + ", personWhoInvited="
 				+ personWhoInvited + ", registeringFor=" + registeringFor + ", childCount=" + childCount
 				+ ", adultCount=" + adultCount + ", registeredTime=" + registeredTime + ", remindedByEmail="
-				+ remindedByEmail + "]";
-	}	
-	
+				+ remindedByEmail + ", dinnerTime=" + dinnerTime + "]";
+	}
+
 }

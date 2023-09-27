@@ -12,9 +12,11 @@ import com.pradheep.dao.config.DAOService;
 import com.pradheep.dao.model.Message;
 import com.pradheep.dao.model.NotificationsModel;
 import com.pradheep.dao.model.Subscription;
+import com.pradheep.dao.model.event.EventParticipants;
 import com.pradheep.web.common.ApplicationConstants;
 import com.pradheep.web.common.ApplicationLoggerWeb;
 import com.pradheep.web.common.PYRUtility;
+import com.pradheep.web.common.event.NotifyEventRegistration;
 import com.pradheep.web.jobs.PersistedNotificationService;
 import com.pry.security.utility.PublicUtility;
 import com.pyr.messenger.Messenger;
@@ -95,6 +97,13 @@ public class EventHandler implements ApplicationListener<ApplicationEvent> {
 			model.setRepeatNotification(false);
 			daoService.saveOrUpdateEntity(model);
 			persistedNotificationService.addNotificationModel(model);				
+		}
+		else if(arg0 instanceof NewUserEventRegistrationEvent) {
+			getLogger().info("New user registered - received event.");
+			EventParticipants eventParticipants = (EventParticipants) arg0.getSource();
+			NotifyEventRegistration notifyEventRegistrationObj = this.persistedNotificationService.getApplicationContext().getBean(NotifyEventRegistration.class);
+			notifyEventRegistrationObj.setEventParticipantsModel(eventParticipants);
+			this.threadPoolTaskExecutor.execute(notifyEventRegistrationObj);
 		}
 	}
 

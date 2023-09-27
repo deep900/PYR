@@ -69,6 +69,16 @@ public class PyrMessenger implements Messenger {
 		return flag;
 	}
 
+	private MimeBodyPart getAttachmentPart(File attachmentFile) {
+		MimeBodyPart attachmentPart = new MimeBodyPart();
+		try {
+			attachmentPart.attachFile(attachmentFile);
+		} catch (IOException | MessagingException e) {
+			e.printStackTrace();
+		}
+		return attachmentPart;
+	}
+
 	public MimeMessage prepareBasicEmailContent(EmailMessageObject emailMessageObject) {
 		MimeMessage mimeMessage = establishPrimaryEmailConnection();
 		String body = emailMessageObject.getBodyOfMessage();
@@ -89,6 +99,9 @@ public class PyrMessenger implements Messenger {
 				BodyPart messageBodyPart = new MimeBodyPart();
 				messageBodyPart.setText(body);
 				multipart.addBodyPart(messageBodyPart);
+				if (null != emailMessageObject.getAttachment()) {
+					multipart.addBodyPart(getAttachmentPart(emailMessageObject.getAttachment()));
+				}
 				mimeMessage.setContent(multipart);
 			} else {
 				mimeMessage.setContent(body, "text/html; charset=utf-8");

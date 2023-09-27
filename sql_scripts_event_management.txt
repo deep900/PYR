@@ -1,0 +1,17 @@
+INSERT INTO `event` VALUES (2,'Christmas Celebration','2023-11-04 18:30:00','CT Hub,# 11-12 , MT Zion, 2 Kallang Ave, Singapore-339407','CMIIC Welcomes you','City Missions Indian International Church','+65 81237107','sushpraveen25@gmail.com','/resources/images/flyer1.jpeg','/resources/images/cmiic_logo.png',60,'/resources/images/event_program.jpeg','Dear ${PARTICIPANT_NAME},<br>Thank you for your registration for the event of : Christmas celebrations the 4th of Nov 2023.<br><br>Your registration number is ${PARTICIPANT_ID} <br>The event starts @6.30 pm <br>We look forward for your participation!<br>Thank you<br>City Missions Indian International Church<br>#11-12, Mount Zion, Kallang ave<br>Singapore- 339407.<br>For any queries : <br>Contact us: faithmissionsint@gmail.com<br>Whatsapp : +6584481381');
+
+
+alter table event_participants add column (dinner_time varchar(25) not null default 'Post-Dinner');
+alter table event add column (event_admin_email varchar(500) not null);
+alter table event add column (notify_event_registration_to_admin boolean not null default true);
+
+update event set event_program_flyer_image_path ='/resources/images/event_program.png' where id = 2;
+update event set event_flyer_image_path ='/resources/images/flyer1.png' where id = 2;
+
+update event set event_admin_email ='rabijohn@gmail.com,faithmissionsint@gmail.com,Julie.vincent@gmail.com,stephen.jabez@gmail.com' where id = 2;
+
+update event set notify_event_registration_to_admin =true where id = 2;
+
+
+
+

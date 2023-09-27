@@ -102,4 +102,8 @@ public class PersistedNotificationService implements InitializingBean, Applicati
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
 		this.applicationContext = arg0;
 	}
+	
+	public ApplicationContext getApplicationContext() { 
+		return this.applicationContext;
+	}
 }

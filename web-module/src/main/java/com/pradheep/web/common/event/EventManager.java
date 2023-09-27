@@ -43,9 +43,10 @@ public class EventManager {
 		List participantsList = daoService.getObjectsListById(EventParticipants.class, "eventId", eventId, "=", -1);
 		return participantsList;
 	}
-	
+
 	public List<EventParticipantsMembers> getParticipantMembers(int participantId) {
-		List participantsMem = daoService.getObjectsListById(EventParticipantsMembers.class, "participantId", participantId, "=", -1);
+		List participantsMem = daoService.getObjectsListById(EventParticipantsMembers.class, "participantId",
+				participantId, "=", -1);
 		return participantsMem;
 	}
 
@@ -100,5 +101,34 @@ public class EventManager {
 			getLogger().error("Error while saving the participants", err);
 			return -1;
 		}
+	}
+
+	public List<EventParticipants> getParticipantsByMobile(String mobileNumber, Integer eventId) {
+		String[] queryParams = { "eventId", "mobileNumber" };
+		Object[] values = { eventId, mobileNumber };
+		String[] sign = { "=", "=" };
+		List participantsList = daoService.getObjectsListByMultipleParameters(EventParticipants.class, queryParams,
+				values, sign, -1, false);
+		if (participantsList != null) {
+			getLogger().info("Found : " + participantsList.size() + " items for (Mobile):" + mobileNumber);
+		} else {
+			getLogger().info("No results found for " + mobileNumber);
+		}
+		return participantsList;
+	}
+
+	public List<EventParticipants> getParticipantsByEmail(String email, Integer eventId) {
+		String[] queryParams = { "eventId", "email" };
+		Object[] values = { eventId, email };
+		String[] sign = { "=", "=" };
+		List participantsList = daoService.getObjectsListByMultipleParameters(EventParticipants.class, queryParams,
+				values, sign, -1, false);
+		if(null != participantsList) {
+			getLogger().info("Found : " + participantsList.size() + " items for (Email):" + email);
+		}else{
+			getLogger().info("No results found for " + email);
+		}
+		
+		return participantsList;
 	}
 }

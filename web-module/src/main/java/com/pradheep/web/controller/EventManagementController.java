@@ -28,6 +28,9 @@ import com.pradheep.dao.model.event.EventWrapper;
 import com.pradheep.web.common.MonitorHitCounter;
 import com.pradheep.web.common.PagePath;
 import com.pradheep.web.common.event.EventManager;
+import com.pradheep.web.common.event.EventParticipantsModel;
+import com.pradheep.web.event.NewUserEventRegistrationEvent;
+import com.pradheep.web.event.PyrApplicationEventPublisher;
 import com.pradheep.web.service.EventManagementService;
 
 /**
@@ -41,9 +44,12 @@ public class EventManagementController extends BaseUtility<Object> {
 
 	@Autowired
 	private EventManager eventManager;
-	
+
 	@Autowired
 	private EventManagementService eventManagementService;
+	
+	@Autowired
+	private PyrApplicationEventPublisher pryEventPublisher;
 
 	@RequestMapping("/eventHost/register")
 	@MonitorHitCounter(path = PagePath.EVENT_PAGE)
@@ -115,10 +121,20 @@ public class EventManagementController extends BaseUtility<Object> {
 		if (flag != -1) {
 			model.addObject("errorMsg", "You have successfully registered , Your reference is: " + flag
 					+ "<br><br> Kindly present this reference number while you attend the event.");
+			notifyEventRegistration(eventParticipants);
 		} else {
 			model.addObject("errorMsg", "Unable to register at this moment. Kindly try again later");
 		}
 		return model;
+	}
+	
+	/**
+	 * This is to send an email to event organizer about the new event registration happened.
+	 * @param eventParticipant
+	 */
+	private void notifyEventRegistration(EventParticipants eventParticipant) {
+		getLogger().info("Publishing the event participant: " + eventParticipant.toString());
+		pryEventPublisher.publishEvent(new NewUserEventRegistrationEvent(eventParticipant));
 	}
 
 	private int getEventId(List<String> eventId) {
@@ -162,6 +178,6 @@ public class EventManagementController extends BaseUtility<Object> {
 		default:
 			return "Veg";
 		}
-	}	
+	}
 
 }

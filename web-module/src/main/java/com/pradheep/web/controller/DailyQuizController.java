@@ -133,6 +133,15 @@ public class DailyQuizController extends BaseUtility {
 		setLanguageBasedStyle(locale, model);
 		return model;
 	}
+	
+	private boolean isEngAnswerCorrect(String correctAnswer, BibleQuizTaker bibleQuizTaker) {
+		return correctAnswer.equals(bibleQuizTaker.getAnswer());
+	}
+
+	private boolean isTamAnsCorrect(String uniCodeCorrectAns, BibleQuizTaker bibleQuizTaker) {
+		return uniCodeCorrectAns.trim().equals(bibleQuizTaker.getAnswer().trim());
+	}
+	
 
 	private DailyBibleQuiz getDailyBibleQuiz(int quizId) {
 		return dailyQuizManager.getBibleQuizById(quizId);
@@ -207,5 +216,5 @@ public class DailyQuizController extends BaseUtility {
 			}			
 		}
 		return true;
-	}	
-}
+	}
+	}

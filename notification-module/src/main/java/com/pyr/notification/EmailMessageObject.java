@@ -15,7 +15,7 @@ public class EmailMessageObject extends MessageObject {
 	private String[] ccList = null;
 	private String[] bccList = null;
 	private String fromAddress;
-	private File attachment;
+	private File attachment;	
 	
 
 	public EmailMessageObject() {

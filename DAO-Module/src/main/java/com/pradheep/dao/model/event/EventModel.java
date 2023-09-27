@@ -54,6 +54,21 @@ public class EventModel implements java.io.Serializable {
 
 	@Column(name = "email_remainder_template")
 	private String emailRemainderTemplate;
+	
+	/**
+	 * Added Newly from Year 2023 to send emails to administrators when user
+	 * register for a event. Email address is comma delimited.
+	 */
+	@Column(name = "event_admin_email")
+	private String eventAdministratorEmail;
+
+	/**
+	 * Added Newly from Year 2023 to send emails to administrators when user
+	 * register for a event. This flag enables and disables the functionality
+	 * dynamically.
+	 */
+	@Column(name = "notify_event_registration_to_admin")
+	private boolean notifyEventRegistrationToAdmin;
 
 	public Integer getId() {
 		return Id;
@@ -157,6 +172,22 @@ public class EventModel implements java.io.Serializable {
 
 	public void setEmailRemainderTemplate(String emailRemainderTemplate) {
 		this.emailRemainderTemplate = emailRemainderTemplate;
+	}	
+
+	public String getEventAdministratorEmail() {
+		return eventAdministratorEmail;
+	}
+
+	public void setEventAdministratorEmail(String eventAdministratorEmail) {
+		this.eventAdministratorEmail = eventAdministratorEmail;
+	}
+
+	public boolean isNotifyEventRegistrationToAdmin() {
+		return notifyEventRegistrationToAdmin;
+	}
+
+	public void setNotifyEventRegistrationToAdmin(boolean notifyEventRegistrationToAdmin) {
+		this.notifyEventRegistrationToAdmin = notifyEventRegistrationToAdmin;
 	}
 
 	@Override
@@ -166,7 +197,9 @@ public class EventModel implements java.io.Serializable {
 				+ ", eventOrgContactNumber=" + eventOrgContactNumber + ", eventOrgEmail=" + eventOrgEmail
 				+ ", eventFlyerImagePath=" + eventFlyerImagePath + ", eventOrgLogoPath=" + eventOrgLogoPath
 				+ ", eventNotificationFreq=" + eventNotificationFreq + ", eventProgramFlyerPath="
-				+ eventProgramFlyerPath + ", emailRemainderTemplate=" + emailRemainderTemplate + "]";
+				+ eventProgramFlyerPath + ", emailRemainderTemplate=" + emailRemainderTemplate
+				+ ", eventAdministratorEmail=" + eventAdministratorEmail + ", notifyEventRegistrationToAdmin="
+				+ notifyEventRegistrationToAdmin + "]";
 	}	
 
 }
