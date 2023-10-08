@@ -69,6 +69,9 @@ public class EventModel implements java.io.Serializable {
 	 */
 	@Column(name = "notify_event_registration_to_admin")
 	private boolean notifyEventRegistrationToAdmin;
+	
+	@Column(name = "welcome_email_template")
+	private String welcomeEmailTemplate;
 
 	public Integer getId() {
 		return Id;
@@ -188,6 +191,14 @@ public class EventModel implements java.io.Serializable {
 
 	public void setNotifyEventRegistrationToAdmin(boolean notifyEventRegistrationToAdmin) {
 		this.notifyEventRegistrationToAdmin = notifyEventRegistrationToAdmin;
+	}	
+
+	public String getWelcomeEmailTemplate() {
+		return welcomeEmailTemplate;
+	}
+
+	public void setWelcomeEmailTemplate(String welcomeEmailTemplate) {
+		this.welcomeEmailTemplate = welcomeEmailTemplate;
 	}
 
 	@Override
@@ -199,7 +210,7 @@ public class EventModel implements java.io.Serializable {
 				+ ", eventNotificationFreq=" + eventNotificationFreq + ", eventProgramFlyerPath="
 				+ eventProgramFlyerPath + ", emailRemainderTemplate=" + emailRemainderTemplate
 				+ ", eventAdministratorEmail=" + eventAdministratorEmail + ", notifyEventRegistrationToAdmin="
-				+ notifyEventRegistrationToAdmin + "]";
+				+ notifyEventRegistrationToAdmin + ", welcomeEmailTemplate=" + welcomeEmailTemplate + "]";
 	}	
 
 }

@@ -165,14 +165,16 @@ public class EventManagementController extends BaseUtility<Object> {
 		return eventParticipntMembers;
 	}
 
-	private String getFoodMapping(String foodOption) {
+	private String getFoodMapping(String foodOption) {		
 		switch (foodOption) {
 		case "Veg":
 			return "Vegeterian";
 		case "Non-Veg":
 			return "Non-Vegeterian";
-		case "Not Required":
-			return "Not Required";
+		case "Food Not Required":
+			return "Food Not Required";
+		case "Food-Not-Required":
+			return "Food Not Required";
 		case "Non-Veg-Hallal":
 			return "Non-Vegeterian-Hallal";
 		default:

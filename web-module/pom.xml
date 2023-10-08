@@ -17,6 +17,12 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<aspectj.version>1.8.11</aspectj.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -165,13 +171,31 @@
 			<version>4.5.3</version>
 		</dependency>
 
+		<!-- <dependency> <groupId>com.pradheep.quiz.service</groupId> <artifactId>service-module</artifactId> 
+			<version>1.0</version> </dependency> -->
 		<!-- <dependency>
-			<groupId>com.pradheep.quiz.service</groupId>
-			<artifactId>service-module</artifactId>
-			<version>1.0</version>
-		</dependency> -->
-	</dependencies>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.2</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.2</version>
+		</dependency> -->
+
+		<dependency>
+			<groupId>com.github.kenglxn.qrgen</groupId>
+			<artifactId>javase</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13.3</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

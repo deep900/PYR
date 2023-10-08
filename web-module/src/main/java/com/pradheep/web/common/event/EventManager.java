@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pradheep.dao.config.ApplicationLogger;
 import com.pradheep.dao.config.DAOService;
@@ -68,6 +69,7 @@ public class EventManager {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public int saveEventParticipants(EventWrapper eventWrapper) {
 		if (null == eventWrapper) {
 			getLogger().info("No valid event data found for persistance");

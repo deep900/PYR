@@ -13,5 +13,13 @@ update event set event_admin_email ='rabijohn@gmail.com,faithmissionsint@gmail.c
 update event set notify_event_registration_to_admin =true where id = 2;
 
 
+update event set event_flyer_image_path = '/resources/images/flyer1.jpg' where id = 2;
+update event set event_program_flyer_image_path = '/resources/images/event_program.jpg' where id = 2;
+update event set email_remainder_template = 'Dear ${PARTICIPANT_NAME},<br>Thank you for your registration for the event of : Christmas celebrations on Dec 02 2023 @6:00PM.<br><br>Your registration number is ${PARTICIPANT_ID} <br>The event starts @6.30 pm <br>We look forward for your participation!<br>Thank you<br>City Missions Indian International Church<br>#11-12, Mount Zion, Kallang ave<br>Singapore- 339407.<br>For any queries : <br>Contact us: faithmissionsint@gmail.com<br>Whatsapp : +6584481381' where id = 2;
+commit;
+describe event;
+alter table event add welcome_email_template varchar(1000);
+update event set welcome_email_template = '<html><body><div style="font-family:Cambria;font-size:18px">Dear #member_name#,<br>Thank you for registering to attend <u>"New Birth Christmas Program"</u>.  Attaching the details for your reference and see you on <b>2nd Dec 2023 @ 6pm.</b><br>Please take note of your registration code - #reg_code#.  We will need this at the registration counter to facilitate  lucky draw and door gifts.<br>#image_ref#<br>With love and prayers, <br>Rev. John Britto & Pastor. Shruti John<br>City Missions Indian International Church<br>+65 8448 1381</div></body></html>' where id = 2;
+
 
 

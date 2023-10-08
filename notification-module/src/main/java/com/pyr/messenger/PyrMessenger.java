@@ -3,7 +3,6 @@
  */
 package com.pyr.messenger;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,25 +58,15 @@ public class PyrMessenger implements Messenger {
 		boolean flag = false;// Not sent by default;
 		try {
 			MimeMessage mimeMessage = prepareBasicEmailContent(emailMessageObject);
-			Transport.send(mimeMessage);
+			Transport.send(mimeMessage);			
 			System.out.println("Email sent to recipient..");
 			flag = true;
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			flag = false;
-		}
+		}		
 		return flag;
-	}
-
-	private MimeBodyPart getAttachmentPart(File attachmentFile) {
-		MimeBodyPart attachmentPart = new MimeBodyPart();
-		try {
-			attachmentPart.attachFile(attachmentFile);
-		} catch (IOException | MessagingException e) {
-			e.printStackTrace();
-		}
-		return attachmentPart;
-	}
+	}	
 
 	public MimeMessage prepareBasicEmailContent(EmailMessageObject emailMessageObject) {
 		MimeMessage mimeMessage = establishPrimaryEmailConnection();
@@ -89,22 +78,21 @@ public class PyrMessenger implements Messenger {
 		String fromAddress = emailMessageObject.getFromAddress();
 
 		try {
-			mimeMessage.setSubject(subject);
+			mimeMessage.setSubject(subject);			
 			if (emailMessageObject.getAttachment() != null) {
 				System.out.println("Attaching file:" + emailMessageObject.getAttachment().getAbsolutePath());
 				MimeBodyPart attachmentPart = new MimeBodyPart();
 				attachmentPart.attachFile(emailMessageObject.getAttachment());
 				Multipart multipart = new MimeMultipart();
 				multipart.addBodyPart(attachmentPart);
-				BodyPart messageBodyPart = new MimeBodyPart();
-				messageBodyPart.setText(body);
-				multipart.addBodyPart(messageBodyPart);
-				if (null != emailMessageObject.getAttachment()) {
-					multipart.addBodyPart(getAttachmentPart(emailMessageObject.getAttachment()));
-				}
-				mimeMessage.setContent(multipart);
+				BodyPart messageBodyPart = new MimeBodyPart();				
+				messageBodyPart.setContent(body, "text/html; charset=utf-8");
+				multipart.addBodyPart(messageBodyPart);				
+				mimeMessage.setContent(multipart,"text/html; charset=utf-8");
 			} else {
 				mimeMessage.setContent(body, "text/html; charset=utf-8");
+				System.out.println("Email content set as HTML");
+				System.out.println("No email attachment.");
 			}
 			try {
 				mimeMessage.setFrom(new InternetAddress(fromAddress, "Praise Your Redeemer"));
@@ -187,6 +175,7 @@ public class PyrMessenger implements Messenger {
 
 	public Object communicate(MessageObject messageObject) {
 		EmailMessageObject emailMessageObject = (EmailMessageObject) messageObject;
+		System.out.println("Attachment :" + emailMessageObject.getAttachment());
 		return sendEmailMessage(emailMessageObject);
 	}
 
