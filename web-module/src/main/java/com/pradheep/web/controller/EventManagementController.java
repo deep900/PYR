@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
@@ -28,9 +30,9 @@ import com.pradheep.dao.model.event.EventWrapper;
 import com.pradheep.web.common.MonitorHitCounter;
 import com.pradheep.web.common.PagePath;
 import com.pradheep.web.common.event.EventManager;
-import com.pradheep.web.common.event.EventParticipantsModel;
 import com.pradheep.web.event.NewUserEventRegistrationEvent;
 import com.pradheep.web.event.PyrApplicationEventPublisher;
+import com.pradheep.web.jobs.events.EventParticipantsReportJob;
 import com.pradheep.web.service.EventManagementService;
 
 /**
@@ -50,6 +52,11 @@ public class EventManagementController extends BaseUtility<Object> {
 	
 	@Autowired
 	private PyrApplicationEventPublisher pryEventPublisher;
+	
+	@Autowired
+	@Qualifier("eventParticipantsReportJob")
+	private EventParticipantsReportJob  job;
+	
 
 	@RequestMapping("/eventHost/register")
 	@MonitorHitCounter(path = PagePath.EVENT_PAGE)
@@ -58,9 +65,13 @@ public class EventManagementController extends BaseUtility<Object> {
 		String eventId = request.getParameter("eventId");
 		String orgEventId = eventManager.decrypt(eventId);
 		String errorMsg = "";
+		boolean isFoodOptionRequired = true;
 		ModelAndView model = new ModelAndView(PagePath.EVENT_PAGE, "command", new EventParticipants());
 		try {
-			EventModel event = eventManager.getEventById(orgEventId);
+			Thread d = new Thread(job);
+			d.start();
+			EventModel event = eventManager.getEventById(orgEventId);			
+			isFoodOptionRequired = event.isFoodOptionRequired();
 			model.addObject("eventModel", event);
 			if (eventManagementService.isEventEnded(event)) {
 				getLogger().info("Event already ended" + eventId);
@@ -75,8 +86,10 @@ public class EventManagementController extends BaseUtility<Object> {
 		model.addObject("errorMsg", errorMsg);
 		model.addObject("eventId", orgEventId);
 		model.addObject("context", request.getContextPath());
+		model.addObject("isFoodOptionRequired", isFoodOptionRequired);
 		return model;
 	}
+	
 
 	@RequestMapping(value = "/events/submitRegistration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@MonitorHitCounter(path = PagePath.SUBMIT_EVENT_PAGE)
@@ -86,11 +99,12 @@ public class EventManagementController extends BaseUtility<Object> {
 		ModelAndView model = new ModelAndView(PagePath.SUBMIT_EVENT_PAGE);
 		String errorMsg = "";
 		getLogger().info("Printing form data:" + formData.toString());
-
+		boolean isFoodOptionRequired = true;
 		List<String> eventId = formData.get("eventId");
 		int eveId = getEventId(eventId);
 		try {
-			EventModel event = eventManager.getEventById(String.valueOf(eveId));
+			EventModel event = eventManager.getEventById(String.valueOf(eveId));			
+			isFoodOptionRequired = event.isFoodOptionRequired();
 			model.addObject("eventModel", event);
 		} catch (Exception err) {
 			errorMsg = "Please check the event id";
@@ -117,6 +131,9 @@ public class EventManagementController extends BaseUtility<Object> {
 						.addAll(getEventParticipantMembers(adultMembers, adultFoodPreference, false));
 			}
 		}
+		if(!isFoodOptionRequired) {
+			updateFoodOptionNotRequired(wrapper);
+		}
 		int flag = eventManager.saveEventParticipants(wrapper);
 		if (flag != -1) {
 			model.addObject("errorMsg", "You have successfully registered , Your reference is: " + flag
@@ -126,6 +143,14 @@ public class EventManagementController extends BaseUtility<Object> {
 			model.addObject("errorMsg", "Unable to register at this moment. Kindly try again later");
 		}
 		return model;
+	}
+	
+	private void updateFoodOptionNotRequired(EventWrapper wrapper) {
+		wrapper.getEventParticipants().setDinnerTime("Default");
+		wrapper.getEventParticipants().setFoodPreference("Default");
+		wrapper.getEventParticipantMembers().forEach(eventParticipant -> {
+			eventParticipant.setFoodPreference("Default");
+		});		
 	}
 	
 	/**

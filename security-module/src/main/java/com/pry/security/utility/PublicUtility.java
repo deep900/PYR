@@ -169,7 +169,7 @@ public class PublicUtility implements InitializingBean {
 	public static void main(String args[]){
 		PublicUtility publicUtility = new PublicUtility();
 		//System.out.println(publicUtility.DecryptText("rEetCL2ZVm4mp7gQEBnWoQ=="));
-		System.out.println(publicUtility.EncryptText("2"));
+		System.out.println(publicUtility.EncryptText("3"));
 	}
 	
 	public Date getDateAtZeroHours(){

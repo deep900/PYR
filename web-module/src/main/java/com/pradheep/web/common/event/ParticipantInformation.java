@@ -19,6 +19,8 @@ public class ParticipantInformation {
 
 	private String mobile;
 
+	private String eventName;
+
 	public String getParticipantName() {
 		return participantName;
 	}
@@ -51,8 +53,16 @@ public class ParticipantInformation {
 		this.mobile = mobile;
 	}
 
+	public String getEventName() {
+		return eventName;
+	}
+
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+
 	public String getDelimitedString() {
 		return this.getParticipantName() + DELIMITER + this.getId() + DELIMITER + this.getMobile() + DELIMITER
-				+ this.getEmail();
+				+ this.getEmail() + DELIMITER + this.getEventName();
 	}
 }

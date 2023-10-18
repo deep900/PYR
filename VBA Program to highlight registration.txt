@@ -1,0 +1,30 @@
+Sub FindStringBasedOnOtherColumn()
+    Dim searchString As String
+    Dim searchColumn As Range
+    Dim targetColumn As Range
+    Dim cell As Range
+    Dim targetCell As Range
+    
+    ' Set the range of cells where you want to search for the string
+    Set searchColumn = Sheets("Sheet1").Range("L2:L1000") ' Adjust the range as needed
+    
+    ' Set the range of cells where you want to highlight based on the search
+    Set targetColumn = Sheets("Sheet1").Range("B1:B1000") ' Adjust the range as needed
+    
+    ' Reset previous highlight in the target column
+    targetColumn.Interior.ColorIndex = xlNone
+    
+    ' Loop through each cell in the search column
+    For Each cell In searchColumn
+        If Not IsEmpty(cell.Value) And cell.Value <> "" Then
+            searchString = cell.Value
+        ' Loop through each cell in the target column
+            For Each targetCell In targetColumn
+                If InStr(1, targetCell.Value, searchString, vbTextCompare) > 0 Then
+                ' String found, highlight the corresponding cell in the target column
+                    targetCell.Interior.Color = RGB(0, 255, 0) ' Highlight in green
+                End If
+            Next targetCell
+         End If
+    Next cell
+End Sub

@@ -72,6 +72,12 @@ public class EventModel implements java.io.Serializable {
 	
 	@Column(name = "welcome_email_template")
 	private String welcomeEmailTemplate;
+	
+	@Column(name = "event_announcement_date_time")
+	private Timestamp eventAnnouncementDate;
+	
+	@Column(name = "food_option_required")
+	private boolean foodOptionRequired;
 
 	public Integer getId() {
 		return Id;
@@ -199,6 +205,22 @@ public class EventModel implements java.io.Serializable {
 
 	public void setWelcomeEmailTemplate(String welcomeEmailTemplate) {
 		this.welcomeEmailTemplate = welcomeEmailTemplate;
+	}	
+
+	public Timestamp getEventAnnouncementDate() {
+		return eventAnnouncementDate;
+	}
+
+	public void setEventAnnouncementDate(Timestamp eventAnnouncementDate) {
+		this.eventAnnouncementDate = eventAnnouncementDate;
+	}
+
+	public boolean isFoodOptionRequired() {
+		return foodOptionRequired;
+	}
+
+	public void setFoodOptionRequired(boolean foodOptionRequired) {
+		this.foodOptionRequired = foodOptionRequired;
 	}
 
 	@Override
@@ -210,7 +232,9 @@ public class EventModel implements java.io.Serializable {
 				+ ", eventNotificationFreq=" + eventNotificationFreq + ", eventProgramFlyerPath="
 				+ eventProgramFlyerPath + ", emailRemainderTemplate=" + emailRemainderTemplate
 				+ ", eventAdministratorEmail=" + eventAdministratorEmail + ", notifyEventRegistrationToAdmin="
-				+ notifyEventRegistrationToAdmin + ", welcomeEmailTemplate=" + welcomeEmailTemplate + "]";
+				+ notifyEventRegistrationToAdmin + ", welcomeEmailTemplate=" + welcomeEmailTemplate
+				+ ", eventAnnouncementDate=" + eventAnnouncementDate + ", foodOptionRequired=" + foodOptionRequired
+				+ "]";
 	}	
 
 }

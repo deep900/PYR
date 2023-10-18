@@ -92,8 +92,8 @@ public class NotifyEventRegistration implements Runnable {
 			emailMessage.setToList(toList);
 			attachment = getWelcomeAttachment(eventModel.getOrganizer() + "\n\n" + eventModel.getEventName()
 					+ "\n\n Timing :" + parseDate(eventModel.getEventDateTime().toString()) + "\n\n" + "Location:"
-					+ eventModel.getEventLocation() + "\n\n" + "(Use the event passes below while attending the event.)",
-					eventModel.getEventName());
+					+ eventModel.getEventLocation() + "\n\n"
+					+ "(Use the event passes below while attending the event.)", eventModel.getEventName());
 			emailMessage.setAttachment(attachment);
 			boolean flag = (Boolean) messengerDelegate.communicateMessage(emailMessage, Messenger.EMAIL_MESSAGE);
 			if (flag) {
@@ -115,8 +115,8 @@ public class NotifyEventRegistration implements Runnable {
 		String template = eventModel.getWelcomeEmailTemplate();
 		template = template.replace("#member_name#", this.eventParticipants.getName());
 		template = template.replace("#reg_code#", "<b>" + String.valueOf(this.eventParticipants.getId()) + "</b> ");
-		template = template.replace("#image_ref#",
-				"<img src='https://www.praiseyourredeemer.org/resources/images/flyer1.jpg' style='width:50%' />");
+		template = template.replace("#image_ref#", "<img src='https://www.praiseyourredeemer.org"
+				+ eventModel.getEventFlyerImagePath() + "'  style='width:50%' />");
 		return template;
 	}
 
@@ -141,7 +141,7 @@ public class NotifyEventRegistration implements Runnable {
 
 	private File getWelcomeAttachment(String title, String fileName) {
 		try {
-			return welcomeEmailAttachmentUtility.getWelcomeEmailAttachment(getEmailAttachmentContent(), title,
+			return welcomeEmailAttachmentUtility.getWelcomeEmailAttachment(getEmailAttachmentContent(fileName), title,
 					fileName);
 		} catch (Exception err) {
 			err.printStackTrace();
@@ -149,23 +149,24 @@ public class NotifyEventRegistration implements Runnable {
 		}
 	}
 
-	private ParticipantInformation getParticipantInformation(String name, String id, String email,
-			String mobileNumber) {
+	private ParticipantInformation getParticipantInformation(String name, String id, String email, String mobileNumber,
+			String eventName) {
 		ParticipantInformation participantInformation = new ParticipantInformation();
 		participantInformation.setEmail(email);
 		participantInformation.setId(id);
 		participantInformation.setMobile(mobileNumber);
 		participantInformation.setParticipantName(name);
+		participantInformation.setEventName(eventName);
 		return participantInformation;
 	}
 
-	private List<ParticipantInformation> getEmailAttachmentContent() {
+	private List<ParticipantInformation> getEmailAttachmentContent(String title) {
 		List<ParticipantInformation> participantInformationList = new ArrayList<ParticipantInformation>();
 		final String email = this.eventParticipants.getEmail();
 		final String mobile = this.eventParticipants.getMobileNumber();
 		final Integer id = this.eventParticipants.getId();
 		participantInformationList.add(getParticipantInformation(this.eventParticipants.getName(),
-				String.valueOf(this.eventParticipants.getId()), email, mobile));
+				String.valueOf(this.eventParticipants.getId()), email, mobile, title));
 		int participantId = this.eventParticipants.getId();
 		getLogger().info("Printing the event participant id:" + participantId);
 		List<Object> participantMembersList = getMembersByParticipantId(participantId);
@@ -174,7 +175,7 @@ public class NotifyEventRegistration implements Runnable {
 			participantMembersList.forEach(eventParticipantMember -> {
 				EventParticipantsMembers member = (EventParticipantsMembers) eventParticipantMember;
 				participantInformationList.add(getParticipantInformation(member.getName(),
-						String.valueOf(id) + "-" + counter.getAndIncrement(), email, mobile));
+						String.valueOf(id) + "-" + counter.getAndIncrement(), email, mobile,title));
 			});
 
 		} else {

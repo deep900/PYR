@@ -74,7 +74,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
 	
 </script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body style="font-family: 'Bona Nova', serif;">
@@ -91,25 +92,29 @@
 								<div class="blog-holder"
 									style="font-size: 18px; font-weight: bold !important">
 									<div class="title-msg">
-										<span><u> ${eventModel.welcomeNote} for	${eventModel.eventName}
-										</u></span>
+										<span><u> ${eventModel.welcomeNote} for
+												${eventModel.eventName} </u></span>
 
 									</div>
 									<br>
-									<div class="col_1 firstcolumn calign" style="text-align:center;">
+									<div class="col_1 firstcolumn calign"
+										style="text-align: center;">
 										<img src=<c:url value="${eventModel.eventFlyerImagePath}"/>
-											alt="image" style="width:83%">
+											alt="image" style="width: 83%">
 										<h3>Registration Form</h3>
 									</div>
-									<div class="col_1 firstcolumn" style="text-align:center; margin:0 auto;">
+									<div class="col_1 firstcolumn"
+										style="text-align: center; margin: 0 auto;">
 										<form:form action="${context}/events/submitRegistration"
 											method="post" name="registrationForm"
-											onsubmit="return validateForm()" style="width: 80%; text-align: center; margin: 0 auto;">
+											onsubmit="return validateForm()"
+											style="width: 80%; text-align: center; margin: 0 auto;">
 											<input type="hidden" id="eventId" name="eventId">
 											<div class="custom-style1">
-												<table style="border: 0px; width: 100%; margin:0 auto;">
+												<table style="border: 0px; width: 100%; margin: 0 auto;">
 													<tr>
-														<td style="width: 100%; margin:0 auto;"><label>Registering for: </label></td>
+														<td style="width: 50%; margin: 0 auto;"><label>Registering
+																for: </label></td>
 														<td><form:select id="registeringFor"
 																name="registeringFor" path="registeringFor"
 																class="mystyle"
@@ -120,14 +125,15 @@
 															</form:select></td>
 													</tr>
 													<tr>
-														<td style="width: 100%; margin:0 auto;">Name:</td>
+														<td style="width: 50%; margin: 0 auto;">Name:</td>
 														<td><form:input type="text" id="name" path="name"
 																style="height: 30px; width: 100%; font-size: 13px;" />
 														</td>
 													</tr>
 
 													<tr>
-														<td style="width: 100%; margin:0 auto;">Contact number:</td>
+														<td style="width: 50%; margin: 0 auto;">Contact
+															number:</td>
 														<td><form:input type="text" path="mobileNumber"
 																id="mobileNumber"
 																style="height: 30px; width: 100%; font-size: 13px;" />
@@ -135,39 +141,47 @@
 													</tr>
 
 													<tr>
-														<td style="width: 100%; margin:0 auto;">Email:</td>
+														<td style="width: 50%; margin: 0 auto;">Email:</td>
 														<td><form:input type="text" id="email" path="email"
 																style="height: 30px; width: 100%; font-size: 13px;" />
+																<br><span style="font-size: 13px; color: red">Note:
+																Event passes will be sent to this email.</span>
 														</td>
 													</tr>
-													<tr>
-														<td style="width: 100%; margin:0 auto;">Dinner time preference</td>
-														<td><form:select id="dinnerTime"
-																name="dinnerTime" path="dinnerTime"
-																style="height: 34px; width: 308px; font-size: 13px;">
-																<optgroup style="font-family:Cambria">
-																<option value="Pre-Dinner">Pre-Dinner @5:30PM</option>
-																<option value="Post-Dinner" selected>Post-Dinner @9PM</option>	
-																</optgroup>															
-															</form:select></td>
-													</tr>							
+													<c:if test="${isFoodOptionRequired}">
+														<tr>
+															<td style="width: 50%; margin: 0 auto;">Dinner time
+																preference</td>
+															<td><form:select id="dinnerTime" name="dinnerTime"
+																	path="dinnerTime"
+																	style="height: 34px; width: 308px; font-size: 13px;">
+																	<optgroup style="font-family: Cambria">
+																		<option value="Pre-Dinner">Pre-Dinner @5:30PM</option>
+																		<option value="Post-Dinner" selected>Post-Dinner
+																			@9PM</option>
+																	</optgroup>
+																</form:select></td>
+														</tr>
 
+														<tr>
+															<td style="width: 50%; margin: 0 auto;">Food
+																preference:</td>
+															<td><form:select id="foodPreference"
+																	name="foodPreference" path="foodPreference"
+																	style="height: 34px; width: 100%; font-size: 13px;">
+																	<optgroup style="font-family: Cambria">
+																		<option value="Vegeterian">Vegeterian</option>
+																		<option value="Non-Vegeterian">Non-Vegeterian</option>
+																		<option value="Non-Vegeterian-Hallal">Non-Vegeterian(Hallal)</option>
+																		<option value="Food Not Required">Food not
+																			required</option>
+																	</optgroup>
+																</form:select></td>
+														</tr>
+													</c:if>
 													<tr>
-														<td style="width: 100%; margin:0 auto;">Food preference:</td>
-														<td><form:select id="foodPreference"
-																name="foodPreference" path="foodPreference"
-																style="height: 34px; width: 100%; font-size: 13px;">
-																<optgroup style="font-family:Cambria">
-																<option value="Vegeterian">Vegeterian</option>
-																<option value="Non-Vegeterian">Non-Vegeterian</option>
-																<option value="Non-Vegeterian-Hallal">Non-Vegeterian(Hallal)</option>
-																<option value="Food Not Required">Food not required</option>
-																</optgroup>
-															</form:select></td>
-													</tr>
-
-													<tr>
-														<td style="width: 100%; margin:0 auto;">Name of person invited you:</td>
+														<td style="width: 50%; margin: 0 auto;">Name of
+															person invited you:</td>
 														<td><form:input type="text" id="personWhoInvited"
 																path="personWhoInvited"
 																style="height: 30px; width: 100%; font-size: 13px;" /><br>
@@ -176,43 +190,45 @@
 													</tr>
 
 													<tr>
-														<td style="width: 100%; margin:0 auto;">Number of children accompany you:</td>
+														<td style="width: 50%; margin: 0 auto;">Number of
+															children accompany you:</td>
 														<td><form:select id="childCount" name="childCount"
 																path="childCount"
 																style="height: 34px; width: 100%; font-size: 13px;"
-																onchange="loadChildComp()">
-																<optgroup style="font-family:Cambria">
-																<option value="0">Select</option>
-																<option value="1">1</option>
-																<option value="2">2</option>
-																<option value="3">3</option>
-																<option value="4">4</option>
-																<option value="5">5</option>
+																onchange="loadChildComp(${isFoodOptionRequired})">
+																<optgroup style="font-family: Cambria">
+																	<option value="0">Select</option>
+																	<option value="1">1</option>
+																	<option value="2">2</option>
+																	<option value="3">3</option>
+																	<option value="4">4</option>
+																	<option value="5">5</option>
 																</optgroup>
 															</form:select>
 															<div class="childDivContainer" id="childContainer"></div></td>
 													</tr>
 
 													<tr>
-														<td style="width: 100%; margin:0 auto;">Number of adults accompany you: <br> <span
+														<td style="width: 50%; margin: 0 auto;">Number of
+															adults accompany you: <br> <span
 															style="font-size: 13px; color: red">(Age Above 13)</span>
 														</td>
 														<td><form:select id="adultCount" name="adultCount"
 																path="adultCount"
 																style="height: 34px; width: 100%; font-size: 13px;"
-																onchange="adultsChanged()">
-																<optgroup style="font-family:Cambria">
-																<option value="0">Select</option>
-																<option value="1">1</option>
-																<option value="2">2</option>
-																<option value="3">3</option>
-																<option value="4">4</option>
-																<option value="5">5</option>
-																<option value="6">6</option>
-																<option value="7">7</option>
-																<option value="8">8</option>
-																<option value="9">9</option>
-																<option value="10">10</option>
+																onchange="adultsChanged(${isFoodOptionRequired})">
+																<optgroup style="font-family: Cambria">
+																	<option value="0">Select</option>
+																	<option value="1">1</option>
+																	<option value="2">2</option>
+																	<option value="3">3</option>
+																	<option value="4">4</option>
+																	<option value="5">5</option>
+																	<option value="6">6</option>
+																	<option value="7">7</option>
+																	<option value="8">8</option>
+																	<option value="9">9</option>
+																	<option value="10">10</option>
 																</optgroup>
 															</form:select>
 															<div class="adultDivContainer" id="adultContainer"></div></td>
@@ -225,12 +241,14 @@
 											<input type="hidden" id="eventId" name="eventId"
 												value="${eventModel.id}" />
 										</form:form>
-									<div class="alert ${csscode} hideit">
+										<div class="alert ${csscode} hideit">
 											<p>${errorMessage}</p>
 											<span class="close"></span>
-										</div>										
-										<img src=<c:url value="${eventModel.eventProgramFlyerPath}"/>
-											alt="image" style="width:83%">
+										</div>
+										<c:if test="${not empty eventModel.eventProgramFlyerPath}">
+											<img src=<c:url value="${eventModel.eventProgramFlyerPath}"/>
+												alt="image" style="width: 83%">
+										</c:if>
 										<hr>
 									</div>
 								</div>
@@ -363,10 +381,10 @@
 				}
 			}
 			return true;
-		}	
+		}
 	</script>
 	<script type="text/javascript">
-		function loadChildComp() {
+		function loadChildComp(isFoodRequired) {
 			var childCount = document.getElementById("childCount").value;
 			//alert("Fill the details of" + childCount +" child");	
 			var container = document.getElementById("childContainer");
@@ -384,16 +402,19 @@
 				input.name = "childMembers.name";
 				input.id = "child" + i;
 				container.appendChild(input);
+				if(isFoodRequired) {
 				var selectList = document.createElement("select");
 				createFoodPreference(container, selectList, i + 1,
 						"childMembers");
+				}
 				container.appendChild(document.createElement("br"));
 				container.appendChild(document.createElement("br"));
 			}
 		}
 
 		function createFoodPreference(parentElement, selectList, id, arg) {
-			var array = [ "Veg", "Non-Veg", "Non-Veg-Hallal", "Food Not Required" ];
+			var array = [ "Veg", "Non-Veg", "Non-Veg-Hallal",
+					"Food Not Required" ];
 			selectList.id = "food-" + arg + "-" + id;
 			selectList.name = arg + ".foodPreference";
 			parentElement.appendChild(selectList);
@@ -407,7 +428,7 @@
 		}
 	</script>
 	<script type="text/javascript">
-		function adultsChanged() {
+		function adultsChanged(isFoodRequired) {
 			var childCount = document.getElementById("adultCount").value;
 			//alert("Fill the details of" + childCount +" child");	
 			var container = document.getElementById("adultContainer");
@@ -425,9 +446,11 @@
 				input.name = "adultMembers.name";
 				input.id = "adult" + i;
 				container.appendChild(input);
+				if(isFoodRequired) {
 				var selectList = document.createElement("select");
 				createFoodPreference(container, selectList, i + 1,
 						"adultMembers");
+				}
 				container.appendChild(document.createElement("br"));
 				container.appendChild(document.createElement("br"));
 			}

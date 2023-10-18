@@ -47,6 +47,7 @@ import com.pradheep.web.jobs.DailySMSNotificationJob;
 import com.pradheep.web.jobs.EventParticipantNotificationJob;
 import com.pradheep.web.jobs.MonthlyMessageNotification;
 import com.pradheep.web.jobs.PersistedNotificationService;
+import com.pradheep.web.jobs.events.EventParticipantsReportJob;
 import com.pradheep.web.service.EventManagementService;
 import com.pyr.templates.NotificationConfiguration;
 
@@ -305,5 +306,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	@Bean(name="eventParticipantNotificationJob")
 	public EventParticipantNotificationJob getEventParticipantNotificationJob(){
 		return new EventParticipantNotificationJob();
+	}
+	
+	@Bean(name="eventParticipantsReportJob")
+	public EventParticipantsReportJob getEventParticipantsReportJob(){
+		return new EventParticipantsReportJob();
 	}
 }
