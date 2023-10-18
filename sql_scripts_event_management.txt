@@ -8,7 +8,7 @@ alter table event add column (notify_event_registration_to_admin boolean not nul
 update event set event_program_flyer_image_path ='/resources/images/event_program.png' where id = 2;
 update event set event_flyer_image_path ='/resources/images/flyer1.png' where id = 2;
 
-update event set event_admin_email ='rabijohn@gmail.com,faithmissionsint@gmail.com,Julie.vincent@gmail.com,stephen.jabez@gmail.com' where id = 2;
+
 
 update event set notify_event_registration_to_admin =true where id = 2;
 
