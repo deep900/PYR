@@ -17,14 +17,14 @@ import com.pyr.messenger.SMSMessenger;
 public class NotificationConfiguration {
 
 	@Bean(name = "emailMessenger")	
-	public Messenger getEmailMessenger() {
-		Messenger emailMessenger = new PyrMessenger();
+	public PyrMessenger getEmailMessenger() {
+		PyrMessenger emailMessenger = new PyrMessenger();
 		return emailMessenger;
 	}
 
 	@Bean(name = "smsMessenger")
-	public Messenger getSMSMessenger() {
-		Messenger smsMessenger = new SMSMessenger();
+	public SMSMessenger getSMSMessenger() {
+		SMSMessenger smsMessenger = new SMSMessenger();
 		return smsMessenger;
 	}
 

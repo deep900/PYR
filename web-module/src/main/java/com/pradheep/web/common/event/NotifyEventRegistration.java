@@ -87,7 +87,7 @@ public class NotifyEventRegistration implements Runnable {
 			emailMessage.setFromAddress("administrator@praiseyourredeemer.org");
 			emailMessage.setBodyOfMessage(createEmailMessage(eventModel));
 			emailMessage.setFormat(NotificationFormat.EMAIL_FORMAT);
-			emailMessage.setSubjectOfMessage("Thanks for event registration - " + this.eventParticipants.getName());
+			emailMessage.setSubjectOfMessage(eventModel.getOrganizer() + " : Registration completed - " + this.eventParticipants.getName());
 			emailMessage.setFooterInformation("");
 			emailMessage.setToList(toList);
 			attachment = getWelcomeAttachment(eventModel.getOrganizer() + "\n\n" + eventModel.getEventName()

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.pradheep.dao.config.DAOService;
 import com.pradheep.web.common.ApplicationLoggerWeb;
@@ -27,10 +28,10 @@ public abstract class NotificationJob<T extends Object> implements Runnable {
 
 	private Date jobStartTime = null;
 
-	@Autowired
+	@Autowired	
 	protected SMSMessenger smsMessenger;
 
-	@Autowired
+	@Autowired	
 	protected PyrMessenger pryMessenger;
 
 	@Autowired

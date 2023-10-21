@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pradheep.web.jobs.events;
+package com.pradheep.web.jobs;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +23,6 @@ import com.pradheep.dao.model.event.EventModel;
 import com.pradheep.dao.model.event.EventParticipants;
 import com.pradheep.dao.model.event.EventParticipantsMembers;
 import com.pradheep.web.common.PYRUtility;
-import com.pradheep.web.jobs.NotificationJob;
 import com.pradheep.web.service.EventManagementService;
 import com.pyr.notification.EmailMessageObject;
 import com.pyr.notification.MessageObject;
@@ -206,11 +205,11 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 	public void notifyMessage() {
 		getLogger().info("Preparing the report for the event participants.");
 		List<EventModel> eventModelList = getActiveEventThatCanBeNotified();
-		getLogger().info("Printing the event models ready to be notified:" + eventModelList.toString());
 		if (null == eventModelList || eventModelList.isEmpty()) {
 			getLogger().info("No events found to be reported.");
 			return;
 		} else {
+			getLogger().info("Printing the event models ready to be notified:" + eventModelList.toString());
 			eventModelList.forEach(eventModel -> {
 				int eventId = eventModel.getId();
 				List<EventManagementReportEntity> eventManagementEntityList = getAllParticipantsDetails(eventModel);
@@ -242,7 +241,7 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 
 	private String getEmailBody(String eventName) {
 		return "Dear Event Administrator, <br><br>  Please find the list of participants for " + eventName
-				+ " attached. <br><br> Thank you <br> Praise Your Redeemer.";
+				+ " attached. <br> Note:Open the file in Excel <br><br> Thank you <br> Praise Your Redeemer.";
 	}
 
 }

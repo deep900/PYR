@@ -45,10 +45,13 @@ import com.pradheep.web.jobs.DailyEmailNotificationJob;
 import com.pradheep.web.jobs.DailyQuizNotification;
 import com.pradheep.web.jobs.DailySMSNotificationJob;
 import com.pradheep.web.jobs.EventParticipantNotificationJob;
+import com.pradheep.web.jobs.EventParticipantsReportJob;
 import com.pradheep.web.jobs.MonthlyMessageNotification;
 import com.pradheep.web.jobs.PersistedNotificationService;
-import com.pradheep.web.jobs.events.EventParticipantsReportJob;
 import com.pradheep.web.service.EventManagementService;
+import com.pyr.messenger.Messenger;
+import com.pyr.messenger.PyrMessenger;
+import com.pyr.messenger.SMSMessenger;
 import com.pyr.templates.NotificationConfiguration;
 
 /**
@@ -292,24 +295,24 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	public DBCleanupTask getDBCleanupTask() {
 		return new DBCleanupTask();
 	}
-	
+
 	@Bean(name = "eventManager")
 	public EventManager getEventManager() {
 		return new EventManager();
 	}
-	
-	@Bean(name="eventManagementService")
-	public EventManagementService getEventManagementService(){
+
+	@Bean(name = "eventManagementService")
+	public EventManagementService getEventManagementService() {
 		return new EventManagementService();
 	}
-	
-	@Bean(name="eventParticipantNotificationJob")
-	public EventParticipantNotificationJob getEventParticipantNotificationJob(){
+
+	@Bean(name = "eventParticipantNotificationJob")
+	public EventParticipantNotificationJob getEventParticipantNotificationJob() {
 		return new EventParticipantNotificationJob();
 	}
-	
-	@Bean(name="eventParticipantsReportJob")
-	public EventParticipantsReportJob getEventParticipantsReportJob(){
+
+	@Bean(name = "eventParticipantsReportJob")
+	public EventParticipantsReportJob getEventParticipantsReportJob() {
 		return new EventParticipantsReportJob();
-	}
+	}	
 }

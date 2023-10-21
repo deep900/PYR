@@ -78,6 +78,9 @@ public class EventModel implements java.io.Serializable {
 	
 	@Column(name = "food_option_required")
 	private boolean foodOptionRequired;
+	
+	@Column(name = "agreement_content")
+	private String agreementContent;
 
 	public Integer getId() {
 		return Id;
@@ -221,6 +224,14 @@ public class EventModel implements java.io.Serializable {
 
 	public void setFoodOptionRequired(boolean foodOptionRequired) {
 		this.foodOptionRequired = foodOptionRequired;
+	}	
+
+	public String getAgreementContent() {
+		return agreementContent;
+	}
+
+	public void setAgreementContent(String agreementContent) {
+		this.agreementContent = agreementContent;
 	}
 
 	@Override
@@ -234,7 +245,7 @@ public class EventModel implements java.io.Serializable {
 				+ ", eventAdministratorEmail=" + eventAdministratorEmail + ", notifyEventRegistrationToAdmin="
 				+ notifyEventRegistrationToAdmin + ", welcomeEmailTemplate=" + welcomeEmailTemplate
 				+ ", eventAnnouncementDate=" + eventAnnouncementDate + ", foodOptionRequired=" + foodOptionRequired
-				+ "]";
+				+ ", agreementContent=" + agreementContent + "]";
 	}	
 
 }

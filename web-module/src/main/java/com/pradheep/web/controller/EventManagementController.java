@@ -32,7 +32,7 @@ import com.pradheep.web.common.PagePath;
 import com.pradheep.web.common.event.EventManager;
 import com.pradheep.web.event.NewUserEventRegistrationEvent;
 import com.pradheep.web.event.PyrApplicationEventPublisher;
-import com.pradheep.web.jobs.events.EventParticipantsReportJob;
+import com.pradheep.web.jobs.EventParticipantsReportJob;
 import com.pradheep.web.service.EventManagementService;
 
 /**

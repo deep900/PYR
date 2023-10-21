@@ -144,9 +144,9 @@
 														<td style="width: 50%; margin: 0 auto;">Email:</td>
 														<td><form:input type="text" id="email" path="email"
 																style="height: 30px; width: 100%; font-size: 13px;" />
-																<br><span style="font-size: 13px; color: red">Note:
-																Event passes will be sent to this email.</span>
-														</td>
+															<br>
+														<span style="font-size: 13px; color: red">Note:
+																Event passes will be sent to this email.</span></td>
 													</tr>
 													<c:if test="${isFoodOptionRequired}">
 														<tr>
@@ -234,6 +234,14 @@
 															<div class="adultDivContainer" id="adultContainer"></div></td>
 													</tr>
 												</table>
+												<c:if test="${not empty eventModel.agreementContent}">
+													<span class="agreement"> 
+													<input type="checkbox"
+														id="agreement" name="agreement"
+														value="agreement"/>
+														<label>${eventModel.agreementContent}</label>
+													</span>
+												</c:if>
 												<br> <input id="submit" name="submit" type="submit"
 													value="SUBMIT" style="margin-left: 10px;"> <br>
 												<br>
@@ -323,6 +331,11 @@
 			var personWhoInvited = document.getElementById('personWhoInvited').value;
 			if (personWhoInvited.length < 3) {
 				alert("Enter a valid person who invited you");
+				return false;
+			}
+			var agreementChecked = document.getElementById('agreement');		
+			if(!agreementChecked.checked) {
+				alert("Select the checkbox for the PDPA agreement to proceed.");
 				return false;
 			}
 			var container = document.getElementById("childContainer");

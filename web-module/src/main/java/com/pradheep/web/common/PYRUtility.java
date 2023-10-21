@@ -54,15 +54,14 @@ public class PYRUtility {
 	
 	public static Date get10PMSGT(Integer offsetInSeconds){
 		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setTime(new Date());
-		calendar.add(GregorianCalendar.SECOND, 120);
-		/*calendar.set(GregorianCalendar.HOUR_OF_DAY, 23);	
-		calendar.set(GregorianCalendar.MINUTE, 26);
+		calendar.setTime(new Date());		
+		calendar.set(GregorianCalendar.HOUR_OF_DAY, 19);	
+		calendar.set(GregorianCalendar.MINUTE, 30);
 		calendar.set(GregorianCalendar.SECOND, 0);
-		calendar.setTimeZone(TimeZone.getTimeZone("SGT"));
+		calendar.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
 		if(offsetInSeconds != null) {
 			calendar.add(GregorianCalendar.SECOND, offsetInSeconds);
-		}*/
+		}
 		return calendar.getTime();
 	}
 	
