@@ -42,8 +42,10 @@ public class EventManagementReportEntity {
 	private String eventId;
 
 	private boolean isChild;
-	
+
 	private String eventName;
+	
+	private String eventOption;
 
 	public String getId() {
 		return id;
@@ -168,8 +170,8 @@ public class EventManagementReportEntity {
 	@Override
 	public String toString() {
 		return id + "," + participantName + "," + mobileNumber + "," + email + "," + participantFoodPreference + ","
-				+ personInvited + "," + registeringFor + "," + registeredTime + "," + dinnerTime + ","
-				+ (isChild ? "Yes" : "No" + "," + eventName);
+				+ personInvited + "," + registeringFor + "," + registeredTime + ","
+				+ (isChild ? "Yes" : "No" + "," + eventName + "," + eventOption);		
 	}
 
 	public String getEventName() {
@@ -178,6 +180,14 @@ public class EventManagementReportEntity {
 
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
+	}
+
+	public String getEventOption() {
+		return eventOption;
+	}
+
+	public void setEventOption(String eventOption) {
+		this.eventOption = eventOption;
 	}
 
 }

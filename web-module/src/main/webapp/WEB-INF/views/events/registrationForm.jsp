@@ -7,8 +7,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.pradheep.dao.model.event.EventModel"%>
 <%@ page import="com.pradheep.dao.model.event.EventWrapper"%>
+<%@ page import="com.pradheep.dao.model.event.EventOptions"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <link rel="stylesheet" href=<c:url value="/resources/css/calendar.css"/>
 	media="screen">
@@ -144,12 +146,11 @@
 														<td style="width: 50%; margin: 0 auto;">Email:</td>
 														<td><form:input type="text" id="email" path="email"
 																style="height: 30px; width: 100%; font-size: 13px;" />
-															<br>
-														<span style="font-size: 13px; color: red">Note:
+															<br> <span style="font-size: 13px; color: red">Note:
 																Event passes will be sent to this email.</span></td>
 													</tr>
 													<c:if test="${isFoodOptionRequired}">
-														<tr>
+														<!-- <tr>
 															<td style="width: 50%; margin: 0 auto;">Dinner time
 																preference</td>
 															<td><form:select id="dinnerTime" name="dinnerTime"
@@ -161,7 +162,7 @@
 																			@9PM</option>
 																	</optgroup>
 																</form:select></td>
-														</tr>
+														</tr>  -->
 
 														<tr>
 															<td style="width: 50%; margin: 0 auto;">Food
@@ -233,13 +234,34 @@
 															</form:select>
 															<div class="adultDivContainer" id="adultContainer"></div></td>
 													</tr>
+													<c:if test="${isExtraOptionsRequired}">
+														<c:set var="cnt" scope="session" value="1" />
+														<c:forEach items="${eventOptionsList}" var="item">
+															<tr>
+																<td style="width: 50%; margin: 0 auto;">
+																	${item.option}</td>
+																<td style="width: 50%; margin: 0 auto;">
+																<form:select id="option${cnt}" name="option${cnt}"
+																	path="eventOption"
+																	style="height: 34px; width: 100%; font-size: 13px;">																	
+																	<c:set var="menuOptList"
+																		value="${fn:split(item.optionMenuItem, ',')}" />
+																	<c:forEach items="${menuOptList}" var="menuItem">
+																		<optgroup style="font-family: Cambria">
+																			<option value="${menuItem}">${menuItem}</option>
+																		</optgroup>
+																	</c:forEach>
+																</form:select>
+																</td>
+															</tr>
+															<c:set var="cnt" scope="session" value="${cnt+1}" />
+														</c:forEach>
+													</c:if>
+
 												</table>
 												<c:if test="${not empty eventModel.agreementContent}">
-													<span class="agreement"> 
-													<input type="checkbox"
-														id="agreement" name="agreement"
-														value="agreement"/>
-														<label>${eventModel.agreementContent}</label>
+													<span class="agreement"> <input type="checkbox"
+														id="agreement" name="agreement" value="agreement" /> <label>${eventModel.agreementContent}</label>
 													</span>
 												</c:if>
 												<br> <input id="submit" name="submit" type="submit"

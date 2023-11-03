@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pradheep.dao.config.ApplicationLogger;
 import com.pradheep.dao.config.DAOService;
 import com.pradheep.dao.model.event.EventModel;
+import com.pradheep.dao.model.event.EventOptions;
 import com.pradheep.dao.model.event.EventParticipants;
 import com.pradheep.dao.model.event.EventParticipantsMembers;
 import com.pradheep.dao.model.event.EventWrapper;
@@ -132,5 +133,10 @@ public class EventManager {
 		}
 		
 		return participantsList;
+	}
+	
+	public List<EventOptions> getEventOptions(int eventId) {
+		List eventOptionsList = daoService.getObjectsListById(EventOptions.class, "eventId", eventId, "=", -1);
+		return eventOptionsList;
 	}
 }

@@ -6,3 +6,22 @@ alter table event_participants add column email_remainder_sent bit(1) default 0;
 update event_participants set email_remainder_sent=0 where email_remainder_sent=null;
 
 
+
+CREATE TABLE IF NOT EXISTS `praiseyo_management`.`event_options` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `event_id` INT NOT NULL,
+  `option` VARCHAR(500) NOT NULL,
+  `datatype` VARCHAR(50) NOT NULL,
+  `option_menu_item` VARCHAR(2000) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `event_options_fk_idx` (`event_id` ASC),
+  CONSTRAINT `event_options_fk`
+    FOREIGN KEY (`event_id`)
+    REFERENCES `praiseyo_management`.`event` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+alter table event_participants add column(event_option varchar(1500) null);
+
+INSERT INTO `event_options` (`id`,`event_id`,`option`,`datatype`,`option_menu_item`) VALUES (1,4,'Like to attend:','dropdown','Select,First day of the event (Dec02 @6PM),Second day of the event (Dec-03 @7PM) ,Both the events (Dec-02 @6PM & Dec-03 @7PM)');

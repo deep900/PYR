@@ -145,6 +145,15 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 					this.eventManagementService.formatDate(new Date(eventParticipant.getRegisteredTime().getTime())));
 			entity.setRegisteringFor(eventParticipant.getRegisteringFor());
 			entity.setEventName(eventName);
+			if (null == eventParticipant.getEventOption()) {
+				entity.setEventOption("NA");
+			} else {
+				if (eventParticipant.getEventOption().equalsIgnoreCase("Select")) {
+					entity.setEventOption("NA");
+				} else {
+					entity.setEventOption(eventParticipant.getEventOption());
+				}
+			}			
 			if (null != member) {
 				entity.setMemberFoodPreference(member.getFoodPreference());
 				entity.setMemberName(member.getName());
@@ -198,7 +207,7 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 	}
 
 	private String getReportHeader() {
-		return "Id,ParticipantName,MobileNumber,Email,Participant Food Preference,Person Invited,Registering For,Registered Time,Dinner Time, Is Child, Event Name";
+		return "Id,ParticipantName,MobileNumber,Email,Participant Food Preference,Person Invited,Registering For,Registered Time,Is Child, Event Name,Option";
 	}
 
 	@Override

@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pradheep.dao.model.event.EventModel;
+import com.pradheep.dao.model.event.EventOptions;
 import com.pradheep.dao.model.event.EventParticipants;
 import com.pradheep.dao.model.event.EventParticipantsMembers;
 import com.pradheep.dao.model.event.EventWrapper;
@@ -32,7 +31,6 @@ import com.pradheep.web.common.PagePath;
 import com.pradheep.web.common.event.EventManager;
 import com.pradheep.web.event.NewUserEventRegistrationEvent;
 import com.pradheep.web.event.PyrApplicationEventPublisher;
-import com.pradheep.web.jobs.EventParticipantsReportJob;
 import com.pradheep.web.service.EventManagementService;
 
 /**
@@ -49,14 +47,9 @@ public class EventManagementController extends BaseUtility<Object> {
 
 	@Autowired
 	private EventManagementService eventManagementService;
-	
+
 	@Autowired
 	private PyrApplicationEventPublisher pryEventPublisher;
-	
-	@Autowired
-	@Qualifier("eventParticipantsReportJob")
-	private EventParticipantsReportJob  job;
-	
 
 	@RequestMapping("/eventHost/register")
 	@MonitorHitCounter(path = PagePath.EVENT_PAGE)
@@ -66,13 +59,20 @@ public class EventManagementController extends BaseUtility<Object> {
 		String orgEventId = eventManager.decrypt(eventId);
 		String errorMsg = "";
 		boolean isFoodOptionRequired = true;
+		boolean isExtraOptionsRequired = true;
 		ModelAndView model = new ModelAndView(PagePath.EVENT_PAGE, "command", new EventParticipants());
 		try {
-			Thread d = new Thread(job);
-			d.start();
-			EventModel event = eventManager.getEventById(orgEventId);			
+			EventModel event = eventManager.getEventById(orgEventId);
 			isFoodOptionRequired = event.isFoodOptionRequired();
 			model.addObject("eventModel", event);
+			int eventObjId = Integer.parseInt(orgEventId);
+			List<EventOptions> eventOptionsList = eventManager.getEventOptions(eventObjId);
+			isExtraOptionsRequired = (eventOptionsList != null) && !eventOptionsList.isEmpty();
+			if (isExtraOptionsRequired) {
+				getLogger().info("Printing the event options" + eventOptionsList.toString());
+			}
+			getLogger().info("Is Extra options required" + isExtraOptionsRequired);
+			model.addObject("eventOptionsList", eventOptionsList);
 			if (eventManagementService.isEventEnded(event)) {
 				getLogger().info("Event already ended" + eventId);
 				model.setViewName(PagePath.EVENT_END_PAGE);
@@ -87,9 +87,9 @@ public class EventManagementController extends BaseUtility<Object> {
 		model.addObject("eventId", orgEventId);
 		model.addObject("context", request.getContextPath());
 		model.addObject("isFoodOptionRequired", isFoodOptionRequired);
+		model.addObject("isExtraOptionsRequired", isExtraOptionsRequired);
 		return model;
 	}
-	
 
 	@RequestMapping(value = "/events/submitRegistration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@MonitorHitCounter(path = PagePath.SUBMIT_EVENT_PAGE)
@@ -103,7 +103,7 @@ public class EventManagementController extends BaseUtility<Object> {
 		List<String> eventId = formData.get("eventId");
 		int eveId = getEventId(eventId);
 		try {
-			EventModel event = eventManager.getEventById(String.valueOf(eveId));			
+			EventModel event = eventManager.getEventById(String.valueOf(eveId));
 			isFoodOptionRequired = event.isFoodOptionRequired();
 			model.addObject("eventModel", event);
 		} catch (Exception err) {
@@ -111,8 +111,10 @@ public class EventManagementController extends BaseUtility<Object> {
 			getLogger().error("Error while obtaining the event", err);
 		}
 		eventParticipants.setEventId(eveId);
+		if (null == eventParticipants.getDinnerTime() || eventParticipants.getDinnerTime().isEmpty()) {
+			eventParticipants.setDinnerTime("Post-Dinner");
+		}
 		getLogger().info("Printing the event participants:" + eventParticipants.toString());
-
 		EventWrapper wrapper = new EventWrapper();
 		wrapper.setEventParticipants(eventParticipants);
 		List<String> childMembers = formData.get("childMembers.name");
@@ -131,30 +133,33 @@ public class EventManagementController extends BaseUtility<Object> {
 						.addAll(getEventParticipantMembers(adultMembers, adultFoodPreference, false));
 			}
 		}
-		if(!isFoodOptionRequired) {
+		if (!isFoodOptionRequired) {
 			updateFoodOptionNotRequired(wrapper);
 		}
 		int flag = eventManager.saveEventParticipants(wrapper);
 		if (flag != -1) {
-			model.addObject("errorMsg", "You have successfully registered , Your reference is: " + flag
-					+ "<br><br> Kindly present this reference number while you attend the event.");
+			model.addObject("errorMsg",
+					"You have successfully registered , Kindly check your email for registration QR Code. <br><br> You will need to produce the QR code during registration on the day of event. <br><br> Also take note of your reference number if you have not received your QR code.<br><br> <b> Your reference is: "
+							+ flag + "</b>");
 			notifyEventRegistration(eventParticipants);
 		} else {
 			model.addObject("errorMsg", "Unable to register at this moment. Kindly try again later");
 		}
 		return model;
 	}
-	
+
 	private void updateFoodOptionNotRequired(EventWrapper wrapper) {
 		wrapper.getEventParticipants().setDinnerTime("Default");
 		wrapper.getEventParticipants().setFoodPreference("Default");
 		wrapper.getEventParticipantMembers().forEach(eventParticipant -> {
 			eventParticipant.setFoodPreference("Default");
-		});		
+		});
 	}
-	
+
 	/**
-	 * This is to send an email to event organizer about the new event registration happened.
+	 * This is to send an email to event organizer about the new event
+	 * registration happened.
+	 * 
 	 * @param eventParticipant
 	 */
 	private void notifyEventRegistration(EventParticipants eventParticipant) {
@@ -190,7 +195,7 @@ public class EventManagementController extends BaseUtility<Object> {
 		return eventParticipntMembers;
 	}
 
-	private String getFoodMapping(String foodOption) {		
+	private String getFoodMapping(String foodOption) {
 		switch (foodOption) {
 		case "Veg":
 			return "Vegeterian";

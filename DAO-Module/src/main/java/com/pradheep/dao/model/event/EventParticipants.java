@@ -54,7 +54,14 @@ public class EventParticipants implements java.io.Serializable {
 	private boolean remindedByEmail;
 
 	@Column(name = "dinner_time")
-	private String dinnerTime;	
+	private String dinnerTime;
+
+	/**
+	 * Generic option selected by the user for the particular event. This is an
+	 * optional field.
+	 */
+	@Column(name = "event_option")
+	private String eventOption;
 
 	public Integer getId() {
 		return Id;
@@ -160,13 +167,21 @@ public class EventParticipants implements java.io.Serializable {
 		this.dinnerTime = dinnerTime;
 	}
 
+	public String getEventOption() {
+		return eventOption;
+	}
+
+	public void setEventOption(String eventOption) {
+		this.eventOption = eventOption;
+	}
+
 	@Override
 	public String toString() {
 		return "EventParticipants [Id=" + Id + ", eventId=" + eventId + ", name=" + name + ", email=" + email
 				+ ", mobileNumber=" + mobileNumber + ", foodPreference=" + foodPreference + ", personWhoInvited="
 				+ personWhoInvited + ", registeringFor=" + registeringFor + ", childCount=" + childCount
 				+ ", adultCount=" + adultCount + ", registeredTime=" + registeredTime + ", remindedByEmail="
-				+ remindedByEmail + ", dinnerTime=" + dinnerTime + "]";
+				+ remindedByEmail + ", dinnerTime=" + dinnerTime + ", eventOption=" + eventOption + "]";
 	}
 
 }
