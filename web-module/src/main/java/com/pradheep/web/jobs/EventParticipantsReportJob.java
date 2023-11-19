@@ -256,9 +256,9 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 			eventManagementEntityList.forEach(entity -> {
 				summary.setTotalCount(summary.getTotalCount() + 1);
 				if (entity.isChild()) {
-					summary.setAdultCount(summary.getAdultCount() + 1);
-				} else {
 					summary.setChildCount(summary.getChildCount() + 1);
+				} else {
+					summary.setAdultCount(summary.getAdultCount() + 1);
 				}
 				if (summary.isFoodProvided()) {
 					if (entity.getParticipantFoodPreference().equalsIgnoreCase("Vegeterian")) {
