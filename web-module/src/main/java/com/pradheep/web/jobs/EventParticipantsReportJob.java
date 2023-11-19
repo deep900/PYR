@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -125,7 +127,7 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 	}
 
 	private EventManagementReportEntity mapEventParticipant(EventParticipants eventParticipant,
-			EventParticipantsMembers member, String memberId,String eventName) {
+			EventParticipantsMembers member, String memberId, String eventName) {
 		EventManagementReportEntity entity = new EventManagementReportEntity();
 		try {
 			if (null == memberId) {
@@ -153,7 +155,7 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 				} else {
 					entity.setEventOption(eventParticipant.getEventOption());
 				}
-			}			
+			}
 			if (null != member) {
 				entity.setMemberFoodPreference(member.getFoodPreference());
 				entity.setMemberName(member.getName());
@@ -174,7 +176,8 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 		if (null != eventParticipants) {
 			eventParticipants.forEach(eventParticipant -> {
 				AtomicInteger counter = new AtomicInteger(1);
-				EventManagementReportEntity entity = mapEventParticipant(eventParticipant, null, null,eventModel.getEventName());
+				EventManagementReportEntity entity = mapEventParticipant(eventParticipant, null, null,
+						eventModel.getEventName());
 				if (null != entity) {
 					eventManagementReportEntityList.add(entity);
 				}
@@ -184,7 +187,7 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 				if (null != memberList) {
 					memberList.forEach(member -> {
 						EventManagementReportEntity memEntity = mapEventParticipant(eventParticipant, member,
-								participantId + "-" + counter.getAndIncrement(),eventModel.getEventName());
+								participantId + "-" + counter.getAndIncrement(), eventModel.getEventName());
 						if (null != memEntity) {
 							eventManagementReportEntityList.add(memEntity);
 						}
@@ -223,18 +226,61 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 				int eventId = eventModel.getId();
 				List<EventManagementReportEntity> eventManagementEntityList = getAllParticipantsDetails(eventModel);
 				File attachment = prepareSummaryReportOfEvent(eventManagementEntityList);
+				EventQuickSummary quickSummary = getEventQuickSummary(eventManagementEntityList,
+						eventModel.isFoodOptionRequired(),eventModel.getEventName());
 				if (null != attachment) {
 					MessageObject messageObj = prepareMessageObject(
 							"Daily event reports - " + this.eventManagementService.getTodayDate(),
-							getEmailBody(eventModel.getEventName()), attachment, eventModel);
+							getEmailBody(eventModel.getEventName(),
+									(quickSummary != null) ? quickSummary.toString() : ""),
+							attachment, eventModel);
 					emailMessage(messageObj);
 					try {
 						Thread.currentThread().sleep(5000l);
+						deleteAttachment(attachment);
 					} catch (Exception err) {
 						getLogger().info("Error occured.", err);
 					}
 				}
 			});
+		}
+	}
+
+	private EventQuickSummary getEventQuickSummary(List<EventManagementReportEntity> eventManagementEntityList,
+			boolean isFoodOptionRequired,String eventName) {
+		try {
+			EventQuickSummary summary = new EventQuickSummary();
+			summary.setEventName(eventName);
+			summary.setFoodProvided(isFoodOptionRequired);
+			Set<String> names = new HashSet<String>();
+			eventManagementEntityList.forEach(entity -> {
+				summary.setTotalCount(summary.getTotalCount() + 1);
+				if (entity.isChild()) {
+					summary.setAdultCount(summary.getAdultCount() + 1);
+				} else {
+					summary.setChildCount(summary.getChildCount() + 1);
+				}
+				if (summary.isFoodProvided()) {
+					if (entity.getParticipantFoodPreference().equalsIgnoreCase("Vegeterian")) {
+						summary.setVegeterianFoodCount(summary.getVegeterianFoodCount() + 1);
+					} else if (entity.getParticipantFoodPreference().equalsIgnoreCase("Non-Vegeterian")) {
+						summary.setNonVegCount(summary.getNonVegCount() + 1);
+					} else if (entity.getParticipantFoodPreference().equalsIgnoreCase("Non-Vegeterian-Hallal")) {
+						summary.setNonVegHallalCount(summary.getNonVegHallalCount() + 1);
+					} else if (entity.getParticipantFoodPreference().equalsIgnoreCase("Food Not Required")) {
+						summary.setFoodNotRequiredCount(summary.getFoodNotRequiredCount() + 1);
+					}
+				}
+				String uniqueName = entity.getMemberName() + entity.getMobileNumber();
+				if (names.contains(uniqueName)) {
+					summary.setPotentialDuplicatesFound(summary.getPotentialDuplicatesFound() + 1);
+				}
+				names.add(uniqueName);
+			});
+			return summary;
+		} catch (Exception err) {
+			getLogger().error("Error while calculating the summary", err);
+			return null;
 		}
 	}
 
@@ -248,9 +294,22 @@ public class EventParticipantsReportJob extends NotificationJob<EventModel> {
 		}
 	}
 
-	private String getEmailBody(String eventName) {
-		return "Dear Event Administrator, <br><br>  Please find the list of participants for " + eventName
-				+ " attached. <br> Note:Open the file in Excel <br><br> Thank you <br> Praise Your Redeemer.";
+	private String getEmailBody(String eventName, String summary) {
+		return "<div style='font-family:Cambria;font-sixe:12px'>Dear Event Administrator, <br><br>  Please find the list of participants for " + eventName
+				+ " attached. <br>" + summary
+				+ "<br> Note:Open the file in Excel <br><br> Thank you <br> Praise Your Redeemer. <br> <b>Note : Subtract the duplicate records from total to get the actual count. </b></div>";
+	}
+
+	private void deleteAttachment(File attachment) {
+		if (null != attachment) {
+			try {
+				getLogger().info("About to delete the file : " + attachment.getAbsolutePath());
+				Thread.sleep(60000);
+				attachment.delete();
+			} catch (Exception err) {
+				getLogger().error("Error while deleting the file " + attachment.getAbsolutePath(), err);
+			}
+		}
 	}
 
 }

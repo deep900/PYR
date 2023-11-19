@@ -80,7 +80,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
-<body style="font-family: 'Bona Nova', serif;">
+<body
+	style="font-family: 'Bona Nova', serif; font-weight: 600; font-style: normal;">
 	<div class="wrapper">
 		<div class="main">
 			<div class="content">
@@ -150,20 +151,6 @@
 																Event passes will be sent to this email.</span></td>
 													</tr>
 													<c:if test="${isFoodOptionRequired}">
-														<!-- <tr>
-															<td style="width: 50%; margin: 0 auto;">Dinner time
-																preference</td>
-															<td><form:select id="dinnerTime" name="dinnerTime"
-																	path="dinnerTime"
-																	style="height: 34px; width: 308px; font-size: 13px;">
-																	<optgroup style="font-family: Cambria">
-																		<option value="Pre-Dinner">Pre-Dinner @5:30PM</option>
-																		<option value="Post-Dinner" selected>Post-Dinner
-																			@9PM</option>
-																	</optgroup>
-																</form:select></td>
-														</tr>  -->
-
 														<tr>
 															<td style="width: 50%; margin: 0 auto;">Food
 																preference:</td>
@@ -240,19 +227,18 @@
 															<tr>
 																<td style="width: 50%; margin: 0 auto;">
 																	${item.option}</td>
-																<td style="width: 50%; margin: 0 auto;">
-																<form:select id="option${cnt}" name="option${cnt}"
-																	path="eventOption"
-																	style="height: 34px; width: 100%; font-size: 13px;">																	
-																	<c:set var="menuOptList"
-																		value="${fn:split(item.optionMenuItem, ',')}" />
-																	<c:forEach items="${menuOptList}" var="menuItem">
-																		<optgroup style="font-family: Cambria">
-																			<option value="${menuItem}">${menuItem}</option>
-																		</optgroup>
-																	</c:forEach>
-																</form:select>
-																</td>
+																<td style="width: 50%; margin: 0 auto;"><form:select
+																		id="option${cnt}" name="option${cnt}"
+																		path="eventOption"
+																		style="height: 34px; width: 100%; font-size: 13px;">
+																		<c:set var="menuOptList"
+																			value="${fn:split(item.optionMenuItem, ',')}" />
+																		<c:forEach items="${menuOptList}" var="menuItem">
+																			<optgroup style="font-family: Cambria">
+																				<option value="${menuItem}">${menuItem}</option>
+																			</optgroup>
+																		</c:forEach>
+																	</form:select></td>
 															</tr>
 															<c:set var="cnt" scope="session" value="${cnt+1}" />
 														</c:forEach>
@@ -340,32 +326,43 @@
 				alert("Name should be at least 3 characters.");
 				return false;
 			}
+			
 			var mobileNum = document.getElementById('mobileNumber').value;
 			if (mobileNum.length < 8) {
 				alert("Enter a valid mobile number.");
 				return false;
 			}
+			
 			var email = document.getElementById('email').value;
 			if (email.length < 3) {
 				alert("Enter a valid email address");
 				return false;
 			}
+			
 			var personWhoInvited = document.getElementById('personWhoInvited').value;
 			if (personWhoInvited.length < 3) {
 				alert("Enter a valid person who invited you");
 				return false;
 			}
+			
 			var agreementChecked = document.getElementById('agreement');		
 			if(!agreementChecked.checked) {
 				alert("Select the checkbox for the PDPA agreement to proceed.");
 				return false;
+			}	
+			
+			var extraOption = document.getElementById("option1");
+			if(extraOption != undefined) {			
+				if(extraOption.value == 'Select'){
+					alert('Select the day of participation.');
+					return false;
+				}							
 			}
+			
 			var container = document.getElementById("childContainer");
-			var childList = document.getElementById("childMembers");
-			console.log("Has Child Nodes" + container.hasChildNodes());
-			var childNodes = container.childNodes;
-			var jsonOut = "[";
-			var nameOut = "";
+			//var childList = document.getElementById("childMembers");
+			//console.log("Has Child Nodes" + container.hasChildNodes());
+			var childNodes = container.childNodes;			
 			for (y = 0; i < childNodes.length; y++) {
 				var childId = childNodes[y].id;
 				var childName = childNodes[y].value;
@@ -377,44 +374,29 @@
 						if (childName.length < 3) {
 							alert("Child Name should be at least 3 characters.")
 							return false;
-						}
-						nameOut = nameOut + "{\"name\":\"" + childName + "\",";
-					}
-					if (childId.includes("foodPreference")) {
-						nameOut = nameOut + "{\"foodPreference\":\""
-								+ childName + "\"}"
-					}
+						}						
+					}					
 				}
-			}
-			jsonOut = "[" + nameOut + "]";
-			childList.value = jsonOut;
-			console.log(jsonOut);
-			alert(jsonOut);
+			}			
 
-			var aContainer = document.getElementById("adultContainer");
-			var adultList = document.getElementById("adultMembers");
-			console.log("Has Child Nodes" + aContainer.hasChildNodes());
-			var achildNodes = aContainer.childNodes;
+			var cont = document.getElementById("adultContainer");			
+			if(cont != undefined) {			
+			var achildNodes = cont.childNodes;						
 			for (x = 0; i < achildNodes.length; x++) {
-				var childId = achildNodes[x].id;
-				var childName = achildNodes[x].value;
-				console.log("Child ID" + childId);
-				console.log("Child Name:" + childName);
-				if (childId != undefined) {
-					if (childId.includes("adult")) {
-						if (childName.length < 3) {
+				var aId = achildNodes[x].id;
+				var aName = achildNodes[x].value;				
+				if (aId != undefined) {
+					if (aId.includes("adult")) {
+						if (aName.length < 3) {
 							alert("Adult Name should be at least 3 characters.")
 							return false;
 						}
-					}
-					if (childId.includes("food")) {
-						if (childName.length < 3) {
-							alert("Adult Name should be at least 3 characters.")
-							return false;
-						}
-					}
+					}				
 				}
 			}
+			}
+			
+			
 			return true;
 		}
 	</script>
