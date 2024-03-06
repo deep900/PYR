@@ -201,6 +201,7 @@ public class DAOService implements InitializingBean {
 		return null;
 	}
 
+	
 	@Transactional
 	public Object getObjectsLike(Class classRef, String queryParameter, String reference) {
 		Session session = null;
@@ -579,7 +580,7 @@ public class DAOService implements InitializingBean {
 		}
 		return flag;
 	}
-
+	
 	public void afterPropertiesSet() throws Exception {
 		// getLogger().info("Testing the DB connection ");
 		// getLogger().info("Printing the size " +

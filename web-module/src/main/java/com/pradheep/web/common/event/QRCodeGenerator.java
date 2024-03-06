@@ -19,16 +19,16 @@ import net.glxn.qrgen.javase.QRCode;
  */
 public class QRCodeGenerator {
 	
-	public BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
+	public static BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
 	    ByteArrayOutputStream stream = QRCode
 	      .from(barcodeText)
-	      .withSize(250, 250)
+	      .withSize(500, 500)
 	      .stream();
 	    ByteArrayInputStream bis = new ByteArrayInputStream(stream.toByteArray());
 	    return ImageIO.read(bis);
 	}
 	
-	public void createImage(BufferedImage image,String targetFileName) {
+	public static void createImage(BufferedImage image,String targetFileName) {
 		try {		 
 		    File outputfile = new File(targetFileName);
 		    ImageIO.write(image, "png", outputfile);		    
@@ -37,12 +37,13 @@ public class QRCodeGenerator {
 		}
 	}
 	
-	/*public static void main(String args[]) {
+	public static void main(String args[]) {
 		try {
-			BufferedImage image = QRCodeGenerator.generateQRCodeImage("129|Pradheep|deep_90@gmail.com|84530859");
-			QRCodeGenerator.createImage(image,"c:\\Roshan\\1.png");
+			BufferedImage image = QRCodeGenerator.generateQRCodeImage("https://www.praiseyourredeemer.org//eventHost/register?eventId=jjpXbaOG39c=");
+			QRCodeGenerator.createImage(image,"c:\\Roshan\\1\\event_500.png");
+			System.out.println("Created successfully.");
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
-	}*/
+	}
 }

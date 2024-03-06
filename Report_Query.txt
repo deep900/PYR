@@ -1,0 +1,4 @@
+select A.id,A.name as participant_name,A.mobile_number mobile_number,A.email,A.food_preference as participant_food_preference,A.person_invited,A.registering_for,A.child_cnt,A.adult_count,A.registered_time, A.registered_time,A.dinner_time,B.name as member_name ,B.id as member_id,B.food_preference as member_food_preference,B.isChild from event_participants A LEFT JOIN event_participant_members B on A.id = B.participant_id and A.event_id = 3;
+
+
+select B.isChild from event_participants A LEFT JOIN event_participant_members B on A.id = B.participant_id and A.event_id = 2;

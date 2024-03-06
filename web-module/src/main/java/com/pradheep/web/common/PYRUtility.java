@@ -180,7 +180,7 @@ public class PYRUtility {
 	}
 	
 	public static void creationTest(){
-		String arg ="துன்பங்கள்";
+		String arg ="நம்மை நாமே நியாயந்தீர்த்துக் கொண்டால் பிறரைக் குறை கூற மாட்டோம்";
 		System.out.println(getUnicodeCharacter(arg));
 		//convertFile();
 	}
