@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.omg.CORBA.UnknownUserException;
+//import org.omg.CORBA.UnknownUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -422,7 +422,7 @@ public class BaseUtility<T> {
 		}
 	}
 
-	public void addUserInformation(ModelAndView modelAndView) throws UnknownUserException {
+	public void addUserInformation(ModelAndView modelAndView) throws UnKnownUserException {
 		String userName = getUserName();
 		if (userName == null || userName.equals("") || userName.equals("anonymousUser")) {
 			logger.error("Unknown user logged in");
@@ -440,7 +440,7 @@ public class BaseUtility<T> {
 		ModelAndView modelAndView = new ModelAndView(pagePath);
 		try {
 			addUserInformation(modelAndView);
-		} catch (UnknownUserException e) {
+		} catch (UnKnownUserException e) {
 			modelAndView.setViewName(PagePath.INVALID_SESSION);
 			return modelAndView;
 		}
@@ -451,7 +451,7 @@ public class BaseUtility<T> {
 		ModelAndView modelAndView = new ModelAndView(pagePath, command, obj);
 		try {
 			addUserInformation(modelAndView);
-		} catch (UnknownUserException e) {
+		} catch (UnKnownUserException e) {
 			modelAndView.setViewName(PagePath.INVALID_SESSION);
 			return modelAndView;
 		}

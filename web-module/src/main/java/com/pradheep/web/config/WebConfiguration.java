@@ -5,8 +5,6 @@ package com.pradheep.web.config;
 
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -49,9 +47,6 @@ import com.pradheep.web.jobs.EventParticipantsReportJob;
 import com.pradheep.web.jobs.MonthlyMessageNotification;
 import com.pradheep.web.jobs.PersistedNotificationService;
 import com.pradheep.web.service.EventManagementService;
-import com.pyr.messenger.Messenger;
-import com.pyr.messenger.PyrMessenger;
-import com.pyr.messenger.SMSMessenger;
 import com.pyr.templates.NotificationConfiguration;
 
 /**
@@ -98,7 +93,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
 
-	@PostConstruct
+	
 	public void doSomething() {
 		System.out.println("Web Configuration is succussefully initialized..");
 	}
