@@ -159,8 +159,7 @@
 																	style="height: 34px; width: 100%; font-size: 13px;">
 																	<optgroup style="font-family: Cambria">
 																		<option value="Vegeterian">Vegeterian</option>
-																		<option value="Non-Vegeterian">Non-Vegeterian</option>
-																		<option value="Non-Vegeterian-Hallal">Non-Vegeterian(Hallal)</option>
+																		<option value="Non-Vegeterian">Non-Vegeterian</option>																		
 																		<option value="Food Not Required">Food not
 																			required</option>
 																	</optgroup>
@@ -430,8 +429,7 @@
 		}
 
 		function createFoodPreference(parentElement, selectList, id, arg) {
-			var array = [ "Veg", "Non-Veg", "Non-Veg-Hallal",
-					"Food Not Required" ];
+			var array = [ "Veg", "Non-Veg", "Food Not Required" ];
 			selectList.id = "food-" + arg + "-" + id;
 			selectList.name = arg + ".foodPreference";
 			parentElement.appendChild(selectList);
